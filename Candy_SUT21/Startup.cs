@@ -31,6 +31,12 @@ namespace Candy_SUT21
             services.AddControllersWithViews();
             services.AddScoped<ICandyRepository, CandyRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepsoitory>();
+            services.AddScoped<ShoppingCart>(sc => ShoppingCart.GetCart(sc));
+
+
+
+            services.AddHttpContextAccessor();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +54,7 @@ namespace Candy_SUT21
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

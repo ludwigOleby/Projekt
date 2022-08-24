@@ -10,5 +10,15 @@
             <h3><a asp-controller="Candy" asp-action="Details" asp-route-id="@Model.CandyId">@Model.Name</a></h3>
             <p>@Model.Description</p>
         </div>
+
+        <div class="addToCart">
+            <p class="button">
+                <a class="btn btn-primary"
+                   asp-controller="ShoppingCart"
+                   asp-action="AddToShoppingCart"
+                   asp-route-candyId="@Model.CandyId">Add To Cart</a>
+            </p>
+        </div>
+
     </div>
 </div>

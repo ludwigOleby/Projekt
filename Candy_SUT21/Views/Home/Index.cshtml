@@ -1,8 +1,13 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model HomeViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<partial name="_Carousel" />
+<h2>Candy On Sale</h2>
+
+
+<div class="row">
+    @foreach (var candy in Model.CandyOnSale)
+    {
+        <partial name="_candyCard" model="candy" />
+    }
+
 </div>
