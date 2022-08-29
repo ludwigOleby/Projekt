@@ -24,7 +24,9 @@
                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
                        <ul class="nav navbar-nav">
                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                           <li><a asp-controller="Candy" asp-action="List">Candy</a></li>
+                           @await Component.InvokeAsync("CategoryMenu")
+                           <li><a asp-controller="Contact" asp-action="Index">Contact US</a></li>
+                           @await Component.InvokeAsync("ShoppingCartSummary")
                        </ul>
 
 
@@ -33,11 +35,27 @@
                </div>
            </nav>
        </div>
-        <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="lead">
+                    <img class="img-responsive" src="~/Images/candyshoplogo.png" />
+
+                </p>
+            </div>
+
+            <div class="col-md-9">
+                @RenderBody()
+
+            </div>
+
+        </div>
+        @*<div class="container">
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
-        </div>
+        </div>*@
 
         <footer class="border-top footer text-muted">
             <div class="container">
