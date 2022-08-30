@@ -11,5 +11,7 @@ namespace Candy_SUT21.ViewModels
         public IEnumerable<Candy> Candies { get; set; }
 
         public string CurrentCategory { get; set; }
+
+
     }
 }
