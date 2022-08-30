@@ -1,4 +1,5 @@
 ﻿using Candy_SUT21.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Candy_SUT21.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
 
