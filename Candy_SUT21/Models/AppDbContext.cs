@@ -40,11 +40,11 @@ namespace Candy_SUT21.Models
             modelBuilder.Entity<Candy>().HasData(new Candy
             {
                 CandyId = 1,
-                 Name = "Assorted Chocolate Candy",
-                  Description= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Tortor posuere ac ut consequat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Lacus sed turpis tincidunt id aliquet risus feugiat in. Viverra aliquet eget sit amet tellus cras adipiscing enim eu.",
-                  ImageUrl="\\Images\\chocolateCandy.jpg",
-                  ImageThumbnailUrl="\\Images\\thumbnails\\chocolateCandy-small.jpg",
-                   IsInStock=true,
+                Name = "Assorted Chocolate Candy",
+                Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Tortor posuere ac ut consequat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Lacus sed turpis tincidunt id aliquet risus feugiat in. Viverra aliquet eget sit amet tellus cras adipiscing enim eu.",
+                ImageUrl = "\\Images\\chocolateCandy.jpg",
+                ImageThumbnailUrl = "\\Images\\thumbnails\\chocolateCandy-small.jpg",
+                StockAmount = 100,
                    IsOnSale=false,
                    Price = 4.95M,  
                    CategoryId=1
@@ -60,7 +60,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 1,
                 ImageUrl = "\\Images\\chocolateCandy2.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\chocolateCandy2-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = true
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -72,7 +72,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 1,
                 ImageUrl = "\\Images\\chocolateCandy3.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\chocolateCandy3-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = false
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -84,7 +84,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 2,
                 ImageUrl = "\\Images\\fruitCandy.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\fruitCandy-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = false
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -96,7 +96,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 2,
                 ImageUrl = "\\Images\\fruitCandy2.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\fruitCandy2-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = true
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -108,7 +108,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 2,
                 ImageUrl = "\\Images\\fruitCandy3.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\fruitCandy3-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = true
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -120,7 +120,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 3,
                 ImageUrl = "\\Images\\gummyCandy.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\gummyCandy-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = true
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -132,7 +132,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 3,
                 ImageUrl = "\\Images\\gummyCandy2.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\gummyCandy2-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = false
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -144,7 +144,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 3,
                 ImageUrl = "\\Images\\gummyCandy3.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\gummyCandy3-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = false
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -156,7 +156,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 4,
                 ImageUrl = "\\Images\\halloweenCandy.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\halloweenCandy-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = true
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -168,7 +168,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 4,
                 ImageUrl = "\\Images\\halloweenCandy2.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\halloweenCandy2-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = true
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -180,7 +180,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 4,
                 ImageUrl = "\\Images\\halloweenCandy3.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\halloweenCandy3-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = true
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -192,7 +192,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 5,
                 ImageUrl = "\\Images\\hardCandy.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\hardCandy-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = false
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -204,7 +204,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 5,
                 ImageUrl = "\\Images\\hardCandy2.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\hardCandy2-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = true
             });
             modelBuilder.Entity<Candy>().HasData(new Candy
@@ -216,7 +216,7 @@ namespace Candy_SUT21.Models
                 CategoryId = 5,
                 ImageUrl = "\\Images\\hardCandy3.jpg",
                 ImageThumbnailUrl = "\\Images\\thumbnails\\hardCandy3-small.jpg",
-                IsInStock = true,
+                StockAmount = 100,
                 IsOnSale = false
             });
         }
