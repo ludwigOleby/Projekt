@@ -30,7 +30,6 @@ namespace Candy_SUT21.Controllers
 
 
         [HttpPost]
-
         public IActionResult CheckOut(Order order)
         {
             _shoppingCart.ShoppingCartItems = _shoppingCart.GetShoppingCartItems();

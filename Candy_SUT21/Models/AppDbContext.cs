@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Candy_SUT21.Models
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -33,7 +33,10 @@ namespace Candy_SUT21.Models
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 4, CategoryName = "Halloween Candy" });
             modelBuilder.Entity<Category>().HasData(new Category { CategoryId = 5, CategoryName = "Hard Candy" });
 
-
+            SeedUsers(modelBuilder);
+            SeedRoles(modelBuilder);
+            SeedUserRoles(modelBuilder);
+            
             modelBuilder.Entity<Candy>().HasData(new Candy
             {
                 CandyId = 1,
@@ -216,6 +219,40 @@ namespace Candy_SUT21.Models
                 IsInStock = true,
                 IsOnSale = false
             });
+        }
+        private void SeedUsers(ModelBuilder builder)
+        {
+            ApplicationUser user = new ApplicationUser
+            {
+                Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                UserName = "admin@djinn.com",
+                NormalizedUserName = "ADMIN@DJINN.COM",
+                Email = "admin@djinn.com",
+                NormalizedEmail = "ADMIN@DJINN.COM",
+                LockoutEnabled = false,
+                PhoneNumber = "123456789",
+                SecurityStamp = Guid.NewGuid().ToString(),
+                EmailConfirmed = true,
+                
+            };
+
+            PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
+            user.PasswordHash = passwordHasher.HashPassword(user, "Admin123!");
+
+            builder.Entity<ApplicationUser>().HasData(user);
+        }
+
+        private void SeedRoles(ModelBuilder builder)
+        {
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole() { Id = "fab4fac1-c546-41de-aebc-a14da6895711", Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "Admin" },
+                new IdentityRole() { Id = "c7b013f0-5201-4317-abd8-c211f91b7330", Name = "Customer", ConcurrencyStamp = "2", NormalizedName = "Customer" });
+        }
+
+        private void SeedUserRoles(ModelBuilder builder)
+        {
+            builder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>() { RoleId = "fab4fac1-c546-41de-aebc-a14da6895711", UserId = "b74ddd14-6340-4840-95c2-db12554843e5" });
         }
     }
 }

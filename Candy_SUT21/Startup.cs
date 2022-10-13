@@ -29,8 +29,10 @@ namespace Candy_SUT21
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
+
 
             //TEST_2
             services.AddControllersWithViews();
