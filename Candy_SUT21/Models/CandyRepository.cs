@@ -35,5 +35,18 @@ namespace Candy_SUT21.Models
         {
             return _appDbContext.Candies.FirstOrDefault(c => c.CandyId == candyId);
         }
+
+        public void AddStock(int candyId, int amount)
+        {
+            var candyToDecrease = _appDbContext.Candies.FirstOrDefault(c => c.CandyId == candyId);
+            candyToDecrease.StockAmount = candyToDecrease.StockAmount + amount;
+            _appDbContext.Candies.Update(candyToDecrease);
+        }
+        public void DecreaseStock(int candyId, int amount)
+        {
+            var candyToDecrease = _appDbContext.Candies.FirstOrDefault(c => c.CandyId == candyId);
+            candyToDecrease.StockAmount = candyToDecrease.StockAmount - amount;
+            _appDbContext.Candies.Update(candyToDecrease);
+        }
     }
 }
