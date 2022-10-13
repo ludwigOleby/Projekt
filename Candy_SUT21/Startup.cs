@@ -32,7 +32,7 @@ namespace Candy_SUT21
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            //TEST
+            //TEST_1
             services.AddControllersWithViews();
             services.AddScoped<ICandyRepository, CandyRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepsoitory>();
