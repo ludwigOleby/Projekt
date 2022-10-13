@@ -24,9 +24,9 @@
     overflow: hidden;
 }
 
-    .caption h4 {
-        white-space: nowrap;
-    }
+.caption h4 {
+    white-space: nowrap;
+}
 
 .thumbnail img {
     width: 100%;
