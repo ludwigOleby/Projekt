@@ -93,16 +93,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "24315075-2f02-4e7d-98ee-28edd3bb66c7",
+                            ConcurrencyStamp = "44c3e368-de98-4499-8a6e-2b44229e3376",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDGt/4RHepZSpDNXq0PKC23eFu+iy8/K/Op3esCmC8URmGoSGsK/xpav1R14oDUOgA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDTCNeg7i9Vc2QXDBkDMWtZ9ZRcuYLe2IJnla97BU0WWtUGlZyWTlbAMy1yEsZM20w==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "74ff51bd-df64-48bb-9327-8c4dc40e47af",
+                            SecurityStamp = "f9f7b1ae-70b2-4990-b02c-a8dd52d604d5",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });

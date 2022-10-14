@@ -22,31 +22,6 @@ namespace Candy_SUT21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -58,6 +33,24 @@ namespace Candy_SUT21.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Customer",
+                columns: table => new
+                {
+                    CustomerId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -99,6 +92,113 @@ namespace Candy_SUT21.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Candies",
+                columns: table => new
+                {
+                    CandyId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    ImageThumbnailUrl = table.Column<string>(nullable: true),
+                    IsOnSale = table.Column<bool>(nullable: false),
+                    StockAmount = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Candies", x => x.CandyId);
+                    table.ForeignKey(
+                        name: "FK_Candies_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Customer_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customer",
+                        principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderDetails",
+                columns: table => new
+                {
+                    OrderDetailId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(nullable: false),
+                    CandyId = table.Column<int>(nullable: false),
+                    Amount = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderDetails", x => x.OrderDetailId);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Candies_CandyId",
+                        column: x => x.CandyId,
+                        principalTable: "Candies",
+                        principalColumn: "CandyId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartItems",
+                columns: table => new
+                {
+                    ShoppingCartItemsId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShoppingCartId = table.Column<string>(nullable: true),
+                    CandyId = table.Column<int>(nullable: true),
+                    Amount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartItems", x => x.ShoppingCartItemsId);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_Candies_CandyId",
+                        column: x => x.CandyId,
+                        principalTable: "Candies",
+                        principalColumn: "CandyId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,80 +286,19 @@ namespace Candy_SUT21.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Candies",
-                columns: table => new
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
                 {
-                    CandyId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    ImageUrl = table.Column<string>(nullable: true),
-                    ImageThumbnailUrl = table.Column<string>(nullable: true),
-                    IsOnSale = table.Column<bool>(nullable: false),
-                    StockAmount = table.Column<int>(nullable: false),
-                    CategoryId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Candies", x => x.CandyId);
-                    table.ForeignKey(
-                        name: "FK_Candies_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                    { "fab4fac1-c546-41de-aebc-a14da6895711", "1", "Admin", "Admin" },
+                    { "c7b013f0-5201-4317-abd8-c211f91b7330", "2", "Customer", "Customer" }
                 });
 
-            migrationBuilder.CreateTable(
-                name: "OrderDetails",
-                columns: table => new
-                {
-                    OrderDetailId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(nullable: false),
-                    CandyId = table.Column<int>(nullable: false),
-                    Amount = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderDetails", x => x.OrderDetailId);
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_Candies_CandyId",
-                        column: x => x.CandyId,
-                        principalTable: "Candies",
-                        principalColumn: "CandyId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShoppingCartItems",
-                columns: table => new
-                {
-                    ShoppingCartItemsId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ShoppingCartId = table.Column<string>(nullable: true),
-                    CandyId = table.Column<int>(nullable: true),
-                    Amount = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShoppingCartItems", x => x.ShoppingCartItemsId);
-                    table.ForeignKey(
-                        name: "FK_ShoppingCartItems_Candies_CandyId",
-                        column: x => x.CandyId,
-                        principalTable: "Candies",
-                        principalColumn: "CandyId",
-                        onDelete: ReferentialAction.Restrict);
-                });
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "44c3e368-de98-4499-8a6e-2b44229e3376", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEDTCNeg7i9Vc2QXDBkDMWtZ9ZRcuYLe2IJnla97BU0WWtUGlZyWTlbAMy1yEsZM20w==", "123456789", false, "f9f7b1ae-70b2-4990-b02c-a8dd52d604d5", false, "admin@djinn.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -272,6 +311,11 @@ namespace Candy_SUT21.Migrations
                     { 4, null, "Halloween Candy" },
                     { 5, null, "Hard Candy" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", "fab4fac1-c546-41de-aebc-a14da6895711" });
 
             migrationBuilder.InsertData(
                 table: "Candies",
@@ -321,6 +365,11 @@ namespace Candy_SUT21.Migrations
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_CustomerId",
+                table: "AspNetUsers",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -389,6 +438,9 @@ namespace Candy_SUT21.Migrations
 
             migrationBuilder.DropTable(
                 name: "Candies");
+
+            migrationBuilder.DropTable(
+                name: "Customer");
 
             migrationBuilder.DropTable(
                 name: "Categories");

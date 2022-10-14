@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221013122429_First")]
+    [Migration("20221014063119_First")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,95 @@ namespace Candy_SUT21.Migrations
                 .HasAnnotation("ProductVersion", "3.1.30")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Candy_SUT21.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "44c3e368-de98-4499-8a6e-2b44229e3376",
+                            Email = "admin@djinn.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@DJINN.COM",
+                            NormalizedUserName = "ADMIN@DJINN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDTCNeg7i9Vc2QXDBkDMWtZ9ZRcuYLe2IJnla97BU0WWtUGlZyWTlbAMy1yEsZM20w==",
+                            PhoneNumber = "123456789",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f9f7b1ae-70b2-4990-b02c-a8dd52d604d5",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@djinn.com"
+                        });
+                });
 
             modelBuilder.Entity("Candy_SUT21.Models.Candy", b =>
                 {
@@ -286,6 +375,36 @@ namespace Candy_SUT21.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Candy_SUT21.Models.Customer", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customer");
+                });
+
             modelBuilder.Entity("Candy_SUT21.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
@@ -409,6 +528,22 @@ namespace Candy_SUT21.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "fab4fac1-c546-41de-aebc-a14da6895711",
+                            ConcurrencyStamp = "1",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "c7b013f0-5201-4317-abd8-c211f91b7330",
+                            ConcurrencyStamp = "2",
+                            Name = "Customer",
+                            NormalizedName = "Customer"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -433,71 +568,6 @@ namespace Candy_SUT21.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -561,6 +631,13 @@ namespace Candy_SUT21.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            RoleId = "fab4fac1-c546-41de-aebc-a14da6895711"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -582,6 +659,13 @@ namespace Candy_SUT21.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Candy_SUT21.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("Candy_SUT21.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
                 });
 
             modelBuilder.Entity("Candy_SUT21.Models.Candy", b =>
@@ -626,7 +710,7 @@ namespace Candy_SUT21.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Candy_SUT21.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -635,7 +719,7 @@ namespace Candy_SUT21.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Candy_SUT21.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -650,7 +734,7 @@ namespace Candy_SUT21.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Candy_SUT21.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -659,7 +743,7 @@ namespace Candy_SUT21.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Candy_SUT21.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
