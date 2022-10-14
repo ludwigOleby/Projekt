@@ -10,18 +10,21 @@ namespace Candy_SUT21.Models
         private readonly AppDbContext _appDbContext;
         private readonly ShoppingCart _shoppingCart;
 
-
-        public OrderRepository(AppDbContext appDbContext,ShoppingCart shoppingCart)
+        public OrderRepository(AppDbContext appDbContext, ShoppingCart shoppingCart)
         {
             _appDbContext = appDbContext;
             _shoppingCart = shoppingCart;
         }
+
 
         public void CreateOrder(Order order)
         {
             order.OrderPlaced = DateTime.Now;
             order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
             _appDbContext.Orders.Add(order);
+            
+
+
             _appDbContext.SaveChanges();
 
            var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
@@ -31,10 +34,10 @@ namespace Candy_SUT21.Models
             {
                 var orderDetails = new OrderDetail
                 {
-                     Amount = shoppigCartItem.Amount,
+                      Amount = shoppigCartItem.Amount,
                       Price = shoppigCartItem.Candy.Price,
                       CandyId = shoppigCartItem.Candy.CandyId,
-                      OrderId = order.OrderId
+                      OrderId = order.OrderId,
                 };
 
                 _appDbContext.OrderDetails.Add(orderDetails);
