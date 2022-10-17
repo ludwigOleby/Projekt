@@ -12,12 +12,20 @@
         </div>
 
         <div class="addToCart">
-            <p class="button">
-                <a class="btn btn-primary"
+            @if (Model.IsInStock == true)
+           {
+                <p class="button">
+                    <a class="btn btn-primary"
                    asp-controller="ShoppingCart"
                    asp-action="AddToShoppingCart"
                    asp-route-candyId="@Model.CandyId">Add To Cart</a>
-            </p>
+                </p>
+            }else{
+                <p class="button" disabled>
+                    <a class="btn btn-primary">Out of stock!</a>
+                </p>
+
+            }
         </div>
 
     </div>
