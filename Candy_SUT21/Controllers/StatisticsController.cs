@@ -20,10 +20,10 @@ namespace Candy_SUT21.Controllers
 
         public JsonResult SalesAmount(string period = "days")
         {
+            DateTime today = DateTime.Today;
 
             if (period == "days")
             {
-                DateTime today = DateTime.Today;
                 var orders = _orderRepository.GetOrdersByDate(DateTime.Today.AddDays(-6), DateTime.Now);
 
                 List<SalesAmountChartModel> data = new List<SalesAmountChartModel>()
@@ -37,9 +37,6 @@ namespace Candy_SUT21.Controllers
                     new SalesAmountChartModel { DateGroup = today, Label=today.ToShortDateString() } 
                 };
 
-
-
-
                 foreach (var order in orders)
                 {
                     var saleCategory = data.Find(s => s.DateGroup == order.OrderPlaced.Date);
@@ -48,30 +45,70 @@ namespace Candy_SUT21.Controllers
                         saleCategory.OrderCount++;
                         saleCategory.ProductSalesCount += order.OrderDetails.Count;
                         saleCategory.SalesAmount += order.OrderTotal;
-
                     }                  
-
                 }
-
                 return Json(new { JSONList = data });
 
             }
 
             else if (period == "weeks")
             {
-
-
                 CultureInfo cul = CultureInfo.CurrentCulture;
 
-                int currentWeek = cul.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+                var monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+                var checkFrom = monday.AddDays(-21);
 
+                var orders = _orderRepository.GetOrdersByDate(checkFrom, DateTime.Now);
 
-                //var orders = _orderRepository.GetOrdersByDate(DateTime.Today.add(-7), DateTime.Now);
+                List<SalesAmountChartModel> data = new List<SalesAmountChartModel>()
+                {
+                    new SalesAmountChartModel { DateGroup = monday.AddDays(-21), Label ="Week "+ cul.Calendar.GetWeekOfYear(monday.AddDays(-21), CalendarWeekRule.FirstDay, DayOfWeek.Monday) },
+                    new SalesAmountChartModel { DateGroup = monday.AddDays(-14), Label = "Week "+ cul.Calendar.GetWeekOfYear(monday.AddDays(-14), CalendarWeekRule.FirstDay, DayOfWeek.Monday) },
+                    new SalesAmountChartModel { DateGroup = monday.AddDays(-7), Label = "Week "+ cul.Calendar.GetWeekOfYear(monday.AddDays(-7), CalendarWeekRule.FirstDay, DayOfWeek.Monday) },
+                    new SalesAmountChartModel { DateGroup = monday, Label = "Week "+ cul.Calendar.GetWeekOfYear(monday, CalendarWeekRule.FirstDay, DayOfWeek.Monday)  }
+                };
+
+                foreach (var order in orders)
+                {
+                    var saleCategory = data.Find(s => cul.Calendar.GetWeekOfYear(s.DateGroup, CalendarWeekRule.FirstDay, DayOfWeek.Monday) == cul.Calendar.GetWeekOfYear(order.OrderPlaced.Date, CalendarWeekRule.FirstDay, DayOfWeek.Monday));
+                    if (saleCategory != null)
+                    {
+                        saleCategory.OrderCount++;
+                        saleCategory.ProductSalesCount += order.OrderDetails.Count;
+                        saleCategory.SalesAmount += order.OrderTotal;
+                    }
+                }
+                return Json(new { JSONList = data });
+
             }
 
             else if (period == "months")
             {
-                var orders = _orderRepository.GetOrdersByDate(DateTime.Today.AddMonths(-5), DateTime.Now);
+                var firstDayOfCurrMonth = today.AddDays(-(today.Day - 1));
+                var orders = _orderRepository.GetOrdersByDate(firstDayOfCurrMonth.AddMonths(-5), DateTime.Now);
+
+                List<SalesAmountChartModel> data = new List<SalesAmountChartModel>()
+                {
+                    new SalesAmountChartModel { DateGroup = firstDayOfCurrMonth.AddMonths(-5), Label = firstDayOfCurrMonth.AddMonths(-5).ToString("MMMM yyyy")},
+                    new SalesAmountChartModel { DateGroup = firstDayOfCurrMonth.AddMonths(-4), Label = firstDayOfCurrMonth.AddMonths(-4).ToString("MMMM yyyy")},
+                    new SalesAmountChartModel { DateGroup = firstDayOfCurrMonth.AddMonths(-3), Label = firstDayOfCurrMonth.AddMonths(-3).ToString("MMMM yyyy")},
+                    new SalesAmountChartModel { DateGroup = firstDayOfCurrMonth.AddMonths(-2), Label = firstDayOfCurrMonth.AddMonths(-2).ToString("MMMM yyyy")},
+                    new SalesAmountChartModel { DateGroup = firstDayOfCurrMonth.AddMonths(-1), Label = firstDayOfCurrMonth.AddMonths(-1).ToString("MMMM yyyy")},
+                    new SalesAmountChartModel { DateGroup = firstDayOfCurrMonth, Label = firstDayOfCurrMonth.ToString("MMMM yyyy")},
+                };
+
+                foreach (var order in orders)
+                {
+                    var saleCategory = data.Find(s => s.DateGroup.Month == order.OrderPlaced.Date.Month);
+                    if (saleCategory != null)
+                    {
+                        saleCategory.OrderCount++;
+                        saleCategory.ProductSalesCount += order.OrderDetails.Count;
+                        saleCategory.SalesAmount += order.OrderTotal;
+                    }
+                }
+                return Json(new { JSONList = data });
+
             }
 
 

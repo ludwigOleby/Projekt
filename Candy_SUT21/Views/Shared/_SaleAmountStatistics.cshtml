@@ -1,47 +1,67 @@
-﻿<div id="salesAmountChart">
+﻿<div class="chartWidget">
+    <form id="salesAmountPeriodForm" class="form-inline">
+        <label for="selectsaleAmountPeriod">Select Period</label>
+        <select id="selectsaleAmountPeriod" class="form-control">
+            <option value="days">Last 7 days</option>
+            <option value="weeks">Last 4 weeks</option>
+            <option value="months">Last 6 months</option>
+        </select>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <div class="chartContainer" id="salesAmountChart">
 
+    </div>
 </div>
+
 
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-    console.log("I script");
+
+    $('#salesAmountPeriodForm').submit(function (e) {
+        e.preventDefault();
+
+        console.log($('#selectsaleAmountPeriod').val());
+        var val = $('#selectsaleAmountPeriod').val();
+        drawChart(val);
+    });
+
       google.charts.load('current', { 'packages': ['corechart', 'bar'] });
       google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
+    function drawChart(period="days") {
         $(function () {
             $.ajax({
                 type: 'GET',
-                url: '/Statistics/SalesAmount',
+                url: '/Statistics/SalesAmount?period=' + period,
                 success: function (chartsdata) {
-                    console.log("succcess");
 
                     var Data = chartsdata.jsonList;
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Day');
-                    data.addColumn('number', 'SalesAmount')
-                    data.addColumn('number', 'Orders');
+                    data.addColumn('number', 'Sales Amount')
+                    data.addColumn('number', 'Nr of Orders');
 
                     for (var i = 0; i < Data.length; i++) {
-                        data.addRow([Data[i].label, Data[i].salesAmount, Data[i].orderCount]);
+                        data.addRow([Data[i].label, { v:Data[i].salesAmount, f: Data[i].salesAmount+' kr' }, Data[i].orderCount]);
                     }
 
                     var options = {
-                        width: 900,
-                        chart: {
-                            title: 'Försäljning',
-                        },
                         series: {
-                            0: { axis: 'SalesAmount' }, // Bind series 0 to an axis named 'distance'.
-                            1: { axis: 'Orders' } // Bind series 1 to an axis named 'brightness'.
+                            0: { axis: 'Sales Amount' }, 
+                            1: { axis: 'Nr of Orders' } 
                         },
                         axes: {
                             y: {
                                 distance: { label: 'parsecs' }, // Left y-axis.
                                 brightness: { side: 'right', label: 'apparent magnitude' } // Right y-axis.
                             }
+                        },
+                        chart: {
+                            title: 'Sales Statistics',
                         }
+
+
                     };
 
                     var chart = new google.charts.Bar(document.getElementById('salesAmountChart'));

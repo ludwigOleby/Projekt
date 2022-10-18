@@ -93,11 +93,17 @@ footer {
     border-color: #fba1a1 !important;
 }
 
-.salesChart {
-    margin-top: 100px;
-}
-
 /*.img {
     float: left;
     max-width:30%;
 }*/
+
+.chartContainer{
+    background-color:white;
+    padding-top:10px;
+}
+
+.chartWidget{
+    background-color:white;
+    padding:10px;
+}
