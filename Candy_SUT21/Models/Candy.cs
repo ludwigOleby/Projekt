@@ -22,8 +22,7 @@ namespace Candy_SUT21.Models
                     (Discount.StartDate < DateTime.Now &&
                     Discount.EndDate > DateTime.Now);
             }
-        }
-            
+        }      
 #nullable enable
         public int? DiscountId { get; set; }
         public Discount? Discount { get; set; }

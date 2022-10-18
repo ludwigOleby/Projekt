@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Discount>
+
+@functions{
+    private string GetCandies(Discount discount)
+    {
+        var candies = "<div class=\"text-align\"/>" + string.Join("<br/>", discount.Candies.Select(c => c.Name)) + "</div>";
+        return candies;
+    }
+}
+<div class="container">
+    <div class="discount-header">
+        <h2>Discount Management</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Discount</th>
+                    <th>Candies</th>
+                    <th>Percentge</th>
+                    <th>Start date</th>
+                    <th>End date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var discount in Model)
+                {
+                    <tr>
+                        <td>@discount.Name</td>
+                        <td>
+                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" data-html="true" title="@string.Join("<br/>", discount.Candies.Select(c => c.Name))">@discount.Candies.Count()</button>
+                        </td>
+                        <td>@discount.Percentage%</td>
+                        <td>@discount.StartDate</td>
+                        <td>@discount.EndDate</td>
+                        <td><a asp-action="" class="btn"><i class="glyphicon glyphicon-pencil"></i></a><a asp-action="" class="btn"><i class="glyphicon glyphicon-trash"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

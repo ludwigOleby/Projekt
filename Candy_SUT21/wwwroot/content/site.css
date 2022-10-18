@@ -90,3 +90,20 @@ footer {
     background-color: #fcaeae !important;
     border-color: #fba1a1 !important;
 }
+
+.discount-circle {
+    position: absolute;
+    background-color: red;
+    padding: 1rem;
+    border-radius: 50%;
+    height: 6rem;
+    width: 6rem;
+    display: flex;
+    align-items: center;
+}
+
+.discount-percent {
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+}

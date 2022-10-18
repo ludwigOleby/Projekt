@@ -40,6 +40,7 @@ namespace Candy_SUT21
             services.AddScoped<ICategoryRepository, CategoryRepsoitory>();
             services.AddScoped<ShoppingCart>(sc => ShoppingCart.GetCart(sc));
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IDiscountRepository, DiscountRepository>();
 
 
 

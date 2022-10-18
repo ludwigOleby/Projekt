@@ -41,7 +41,7 @@ namespace Candy_SUT21.Models
 
         public async Task<IEnumerable<Discount>> GetDiscounts()
         {
-            return await _context.Discounts.ToListAsync();
+            return await _context.Discounts.Include(c => c.Candies).ToListAsync();
         }
 
         public async Task<Discount> UpdateDiscount(Discount discount)

@@ -5,7 +5,10 @@
     <div class="thumbnail">
         @if (Model.IsOnSale)
         {
-            <i style="position:absolute; background-color: red; color: white; padding:1rem; border-radius: 50%;  font-weight: bold; font-size: 22px;">-@Model.Discount.Percentage%</i>
+            <div class="discount-circle">
+                <i class="discount-percent">-@Model.Discount.Percentage%</i>
+            </div>
+            
         }
         
         <img src="@Model.ImageThumbnailUrl" alt="Image for Candy" />
@@ -14,8 +17,8 @@
             @if (Model.IsOnSale)
             {
                 <h3 class="pull-right" style="color: red;">
-                @Model.GetDiscountPrice()
-    @*@Math.Round((Model.Price - (Model.Price * (Convert.ToDecimal(Model.Discount.Percentage) / 100M))), 2)*@</h3>
+                    @Model.GetDiscountPrice()
+                </h3>
                 <h4 class="pull-right" style="text-decoration: line-through">@Model.Price</h4>
             }
             else
