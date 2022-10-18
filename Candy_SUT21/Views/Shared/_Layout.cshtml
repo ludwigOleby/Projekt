@@ -24,10 +24,10 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <img style="float:left; max-width:10%" src="~/Images/DjinnLogo-Circle.png.png" />
+                <a asp-controller="Home" asp-action="Index"><img style="float:left; max-width:100px" src="~/Images/DjinnLogo-Circle.png.png" /></a>
                         <ul class="nav navbar-nav" >
 
-                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li><a asp-controller="Candy" asp-action="List" asp-route-category="">All Candy</a></li>
                             @await Component.InvokeAsync("CategoryMenu")
                             <li><a asp-controller="Contact" asp-action="Index">Contact Us</a></li>
                             @await Component.InvokeAsync("ShoppingCartSummary")
@@ -48,6 +48,7 @@
     </div>
 
     <div class="row">
+
         <div class="col-md-8 col-md-offset-2">
             @RenderBody()
         </div>
@@ -59,9 +60,7 @@
     </div>*@
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Candy_SUT21 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

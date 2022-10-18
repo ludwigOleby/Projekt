@@ -46,8 +46,6 @@ namespace Candy_SUT21.Models
             _appDbContext.SaveChanges();
         }
 
-
-
         public IEnumerable<Order> GetOrdersByDate(DateTime from, DateTime? to)
         {
             if (to == null)
@@ -59,9 +57,11 @@ namespace Candy_SUT21.Models
 
         }
 
-        public IEnumerable<Order> GetAllOrders()
+
+
+        public IEnumerable<Order> OrderList()
         {
-            return _appDbContext.Orders.Include(o=>o.OrderDetails).ToList();
+            return _appDbContext.Orders.ToList();
         }
     }
 }
