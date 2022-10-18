@@ -44,5 +44,10 @@ namespace Candy_SUT21.Models
             }
             _appDbContext.SaveChanges();
         }
+
+        public IEnumerable<Order> OrderList()
+        {
+            return _appDbContext.Orders.ToList();
+        }
     }
 }
