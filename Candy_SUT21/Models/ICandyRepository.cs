@@ -14,5 +14,6 @@ namespace Candy_SUT21.Models
 
         void DecreaseStock(int candyId, int amount);
         void AddStock(int candyId, int amount);
+        void CreateCandy(Candy candy);
     }
 }

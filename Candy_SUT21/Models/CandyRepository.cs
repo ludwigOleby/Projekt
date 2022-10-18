@@ -48,5 +48,10 @@ namespace Candy_SUT21.Models
             candyToDecrease.StockAmount = candyToDecrease.StockAmount - amount;
             _appDbContext.Candies.Update(candyToDecrease);
         }
+        public void CreateCandy(Candy candy)
+        {
+            var candyToCreate = _appDbContext.Candies.Add(candy);
+            _appDbContext.SaveChanges();            
+        }
     }
 }

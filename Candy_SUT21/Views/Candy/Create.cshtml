@@ -1,0 +1,62 @@
+﻿@model CandyViewModel
+
+<h1>Candy</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-11">
+            <h4>Edit</h4>
+        </div>
+    </div>
+    <form method="post">
+        <div class="row">
+            <div class="input-group col-sm-5 pull-left" title="Candy name">
+                <span class="input-group-addon"><i class="fa-solid fa-candy-cane"></i></span>
+                <input id="Name" type="text" asp-for="Name" class="form-control" placeholder="Candy Name" />
+            </div>
+            <div class="input-group col-lg-5 col-md-5 col-sm-5 pull-right" title="Category">
+                <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
+                <select asp-for="CategoryId" id="selectCategory" class="form-control">
+                    <option selected>Category</option>
+                    @await Component.InvokeAsync("CategoryOption")
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group col-sm-5 pull-left" title="Price">
+                <span class="input-group-addon"><i class="fa-solid fa-coins"></i></span>
+                <input id="Price" type="number" asp-for="Price" class="form-control" placeholder="Price" />
+            </div>
+            <div class="input-group col-sm-5 pull-right" title="Amount in stock">
+                <span class="input-group-addon"><i class="fa-solid fa-cubes-stacked"></i></span>
+                <input id="Stock" asp-for="StockAmount" class="form-control" placeholder="Amount in stock" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group col-sm-5 pull-left" title="ImageThumbnailUrl">
+                <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
+                <input id="ImageThumbnailUrl" type="file" asp-for="ImageThumbnailUrl" class="form-control" />
+            </div>
+            <div class="input-group col-sm-5 pull-right" title="ImageUrl">
+                <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
+                <input id="ImageUrl" type="file" asp-for="ImageUrl" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-group col-sm-5 pull-left" title="Description">
+                <span class="input-group-addon"><i class="fa-solid fa-glasses"></i></span>
+                <input id="Description" asp-for="Description" class="form-control" placeholder="Description" />
+            </div>
+            <div class="input-group col-sm-5 pull-right" title="Is on sale">
+                <span class="input-group-addon"><input class="form-check-input" type="checkbox" asp-for="IsOnSale" id="checkOnSale" /></span>
+                <label class="form-control" asp-for="IsOnSale">Is on sale</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Home</a>
+            </div>
+        </div>
+    </form>
+</div>
+
