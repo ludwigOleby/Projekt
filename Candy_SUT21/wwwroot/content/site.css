@@ -1,13 +1,13 @@
 ﻿body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    background-image: url('/images/pattern.png');
-    background-repeat: repeat;
+    padding-top: 125px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    background-image: url('/images/CandyShopBackGround.png');
+    background-size: cover;
     font-family: 'Source Sans Pro', sans-serif;
 }
 
 
 .slide-image {
-    width: 100%;
+    width:100%;
 }
 
 .carousel-holder {
@@ -54,14 +54,16 @@ footer {
     background-image: none;
 }
 
+/*Navbar head color*/
 .navbar-inverse {
-    background-color: #a593c2;
-    border-color: #a593c2;
+    background-color: #5c85b3;
+    border-color: #B3F1F5;
 }
 
 .nav.navbar-nav.navbar-right li a {
     color: white;
     font-size: 1.2em;
+
 }
 
 .navbar .nav > li > a {
@@ -107,3 +109,8 @@ footer {
     font-size: 20px;
     color: white;
 }
+
+/*.img {
+    float: left;
+    max-width:30%;
+}*/
