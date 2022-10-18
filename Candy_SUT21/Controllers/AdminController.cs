@@ -20,5 +20,11 @@ namespace Candy_SUT21.Controllers
         {
             return View();
         }
+
+
+        public IActionResult Statistics()
+        {
+            return View();
+        }
     }
 }

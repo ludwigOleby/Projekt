@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,6 +44,24 @@ namespace Candy_SUT21.Models
                 _appDbContext.OrderDetails.Add(orderDetails);
             }
             _appDbContext.SaveChanges();
+        }
+
+
+
+        public IEnumerable<Order> GetOrdersByDate(DateTime from, DateTime? to)
+        {
+            if (to == null)
+            {
+                to = DateTime.Now;
+            }
+
+            return _appDbContext.Orders.Include(o => o.OrderDetails).Where(o => o.OrderPlaced > from & o.OrderPlaced < to);
+
+        }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return _appDbContext.Orders.Include(o=>o.OrderDetails).ToList();
         }
     }
 }

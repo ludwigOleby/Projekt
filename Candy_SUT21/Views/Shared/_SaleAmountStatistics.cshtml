@@ -1,0 +1,58 @@
+﻿<div id="salesAmountChart">
+
+</div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    console.log("I script");
+      google.charts.load('current', { 'packages': ['corechart', 'bar'] });
+      google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Statistics/SalesAmount',
+                success: function (chartsdata) {
+                    console.log("succcess");
+
+                    var Data = chartsdata.jsonList;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Day');
+                    data.addColumn('number', 'SalesAmount')
+                    data.addColumn('number', 'Orders');
+
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].label, Data[i].salesAmount, Data[i].orderCount]);
+                    }
+
+                    var options = {
+                        width: 900,
+                        chart: {
+                            title: 'Försäljning',
+                        },
+                        series: {
+                            0: { axis: 'SalesAmount' }, // Bind series 0 to an axis named 'distance'.
+                            1: { axis: 'Orders' } // Bind series 1 to an axis named 'brightness'.
+                        },
+                        axes: {
+                            y: {
+                                distance: { label: 'parsecs' }, // Left y-axis.
+                                brightness: { side: 'right', label: 'apparent magnitude' } // Right y-axis.
+                            }
+                        }
+                    };
+
+                    var chart = new google.charts.Bar(document.getElementById('salesAmountChart'));
+                    chart.draw(data, google.charts.Bar.convertOptions(options))
+                },
+                error: function () {
+                    alert("Error loading data!");
+                }
+            })
+        })
+    }
+
+
+</script>
