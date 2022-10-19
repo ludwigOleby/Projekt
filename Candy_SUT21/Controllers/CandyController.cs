@@ -14,9 +14,9 @@ namespace Candy_SUT21.Controllers
     {
         private readonly ICandyRepository _candyRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IHostingEnvironment _hosting;
+        public IWebHostEnvironment _hosting;
 
-        public CandyController(ICandyRepository candyRepository , ICategoryRepository categoryRepository, IHostingEnvironment hosting)
+        public CandyController(ICandyRepository candyRepository , ICategoryRepository categoryRepository, IWebHostEnvironment hosting)
         {
             _candyRepository = candyRepository;
             _categoryRepository = categoryRepository;
@@ -85,35 +85,74 @@ namespace Candy_SUT21.Controllers
         {
             return View();
         }
+
+        //Create new Candy
+        //Post: Candy/Create
         [HttpPost]
-        public IActionResult Create(CandyViewModel candy)
+        public async Task<IActionResult> Create(CandyViewModel candyItem)
         {
             if(ModelState.IsValid)
             {
-                if(candy.FileImageThumbnail != null && candy.FileImage != null)
+                if(candyItem.FileImageThumbnail != null && candyItem.FileImage != null)                
                 {
-                    string uploadFileImage = Path.Combine(_hosting.WebRootPath, @"Images/");
-                    string fullPathFileImage = Path.Combine(uploadFileImage, candy.FileImage.FileName);
-                    candy.FileImage.CopyTo(new FileStream(fullPathFileImage, FileMode.Create));
+                    string uploadFileImage = Path.Combine(_hosting.WebRootPath, @"\Images\");                   
+                    string fullPathFileImage = Path.Combine(uploadFileImage, candyItem.FileImage.FileName );
+                    await candyItem.FileImage.CopyToAsync(new FileStream(fullPathFileImage, FileMode.Create));
 
-                    string uploadFileImageThumbnail = Path.Combine(_hosting.WebRootPath, @"Images/thumbnails");
-                    string fullPathFileImageThumbnail = Path.Combine(uploadFileImageThumbnail, candy.FileImageThumbnail.FileName);
-                    candy.FileImageThumbnail.CopyTo(new FileStream(fullPathFileImageThumbnail, FileMode.Create));
+                    string uploadFileImageThumbnail = Path.Combine(_hosting.WebRootPath, @"\Images\thumbnails\");
+                    string fullPathFileImageThumbnail = Path.Combine(uploadFileImageThumbnail, candyItem.FileImageThumbnail.FileName);
+                    await candyItem.FileImageThumbnail.CopyToAsync(new FileStream(fullPathFileImageThumbnail, FileMode.Create));
                 }
                 Candy item = new Candy
                 {
-                    Name = candy.Name,
-                    CategoryId = candy.CategoryId,
-                    Description = candy.Description,
-                    ImageThumbnailUrl = candy.ImageThumbnailUrl,
-                    ImageUrl = candy.ImageUrl,
-                    Price = candy.Price,
-                    StockAmount = candy.StockAmount,
-                    IsOnSale = candy.IsOnSale
+                    Name = candyItem.Name,
+                    CategoryId = candyItem.CategoryId,
+                    Description = candyItem.Description,
+                    ImageThumbnailUrl = Path.Combine(@"\Images\thumbnails\", candyItem.FileImageThumbnail.FileName),
+                    ImageUrl = Path.Combine(@"\Images\", candyItem.FileImage.FileName),
+                    Price = candyItem.Price,
+                    StockAmount = candyItem.StockAmount,
+                    IsOnSale = candyItem.IsOnSale
                 };
                 _candyRepository.CreateCandy(item);
             }
-            return View(candy);
+        
+            return View(candyItem);
         }
+
+        //Get: Candy/Edit/Id
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var candyToGet = _candyRepository.GetCandyById(id);
+            if (candyToGet == null)
+            {
+                return NotFound();
+            }
+            CandyViewModel candyViewModel = new CandyViewModel
+            {
+                CandyId = candyToGet.CandyId,
+                Name = candyToGet.Name,
+                CategoryId = candyToGet.CategoryId,
+                Description = candyToGet.Description,
+                ImageUrl = candyToGet.ImageUrl,
+                ImageThumbnailUrl= candyToGet.ImageThumbnailUrl,
+                Price = candyToGet.Price,
+                StockAmount = candyToGet.StockAmount,
+                IsOnSale = candyToGet.IsOnSale                
+            };
+            return View(candyViewModel);
+        }
+        //public IActionResult Edit(CandyViewModel candyItem)
+        //{
+        //    if(ModelState.IsValid)
+        //    {
+               
+
+        //    }
+        //}
     }
 }

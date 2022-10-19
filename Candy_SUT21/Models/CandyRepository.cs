@@ -31,7 +31,7 @@ namespace Candy_SUT21.Models
             }
         }
 
-        public Candy GetCandyById(int candyId)
+        public Candy GetCandyById(int? candyId)
         {
             return _appDbContext.Candies.FirstOrDefault(c => c.CandyId == candyId);
         }
@@ -52,6 +52,26 @@ namespace Candy_SUT21.Models
         {
             var candyToCreate = _appDbContext.Candies.Add(candy);
             _appDbContext.SaveChanges();            
+        }
+
+        public Candy UpdateCandy(Candy candy)
+        {
+            var candyToUpdate = _appDbContext.Candies.FirstOrDefault(c => c.CandyId == candy.CandyId);
+            if(candyToUpdate != null)
+            {
+                candyToUpdate.Name = candy.Name;
+                candyToUpdate.CategoryId = candy.CategoryId;
+                candyToUpdate.Price = candy.Price;
+                candyToUpdate.Description = candy.Description;
+                candyToUpdate.ImageUrl = candy.ImageUrl;
+                candyToUpdate.ImageThumbnailUrl = candy.ImageThumbnailUrl;
+                candyToUpdate.StockAmount = candy.StockAmount;
+                candyToUpdate.IsOnSale = candy.IsOnSale;
+
+                _appDbContext.SaveChanges();
+                return candyToUpdate;
+            }
+            return null;
         }
     }
 }

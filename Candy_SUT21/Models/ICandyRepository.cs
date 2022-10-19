@@ -10,10 +10,11 @@ namespace Candy_SUT21.Models
         IEnumerable<Candy> GetAllCandy { get; }
         IEnumerable<Candy> GetCandyOnSale { get; }
 
-        Candy GetCandyById(int candyId);
+        Candy GetCandyById(int? candyId);
 
         void DecreaseStock(int candyId, int amount);
         void AddStock(int candyId, int amount);
         void CreateCandy(Candy candy);
+        Candy UpdateCandy (Candy candy);
     }
 }

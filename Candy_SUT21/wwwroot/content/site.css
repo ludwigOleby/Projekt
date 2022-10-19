@@ -97,3 +97,6 @@ footer {
     float: left;
     max-width:30%;
 }*/
+.row, .row-input{
+    margin-bottom: 1em;
+}
