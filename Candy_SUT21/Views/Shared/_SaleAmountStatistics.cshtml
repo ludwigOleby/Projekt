@@ -15,21 +15,19 @@
 
 
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <script type="text/javascript">
 
     $('#salesAmountPeriodForm').submit(function (e) {
         e.preventDefault();
 
-        console.log($('#selectsaleAmountPeriod').val());
         var val = $('#selectsaleAmountPeriod').val();
-        drawChart(val);
+        drawSalesAmountChart(val);
     });
 
-      google.charts.load('current', { 'packages': ['corechart', 'bar'] });
-      google.charts.setOnLoadCallback(drawChart);
+      google.charts.setOnLoadCallback(drawSalesAmountChart);
 
-    function drawChart(period="days") {
+    function drawSalesAmountChart(period="days") {
         $(function () {
             $.ajax({
                 type: 'GET',
@@ -37,6 +35,7 @@
                 success: function (chartsdata) {
 
                     var Data = chartsdata.jsonList;
+                    console.log(Data);
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Day');
                     data.addColumn('number', 'Sales Amount')
@@ -47,6 +46,7 @@
                     }
 
                     var options = {
+                        width: 900,
                         series: {
                             0: { axis: 'Sales Amount' }, 
                             1: { axis: 'Nr of Orders' } 
@@ -64,8 +64,8 @@
 
                     };
 
-                    var chart = new google.charts.Bar(document.getElementById('salesAmountChart'));
-                    chart.draw(data, google.charts.Bar.convertOptions(options))
+                    var productSaleschart = new google.charts.Bar(document.getElementById('salesAmountChart'));
+                    productSaleschart.draw(data, google.charts.Bar.convertOptions(options))
                 },
                 error: function () {
                     alert("Error loading data!");

@@ -110,12 +110,68 @@ namespace Candy_SUT21.Controllers
                 return Json(new { JSONList = data });
 
             }
-
-
-
             return new JsonResult(null);
+        }
+
+        public JsonResult ProductSalesShare(string period = "days")
+        {
+            DateTime today = DateTime.Today;
+
+            IEnumerable<Order> orders;
+            string fromDate;
+
+            if (period == "days")
+            {
+                fromDate = DateTime.Today.AddDays(-6).ToShortDateString();
+                orders = _orderRepository.GetOrdersByDate(DateTime.Today.AddDays(-6), DateTime.Now);
+
+            }
+
+            else if (period == "weeks")
+            {
+                CultureInfo cul = CultureInfo.CurrentCulture;
+
+                var monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+                var checkFrom = monday.AddDays(-21);
+                fromDate = checkFrom.ToShortDateString();
+
+                orders = _orderRepository.GetOrdersByDate(checkFrom, DateTime.Now);
 
 
+            }
+
+            else if (period == "months")
+            {
+                var firstDayOfCurrMonth = today.AddDays(-(today.Day - 1));
+
+                fromDate = firstDayOfCurrMonth.AddMonths(-5).ToShortDateString();
+                orders = _orderRepository.GetOrdersByDate(firstDayOfCurrMonth.AddMonths(-5), DateTime.Now);
+
+            }
+
+            else
+            {
+                return new JsonResult(null);
+            }
+
+            var soldProducts = new List<ProductSalesShareChartModel>();
+
+            foreach (var order in orders)
+            {
+                foreach (var orderDetail in order.OrderDetails)
+                {
+                    var sP = soldProducts.FirstOrDefault(s => s.ProductId == orderDetail.CandyId);
+                    if (sP == null)
+                    {
+                        soldProducts.Add(new ProductSalesShareChartModel { ProductId = orderDetail.CandyId, ProductName = orderDetail.Candy.Name, SalesCount = orderDetail.Amount });
+                    }
+                    else
+                    {
+                        sP.SalesCount += orderDetail.Amount;
+                    }
+                }
+            }
+            return Json(new { JSONList = soldProducts, fromDate });
 
         }
 

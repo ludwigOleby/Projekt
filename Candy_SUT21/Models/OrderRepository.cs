@@ -53,7 +53,7 @@ namespace Candy_SUT21.Models
                 to = DateTime.Now;
             }
 
-            return _appDbContext.Orders.Include(o => o.OrderDetails).Where(o => o.OrderPlaced > from & o.OrderPlaced < to);
+            return _appDbContext.Orders.Include(o => o.OrderDetails).ThenInclude(od=>od.Candy).Where(o => o.OrderPlaced > from & o.OrderPlaced < to);
 
         }
 
