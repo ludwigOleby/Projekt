@@ -18,9 +18,7 @@ namespace Candy_SUT21.Models
         {
             get
             {
-                return (Discount != null) &&
-                    (Discount.StartDate < DateTime.Now &&
-                    Discount.EndDate > DateTime.Now);
+                return Discount?.IsActive() == true;
             }
         }      
 #nullable enable
@@ -39,7 +37,7 @@ namespace Candy_SUT21.Models
                 return Math.Round(this.Price - (this.Price * (Convert.ToDecimal(this.Discount.Percentage) / 100M)), 2);
             }
             return this.Price;
-    }
+        }
     }
 
     

@@ -11,5 +11,10 @@ namespace Candy_SUT21.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public IEnumerable<Candy> Candies { get; set; }
+
+        public bool IsActive()
+        {
+            return StartDate >= DateTime.Now && EndDate <= DateTime.Now; 
+        }
     }
 }

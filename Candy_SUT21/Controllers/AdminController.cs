@@ -1,5 +1,9 @@
 ﻿using Candy_SUT21.Models;
+using Candy_SUT21.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Candy_SUT21.Controllers
@@ -33,17 +37,49 @@ namespace Candy_SUT21.Controllers
             var discounts = await _discountRepository.GetDiscounts();
             return View(discounts);
         }
-        public IActionResult EditDiscount(int candyId)
+        public async Task<IActionResult> AddOrEditDiscount(int? id)
         {
-            var candy = _candyRepository.GetCandyById(candyId);
-            if (candy == null || candy.Discount == null)
+            var allCandies = _candyRepository.GetAllCandy;
+            if(id == null)
+            {
+                return View(new AddOrEditDiscountViewModel(
+                    new Discount {
+                        StartDate = DateTime.Now,
+                        EndDate = DateTime.Now.AddMonths(1),
+                        Candies = new List<Candy>()},
+                     allCandies));
+            }
+            var discount = await _discountRepository.GetDiscountById((int)id);
+            if(discount == null)
+            {
                 return NotFound();
-            return View(candy);
+            }
+            return View(new AddOrEditDiscountViewModel( discount, allCandies ));
+            
         }
-        //[HttpPost]
-        //public IActionResult EditDiscount(Candy candy)
-        //{
-
-        //}
+        [HttpPost]
+        public async Task<IActionResult> AddOrEditDiscount(AddOrEditDiscountViewModel discountVM)
+        {
+            if(ModelState.IsValid)
+            {
+                if (discountVM.Discount.Id == 0)
+                {
+                    await _discountRepository.CreateDiscount(discountVM.Discount);
+                }
+                else
+                {
+                    await _discountRepository.UpdateDiscount(discountVM.Discount);
+                }
+                return RedirectToAction("Discount");
+            }                
+            return View(discountVM);
+        }
+        public async Task<IActionResult> DeleteDiscount(int discountId)
+        {
+            if (await _discountRepository.DeleteDiscount(discountId) == null)
+                return NotFound();
+            else
+                return RedirectToAction(nameof(Discount));
+        }
     }
 }

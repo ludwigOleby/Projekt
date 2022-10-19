@@ -33,10 +33,8 @@ namespace Candy_SUT21.Models
 
         public async Task<Discount> GetDiscountById(int id)
         {
-            var result = await _context.Discounts.FirstOrDefaultAsync(d => d.Id == id);           
-            if (result != null)
-                return result;
-            return null;
+            var result = await _context.Discounts.Include(c => c.Candies).FirstOrDefaultAsync(d => d.Id == id);           
+            return result;
         }
 
         public async Task<IEnumerable<Discount>> GetDiscounts()
@@ -46,11 +44,15 @@ namespace Candy_SUT21.Models
 
         public async Task<Discount> UpdateDiscount(Discount discount)
         {
-            if(GetDiscountById(discount.Id) != null)
+            var toUpdate = await GetDiscountById(discount.Id);
+            if (toUpdate != null)
             {
-                var result = _context.Discounts.Update(discount);
+                toUpdate.Name = discount.Name;
+                toUpdate.StartDate = discount.StartDate;
+                toUpdate.EndDate = discount.EndDate;
+                toUpdate.Percentage = discount.Percentage;
                 await _context.SaveChangesAsync();
-                return result.Entity;
+                return toUpdate;
             }
             return null;
         }
