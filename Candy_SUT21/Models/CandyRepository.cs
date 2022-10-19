@@ -48,5 +48,10 @@ namespace Candy_SUT21.Models
             candyToDecrease.StockAmount = candyToDecrease.StockAmount - amount;
             _appDbContext.Candies.Update(candyToDecrease);
         }
+
+        public IEnumerable<Candy> GetCandiesWithStockUnder(int stockBelow)
+        {
+            return _appDbContext.Candies.Where(c => c.StockAmount < stockBelow);
+        }
     }
 }

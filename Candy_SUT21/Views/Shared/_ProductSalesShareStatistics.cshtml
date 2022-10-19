@@ -6,7 +6,7 @@
             <option value="weeks">Last 4 weeks</option>
             <option value="months">Last 6 months</option>
         </select>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default">Update</button>
     </form>
     <div class="chartContainer" id="productSalesShareChart">
 
@@ -37,7 +37,6 @@
 
                     var Data = chartsdata.jsonList;
 
-                    console.log(Data);
 
                     var fromDate = chartsdata.fromDate;
                     var data = new google.visualization.DataTable();
@@ -54,6 +53,9 @@
 
                     var chart = new google.visualization.PieChart(document.getElementById('productSalesShareChart'));
                     chart.draw(data, options)
+                    $(window).resize(function () {
+                        chart.draw(data, options);
+                    });
                 },
                 error: function () {
                     alert("Error loading data!");
