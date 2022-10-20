@@ -25,5 +25,11 @@ namespace Candy_SUT21.Controllers
             IEnumerable<Order> orders = _orderRepository.OrderList().OrderBy(o => o.OrderId);
             return View(orders);
         }
+
+
+        public IActionResult Statistics()
+        {
+            return View();
+        }
     }
 }

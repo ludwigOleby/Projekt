@@ -46,6 +46,7 @@ namespace Candy_SUT21.Models
             _appDbContext.SaveChanges();
         }
 
+
         public Order GetOrderDetails(int id)
         {
             var order = _appDbContext.Orders.Include(x => x.OrderDetails)
@@ -53,6 +54,21 @@ namespace Candy_SUT21.Models
                 .FirstOrDefault(x => x.OrderId == id);
             return order;
         }
+
+
+        public IEnumerable<Order> GetOrdersByDate(DateTime from, DateTime? to)
+        {
+            if (to == null)
+            {
+                to = DateTime.Now;
+            }
+
+            return _appDbContext.Orders.Include(o => o.OrderDetails).ThenInclude(od=>od.Candy).Where(o => o.OrderPlaced > from & o.OrderPlaced < to);
+
+        }
+
+
+
 
         public IEnumerable<Order> OrderList()
         {
