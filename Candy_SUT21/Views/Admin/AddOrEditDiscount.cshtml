@@ -1,31 +1,34 @@
 ﻿@model AddOrEditDiscountViewModel
 
-    <div class="discount-edit-container">
+    <div class="discount-edit-container col-md-10 col-md-offset-1">
         <div class="discount-edit-header">
             <h2>Discount Management</h2>
         </div>
-        <form class="discount-edit-form" asp-action="AddOrEditDiscount">
+        <form class="discount-edit-form form-group" asp-action="AddOrEditDiscount">
             <input hidden asp-for="@Model.Discount.Id" />
             <input hidden asp-for="@Model.CandiesNotInDiscount" />
             <div class="name">
                 <label asp-for="@Model.Discount.Name"></label>
-                <input type="text" asp-for="@Model.Discount.Name" />
+                <input class="form-control" type="text" asp-for="@Model.Discount.Name" />
             </div>
             <div class="percentage">
                 <label asp-for="@Model.Discount.Percentage"></label>
-                <input type="number" asp-for="@Model.Discount.Percentage" /><span>%</span>
+                <div class="input-group">
+                    <input class="form-control" type="number" asp-for="@Model.Discount.Percentage" /><span class="input-group-addon">%</span>
+                </div>
+                
             </div>
             <div class="startDate">
                 <label asp-for="@Model.Discount.StartDate"></label>
-                <input  asp-for="@Model.Discount.StartDate" asp-format="{0:yyyy-MM-ddTHH:mm}"/>
+                <input  class="form-control" asp-for="@Model.Discount.StartDate" asp-format="{0:yyyy-MM-ddTHH:mm}"/>
             </div>
             <div class="endDate">
                 <label asp-for="@Model.Discount.EndDate"></label>
-                <input asp-for="@Model.Discount.EndDate" asp-format="{0:yyyy-MM-ddTHH:mm}"/>
+                <input class="form-control" asp-for="@Model.Discount.EndDate" asp-format="{0:yyyy-MM-ddTHH:mm}"/>
             </div>
             <div class="candyInDiscount">
                 <label for="inDiscount">Candies in discount</label>
-                <select disabled multiple="multiple" id="inDiscount">
+                <select class="form-control" disabled multiple="multiple" id="inDiscount">
                     @if (Model.Discount.Candies.Count() == 0)
                     {
                         <option>No candies in discount!</option>
