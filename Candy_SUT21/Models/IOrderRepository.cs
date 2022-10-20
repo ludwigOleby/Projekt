@@ -8,5 +8,13 @@ namespace Candy_SUT21.Models
     public interface IOrderRepository
     {
         void CreateOrder(Order order);
+
+        Order GetOrderDetails(int id);
+
+
+        IEnumerable<Order> GetOrdersByDate(DateTime from, DateTime? to);
+
+
+        IEnumerable<Order> OrderList();
     }
 }

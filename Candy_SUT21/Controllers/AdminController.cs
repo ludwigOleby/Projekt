@@ -1,9 +1,11 @@
 ﻿using Candy_SUT21.Models;
 using Candy_SUT21.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Candy_SUT21.Controllers
@@ -27,7 +29,15 @@ namespace Candy_SUT21.Controllers
             _discountRepository = discountRepository;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult OrderManagement()
+        {
+            IEnumerable<Order> orders = _orderRepository.OrderList().OrderBy(o => o.OrderId);
+            return View(orders);
+        }
+
+
+        public IActionResult Statistics()
         {
             return View();
         }

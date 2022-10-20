@@ -84,13 +84,17 @@ footer {
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
-    background-color: #fcaeae !important;
-    border-color: #fba1a1 !important;
+    background-color: #2F445C !important;
+    border-color: #2F445C !important;
 }
 
 .btn {
-    background-color: #fcaeae !important;
-    border-color: #fba1a1 !important;
+    background-color: #5c85b3 !important;
+}
+
+.chartContainer{
+    background-color:white;
+    padding-top:10px;
 }
 
 .discount-circle {
