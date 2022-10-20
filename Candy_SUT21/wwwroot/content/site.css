@@ -169,10 +169,6 @@ footer {
     width: 12rem;
 }
 
-.discount-edit-form .percentage span {
-    font-size: 18px;
-    font-weight:bold;
-}
 
 .discount-edit-form .startDate {
     grid-row: 2;

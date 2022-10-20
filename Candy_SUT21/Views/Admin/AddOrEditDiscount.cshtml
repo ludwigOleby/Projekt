@@ -6,25 +6,29 @@
         </div>
         <form class="discount-edit-form form-group" asp-action="AddOrEditDiscount">
             <input hidden asp-for="@Model.Discount.Id" />
-            <input hidden asp-for="@Model.CandiesNotInDiscount" />
+            <input hidden asp-for="@Model.Discount.Candies" />
             <div class="name">
                 <label asp-for="@Model.Discount.Name"></label>
                 <input class="form-control" type="text" asp-for="@Model.Discount.Name" />
+                <span asp-validation-for="@Model.Discount.Name" class="text-danger"></span>
             </div>
             <div class="percentage">
                 <label asp-for="@Model.Discount.Percentage"></label>
                 <div class="input-group">
                     <input class="form-control" type="number" asp-for="@Model.Discount.Percentage" /><span class="input-group-addon">%</span>
                 </div>
+                <span asp-validation-for="@Model.Discount.Percentage" class="text-danger"></span>
                 
             </div>
             <div class="startDate">
                 <label asp-for="@Model.Discount.StartDate"></label>
-                <input  class="form-control" asp-for="@Model.Discount.StartDate" asp-format="{0:yyyy-MM-ddTHH:mm}"/>
+                <input class="form-control" asp-for="@Model.Discount.StartDate" asp-format="{0:yyyy-MM-ddTHH:mm}" />
+                <span asp-validation-for="@Model.Discount.StartDate" class="text-danger"></span>
             </div>
             <div class="endDate">
                 <label asp-for="@Model.Discount.EndDate"></label>
-                <input class="form-control" asp-for="@Model.Discount.EndDate" asp-format="{0:yyyy-MM-ddTHH:mm}"/>
+                <input class="form-control" asp-for="@Model.Discount.EndDate" asp-format="{0:yyyy-MM-ddTHH:mm}" />
+                <span asp-validation-for="@Model.Discount.EndDate" class="text-danger"></span>
             </div>
             <div class="candyInDiscount">
                 <label for="inDiscount">Candies in discount</label>
