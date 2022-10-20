@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,27 +23,35 @@ namespace Candy_SUT21.Models
             order.OrderPlaced = DateTime.Now;
             order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
             _appDbContext.Orders.Add(order);
-            
+
 
 
             _appDbContext.SaveChanges();
 
-           var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
+            var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
 
 
             foreach (var shoppigCartItem in shoppingCartItems)
             {
                 var orderDetails = new OrderDetail
                 {
-                      Amount = shoppigCartItem.Amount,
-                      Price = shoppigCartItem.Candy.Price,
-                      CandyId = shoppigCartItem.Candy.CandyId,
-                      OrderId = order.OrderId,
+                    Amount = shoppigCartItem.Amount,
+                    Price = shoppigCartItem.Candy.Price,
+                    CandyId = shoppigCartItem.Candy.CandyId,
+                    OrderId = order.OrderId,
                 };
 
                 _appDbContext.OrderDetails.Add(orderDetails);
             }
             _appDbContext.SaveChanges();
+        }
+
+        public Order GetOrderDetails(int id)
+        {
+            var order = _appDbContext.Orders.Include(x => x.OrderDetails)
+                .ThenInclude(x => x.Candy)
+                .FirstOrDefault(x => x.OrderId == id);
+            return order;
         }
 
         public IEnumerable<Order> OrderList()

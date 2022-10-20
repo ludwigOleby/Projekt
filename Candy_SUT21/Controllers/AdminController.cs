@@ -19,11 +19,6 @@ namespace Candy_SUT21.Controllers
             _orderRepository = orderRepository;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult OrderManagement()
         {
