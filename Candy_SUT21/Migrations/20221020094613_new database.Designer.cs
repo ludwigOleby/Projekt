@@ -10,16 +10,105 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221013110706_init")]
-    partial class init
+    [Migration("20221020094613_new database")]
+    partial class newdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.28")
+                .HasAnnotation("ProductVersion", "3.1.30")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Candy_SUT21.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8ca984ad-591d-4db7-9b0c-1cdc6b99ed9a",
+                            Email = "admin@djinn.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@DJINN.COM",
+                            NormalizedUserName = "ADMIN@DJINN.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ4Mk8ViwFc7ynAMgmdLtGgKCm+6GK/rSHShSyHJg9Ag9zX5YllDrVh3QtzipZgUQA==",
+                            PhoneNumber = "123456789",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f475dd45-631f-4fb1-936d-65808e767a13",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@djinn.com"
+                        });
+                });
 
             modelBuilder.Entity("Candy_SUT21.Models.Candy", b =>
                 {
@@ -40,9 +129,6 @@ namespace Candy_SUT21.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsInStock")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsOnSale")
                         .HasColumnType("bit");
 
@@ -51,6 +137,9 @@ namespace Candy_SUT21.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("StockAmount")
+                        .HasColumnType("int");
 
                     b.HasKey("CandyId");
 
@@ -66,10 +155,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Tortor posuere ac ut consequat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Lacus sed turpis tincidunt id aliquet risus feugiat in. Viverra aliquet eget sit amet tellus cras adipiscing enim eu.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\chocolateCandy-small.jpg",
                             ImageUrl = "\\Images\\chocolateCandy.jpg",
-                            IsInStock = true,
                             IsOnSale = false,
-                            Name = "Assorted Chocolate Candy",
-                            Price = 4.95m
+                            Name = "Mixed Chocolate Candy",
+                            Price = 4.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -78,10 +167,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Venenatis tellus in metus vulputate eu scelerisque felis imperdiet proin. Quisque egestas diam in arcu cursus. Sed viverra tellus in hac. Quis commodo odio aenean sed adipiscing diam donec adipiscing.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\chocolateCandy2-small.jpg",
                             ImageUrl = "\\Images\\chocolateCandy2.jpg",
-                            IsInStock = true,
                             IsOnSale = true,
-                            Name = "Another Assorted Chocolate Candy",
-                            Price = 3.95m
+                            Name = "M&M's",
+                            Price = 3.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -90,10 +179,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Turpis egestas pretium aenean pharetra magna ac placerat vestibulum. Sed faucibus turpis in eu mi bibendum neque egestas. At in tellus integer feugiat scelerisque. Elementum integer enim neque volutpat ac tincidunt.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\chocolateCandy3-small.jpg",
                             ImageUrl = "\\Images\\chocolateCandy3.jpg",
-                            IsInStock = true,
                             IsOnSale = false,
-                            Name = "Another Chocolate Candy",
-                            Price = 5.75m
+                            Name = "Another Mixed Chocolate Candy",
+                            Price = 5.75m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -102,22 +191,22 @@ namespace Candy_SUT21.Migrations
                             Description = "Vitae congue eu consequat ac felis donec et. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Vel eros donec ac odio. A lacus vestibulum sed arcu non odio euismod lacinia at. Nisl suscipit adipiscing bibendum est ultricies integer. Nec tincidunt praesent semper feugiat nibh.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\fruitCandy-small.jpg",
                             ImageUrl = "\\Images\\fruitCandy.jpg",
-                            IsInStock = true,
                             IsOnSale = false,
-                            Name = "Assorted Fruit Candy",
-                            Price = 3.95m
+                            Name = "Mixed Candy",
+                            Price = 3.95m,
+                            StockAmount = 100
                         },
                         new
                         {
                             CandyId = 5,
-                            CategoryId = 2,
+                            CategoryId = 5,
                             Description = "Purus sit amet luctus venenatis lectus magna fringilla. Consectetur lorem donec massa sapien faucibus et molestie ac. Sagittis nisl rhoncus mattis rhoncus urna neque viverra.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\fruitCandy2-small.jpg",
                             ImageUrl = "\\Images\\fruitCandy2.jpg",
-                            IsInStock = true,
                             IsOnSale = true,
-                            Name = "Fruit Candy",
-                            Price = 7.00m
+                            Name = "Mixed Hard Candy",
+                            Price = 7.00m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -126,10 +215,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Ultrices vitae auctor eu augue ut. Leo vel fringilla est ullamcorper eget. A diam maecenas sed enim ut. Massa tincidunt dui ut ornare lectus. Nullam non nisi est sit amet facilisis magna. ",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\fruitCandy3-small.jpg",
                             ImageUrl = "\\Images\\fruitCandy3.jpg",
-                            IsInStock = true,
                             IsOnSale = true,
-                            Name = "Another Assorted Fruit Candy",
-                            Price = 11.25m
+                            Name = "Sour Fruit Candy",
+                            Price = 11.25m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -138,10 +227,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Diam sit amet nisl suscipit adipiscing bibendum est ultricies integer. Molestie at elementum eu facilisis sed odio morbi quis commodo. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Urna porttitor rhoncus dolor purus non enim praesent elementum facilisis.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\gummyCandy-small.jpg",
                             ImageUrl = "\\Images\\gummyCandy.jpg",
-                            IsInStock = true,
                             IsOnSale = true,
-                            Name = "Assorted Gummy Candy",
-                            Price = 3.95m
+                            Name = "Gummy Bears",
+                            Price = 3.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -150,10 +239,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Posuere ac ut consequat semper viverra nam libero justo laoreet. Ultrices dui sapien eget mi proin sed libero enim. Etiam non quam lacus suspendisse faucibus interdum. Amet nisl suscipit adipiscing bibendum est ultricies integer quis.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\gummyCandy2-small.jpg",
                             ImageUrl = "\\Images\\gummyCandy2.jpg",
-                            IsInStock = true,
                             IsOnSale = false,
-                            Name = "Another Assorted Gummy Candy",
-                            Price = 1.95m
+                            Name = "Another Gummy Bears",
+                            Price = 1.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -162,10 +251,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Ut ornare lectus sit amet est placerat in egestas. Iaculis nunc sed augue lacus viverra vitae. Bibendum ut tristique et egestas quis ipsum suspendisse ultrices gravida. Accumsan tortor posuere ac ut consequat semper viverra.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\gummyCandy3-small.jpg",
                             ImageUrl = "\\Images\\gummyCandy3.jpg",
-                            IsInStock = true,
                             IsOnSale = false,
-                            Name = "Gummy Candy",
-                            Price = 13.95m
+                            Name = "Sour Gummy Bears",
+                            Price = 13.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -174,10 +263,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Vitae congue eu consequat ac felis donec et odio. Tellus orci ac auctor augue mauris augue. Feugiat sed lectus vestibulum mattis ullamcorper velit sed. Sit amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Sed pulvinar proin gravida hendrerit lectus a.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\halloweenCandy-small.jpg",
                             ImageUrl = "\\Images\\halloweenCandy.jpg",
-                            IsInStock = true,
                             IsOnSale = true,
                             Name = "Halloween Candy",
-                            Price = 1.95m
+                            Price = 1.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -186,10 +275,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Hac habitasse platea dictumst quisque sagittis purus sit. Dui nunc mattis enim ut. Mauris commodo quis imperdiet massa tincidunt nunc pulvinar sapien et.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\halloweenCandy2-small.jpg",
                             ImageUrl = "\\Images\\halloweenCandy2.jpg",
-                            IsInStock = true,
                             IsOnSale = true,
-                            Name = "Assorted Halloween Candy",
-                            Price = 12.95m
+                            Name = "Another Halloween Candy",
+                            Price = 12.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -198,10 +287,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Vulputate eu scelerisque felis imperdiet proin fermentum.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\halloweenCandy3-small.jpg",
                             ImageUrl = "\\Images\\halloweenCandy3.jpg",
-                            IsInStock = true,
                             IsOnSale = true,
-                            Name = "Another Halloween Candy",
-                            Price = 21.95m
+                            Name = "Mixed Halloween Candy",
+                            Price = 21.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -210,10 +299,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Arcu cursus euismod quis viverra.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\hardCandy-small.jpg",
                             ImageUrl = "\\Images\\hardCandy.jpg",
-                            IsInStock = true,
                             IsOnSale = false,
                             Name = "Hard Candy",
-                            Price = 6.95m
+                            Price = 6.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -222,10 +311,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Blandit massa enim nec dui nunc mattis enim ut tellus. Duis at consectetur lorem donec massa sapien faucibus et. At auctor urna nunc id cursus metus. Ut enim blandit volutpat maecenas volutpat blandit.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\hardCandy2-small.jpg",
                             ImageUrl = "\\Images\\hardCandy2.jpg",
-                            IsInStock = true,
                             IsOnSale = true,
-                            Name = "Another Hard Candy",
-                            Price = 2.95m
+                            Name = "Mixed Sweet/Sour & Hard Candy",
+                            Price = 2.95m,
+                            StockAmount = 100
                         },
                         new
                         {
@@ -234,10 +323,10 @@ namespace Candy_SUT21.Migrations
                             Description = "Nisi lacus sed viverra tellus in. Morbi non arcu risus quis varius quam quisque id. Cras adipiscing enim eu turpis egestas. Tristique nulla aliquet enim tortor. Quisque id diam vel quam. Id faucibus nisl tincidunt eget nullam.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\hardCandy3-small.jpg",
                             ImageUrl = "\\Images\\hardCandy3.jpg",
-                            IsInStock = true,
                             IsOnSale = false,
-                            Name = "Best Hard Candy",
-                            Price = 16.95m
+                            Name = "Another Hard Candy",
+                            Price = 16.95m,
+                            StockAmount = 100
                         });
                 });
 
@@ -284,6 +373,36 @@ namespace Candy_SUT21.Migrations
                             CategoryId = 5,
                             CategoryName = "Hard Candy"
                         });
+                });
+
+            modelBuilder.Entity("Candy_SUT21.Models.Customer", b =>
+                {
+                    b.Property<int>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CustomerId");
+
+                    b.ToTable("Customer");
                 });
 
             modelBuilder.Entity("Candy_SUT21.Models.Order", b =>
@@ -409,6 +528,22 @@ namespace Candy_SUT21.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "fab4fac1-c546-41de-aebc-a14da6895711",
+                            ConcurrencyStamp = "1",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "c7b013f0-5201-4317-abd8-c211f91b7330",
+                            ConcurrencyStamp = "2",
+                            Name = "Customer",
+                            NormalizedName = "Customer"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -433,71 +568,6 @@ namespace Candy_SUT21.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -561,6 +631,13 @@ namespace Candy_SUT21.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            RoleId = "fab4fac1-c546-41de-aebc-a14da6895711"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -582,6 +659,13 @@ namespace Candy_SUT21.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Candy_SUT21.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("Candy_SUT21.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
                 });
 
             modelBuilder.Entity("Candy_SUT21.Models.Candy", b =>
@@ -626,7 +710,7 @@ namespace Candy_SUT21.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Candy_SUT21.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -635,7 +719,7 @@ namespace Candy_SUT21.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Candy_SUT21.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -650,7 +734,7 @@ namespace Candy_SUT21.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Candy_SUT21.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -659,7 +743,7 @@ namespace Candy_SUT21.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Candy_SUT21.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
