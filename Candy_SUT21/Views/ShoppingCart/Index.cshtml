@@ -19,7 +19,7 @@
                         @item.Amount
                     @if (item.Candy.StockAmount > item.Amount)
                     {
-                        <a class="btn btn-secondary" style="background-color: #74F791 !important; margin-left: 10px; asp-controller="shoppingcart" asp-action="addtoshoppingcart" asp-route-candyid=@item.Candy.CandyId>+</a>
+                        <a class="btn btn-secondary" style="background-color: #74F791 !important; margin-left: 10px;" asp-controller="shoppingcart" asp-action="addtoshoppingcart" asp-route-candyid=@item.Candy.CandyId>+</a>
                     }
 
                 </td>

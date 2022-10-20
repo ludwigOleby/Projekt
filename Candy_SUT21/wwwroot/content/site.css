@@ -2,6 +2,11 @@
     padding-top: 125px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
     background-image: url('/images/CandyShopBackGround.png');
     background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+
+
     font-family: 'Source Sans Pro', sans-serif;
 }
 
