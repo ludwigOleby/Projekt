@@ -4,6 +4,7 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
+            <th>&nbsp;</th>
             <th>Selected Amount</th>
             <th>Candy</th>
             <th class="text-right">Price</th>
@@ -14,7 +15,7 @@
         @foreach (var item in Model.OrderDetails)
         {
             <tr>
-                <td class="text-left">@item.Amount</td>
+                <td class="text-center">@item.Amount</td>
                 <td class="text-left">@item.Candy.Name</td>
                 <td class="text-right">@item.Candy.Price.ToString("c")</td>
                 <td class="text-right">
@@ -25,14 +26,14 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="3" class="text-right">Total</td>
+            <td colspan="4" class="text-right">Total</td>
             <td class="text-right">@Model.OrderTotal.ToString("c")</td>
         </tr>
     </tfoot>
 </table>
 
 <div class="text-center">
-    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Home</a>
+    <a class="btn btn-primary" asp-controller="Admin" asp-action="OrderManagement">Order List</a>
 </div>
 
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Candy_SUT21.Models
 {
+
     public class Candy
     {
         public int CandyId { get; set; }
@@ -13,10 +14,31 @@ namespace Candy_SUT21.Models
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }
         public string ImageThumbnailUrl { get; set; }
-        public bool IsOnSale { get; set; }
+        public bool IsOnSale
+        {
+            get
+            {
+                return Discount?.IsActive() == true;
+            }
+        }      
+#nullable enable
+        public int? DiscountId { get; set; }
+        public Discount? Discount { get; set; }
+#nullable disable
         public bool IsInStock => StockAmount > 0;
         public int StockAmount { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public decimal GetDiscountPrice()
+        {
+            if (this.IsOnSale)
+            {
+                return Math.Round(this.Price - (this.Price * (Convert.ToDecimal(this.Discount.Percentage) / 100M)), 2);
+            }
+            return this.Price;
+        }
     }
+
+    
 }

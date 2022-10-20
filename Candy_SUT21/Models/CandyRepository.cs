@@ -19,7 +19,7 @@ namespace Candy_SUT21.Models
         {
             get
             {
-                return _appDbContext.Candies.Include(c => c.Category );
+                return _appDbContext.Candies.Include(c => c.Category ).Include(d => d.Discount);
             }
         }
 
@@ -27,7 +27,9 @@ namespace Candy_SUT21.Models
         {
             get
             {
-                return _appDbContext.Candies.Include(c => c.Category).Where(p => p.IsOnSale);
+                //return _appDbContext.Candies.Include(c => c.Category).Where(p => p.IsOnSale);
+                var candies = _appDbContext.Candies.Include(c => c.Category).Include(d => d.Discount).Where(i => i.DiscountId != null).ToList();
+                return candies.Where(s => s.IsOnSale);
             }
         }
 

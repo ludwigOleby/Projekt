@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221014070026_init1")]
-    partial class init1
+    [Migration("20221020094613_new database")]
+    partial class newdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,16 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4e0e5964-8454-4320-a376-388e699a9d1e",
+                            ConcurrencyStamp = "8ca984ad-591d-4db7-9b0c-1cdc6b99ed9a",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECuFSbIArXBkHAb0Y+/luA4jEBUrhWkJ9Yx9s1Een3zqRFS/5ERXalicJ0arTOQ/xA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ4Mk8ViwFc7ynAMgmdLtGgKCm+6GK/rSHShSyHJg9Ag9zX5YllDrVh3QtzipZgUQA==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "59622f9a-ff2a-4702-b8a2-64a88659e9b4",
+                            SecurityStamp = "f475dd45-631f-4fb1-936d-65808e767a13",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -156,7 +156,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\chocolateCandy-small.jpg",
                             ImageUrl = "\\Images\\chocolateCandy.jpg",
                             IsOnSale = false,
-                            Name = "Assorted Chocolate Candy",
+                            Name = "Mixed Chocolate Candy",
                             Price = 4.95m,
                             StockAmount = 100
                         },
@@ -168,7 +168,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\chocolateCandy2-small.jpg",
                             ImageUrl = "\\Images\\chocolateCandy2.jpg",
                             IsOnSale = true,
-                            Name = "Another Assorted Chocolate Candy",
+                            Name = "M&M's",
                             Price = 3.95m,
                             StockAmount = 100
                         },
@@ -180,7 +180,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\chocolateCandy3-small.jpg",
                             ImageUrl = "\\Images\\chocolateCandy3.jpg",
                             IsOnSale = false,
-                            Name = "Another Chocolate Candy",
+                            Name = "Another Mixed Chocolate Candy",
                             Price = 5.75m,
                             StockAmount = 100
                         },
@@ -192,19 +192,19 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\fruitCandy-small.jpg",
                             ImageUrl = "\\Images\\fruitCandy.jpg",
                             IsOnSale = false,
-                            Name = "Assorted Fruit Candy",
+                            Name = "Mixed Candy",
                             Price = 3.95m,
                             StockAmount = 100
                         },
                         new
                         {
                             CandyId = 5,
-                            CategoryId = 2,
+                            CategoryId = 5,
                             Description = "Purus sit amet luctus venenatis lectus magna fringilla. Consectetur lorem donec massa sapien faucibus et molestie ac. Sagittis nisl rhoncus mattis rhoncus urna neque viverra.",
                             ImageThumbnailUrl = "\\Images\\thumbnails\\fruitCandy2-small.jpg",
                             ImageUrl = "\\Images\\fruitCandy2.jpg",
                             IsOnSale = true,
-                            Name = "Fruit Candy",
+                            Name = "Mixed Hard Candy",
                             Price = 7.00m,
                             StockAmount = 100
                         },
@@ -216,7 +216,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\fruitCandy3-small.jpg",
                             ImageUrl = "\\Images\\fruitCandy3.jpg",
                             IsOnSale = true,
-                            Name = "Another Assorted Fruit Candy",
+                            Name = "Sour Fruit Candy",
                             Price = 11.25m,
                             StockAmount = 100
                         },
@@ -228,7 +228,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\gummyCandy-small.jpg",
                             ImageUrl = "\\Images\\gummyCandy.jpg",
                             IsOnSale = true,
-                            Name = "Assorted Gummy Candy",
+                            Name = "Gummy Bears",
                             Price = 3.95m,
                             StockAmount = 100
                         },
@@ -240,7 +240,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\gummyCandy2-small.jpg",
                             ImageUrl = "\\Images\\gummyCandy2.jpg",
                             IsOnSale = false,
-                            Name = "Another Assorted Gummy Candy",
+                            Name = "Another Gummy Bears",
                             Price = 1.95m,
                             StockAmount = 100
                         },
@@ -252,7 +252,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\gummyCandy3-small.jpg",
                             ImageUrl = "\\Images\\gummyCandy3.jpg",
                             IsOnSale = false,
-                            Name = "Gummy Candy",
+                            Name = "Sour Gummy Bears",
                             Price = 13.95m,
                             StockAmount = 100
                         },
@@ -276,7 +276,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\halloweenCandy2-small.jpg",
                             ImageUrl = "\\Images\\halloweenCandy2.jpg",
                             IsOnSale = true,
-                            Name = "Assorted Halloween Candy",
+                            Name = "Another Halloween Candy",
                             Price = 12.95m,
                             StockAmount = 100
                         },
@@ -288,7 +288,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\halloweenCandy3-small.jpg",
                             ImageUrl = "\\Images\\halloweenCandy3.jpg",
                             IsOnSale = true,
-                            Name = "Another Halloween Candy",
+                            Name = "Mixed Halloween Candy",
                             Price = 21.95m,
                             StockAmount = 100
                         },
@@ -312,7 +312,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\hardCandy2-small.jpg",
                             ImageUrl = "\\Images\\hardCandy2.jpg",
                             IsOnSale = true,
-                            Name = "Another Hard Candy",
+                            Name = "Mixed Sweet/Sour & Hard Candy",
                             Price = 2.95m,
                             StockAmount = 100
                         },
@@ -324,7 +324,7 @@ namespace Candy_SUT21.Migrations
                             ImageThumbnailUrl = "\\Images\\thumbnails\\hardCandy3-small.jpg",
                             ImageUrl = "\\Images\\hardCandy3.jpg",
                             IsOnSale = false,
-                            Name = "Best Hard Candy",
+                            Name = "Another Hard Candy",
                             Price = 16.95m,
                             StockAmount = 100
                         });
