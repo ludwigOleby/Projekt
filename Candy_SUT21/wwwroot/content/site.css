@@ -92,3 +92,12 @@ footer {
     background-color: #5c85b3 !important;
 }
 
+.chartContainer{
+    background-color:white;
+    padding-top:10px;
+}
+
+.chartWidget{
+    background-color:white;
+    padding:10px;
+}

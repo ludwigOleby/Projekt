@@ -1,5 +1,8 @@
 ﻿using Candy_SUT21.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Candy_SUT21.Controllers
 {
@@ -16,7 +19,15 @@ namespace Candy_SUT21.Controllers
             _orderRepository = orderRepository;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult OrderManagement()
+        {
+            IEnumerable<Order> orders = _orderRepository.OrderList().OrderBy(o => o.OrderId);
+            return View(orders);
+        }
+
+
+        public IActionResult Statistics()
         {
             return View();
         }
