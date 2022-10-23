@@ -4,20 +4,15 @@ using System.Collections.Generic;
 
 namespace Candy_SUT21.ViewModels
 {
-    public class CandyViewModel
-    {
-        public Candy candy { get; set; }
-        public int CandyId { get; set; }
+    public class CandyCreateViewModel
+    {  
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public string? ImageUrl { get; set; }
-        public string? ImageThumbnailUrl { get; set; }
         public bool IsOnSale { get; set; }
-        public bool IsInStock => StockAmount > 0;
         public int StockAmount { get; set; }
         public int CategoryId { get; set; }
-        public Category category { get; set; }
+        public string CurrentCategory { get; set; }
         public IFormFile? FileImage { get; set; }
         public IFormFile? FileImageThumbnail { get; set; }
     }

@@ -1,8 +1,11 @@
 ﻿@model Candy
 
+@{
+    var imagePath = @"/Images/" + (Model.ImageUrl ?? "noImage2.png");
+}
 
 <div class="img-thumbnail">
-    <img src="@Model.ImageUrl" alt="@Model.Name" />
+    <img src="@imagePath" alt="@Model.Name"/>
 
     <div class="figure-caption">
         <h3>@Model.Name</h3>

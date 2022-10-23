@@ -1,71 +1,92 @@
-﻿@model CandyViewModel
+﻿@model CandyEditViewModel
 
-<h1>Candy</h1>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Edit</h4>
-        </div>
-    </div>
+@{
+    ViewBag.Title = "Edit Candy";
+    var imageThumbnailPath = @"/Images/thumbnails/" + Model.ExistingImageThumbnailPath ?? @"/Images/thumbnails/noImage2-small.png";
+    var imagePath = @"/Images/" + Model.ExistingImagePath ?? @"/Images/noImage2.png";
+}
+
+<div class="container-flow">
     <form method="post" asp-action="Edit" enctype="multipart/form-data">
         <input asp-for="CandyId" hidden />
-        <div class="row row-input">
-            <div class="input-group col-sm-5 pull-left" title="Candy name">
-                <span class="input-group-addon"><i class="fa-solid fa-candy-cane"></i></span>
-                <input id="Name" type="text" asp-for="Name" class="form-control" placeholder="Candy Name" />
+        <input asp-for="ExistingImagePath" hidden />
+        <input asp-for="ExistingImageThumbnailPath" hidden />
+        <input asp-for="CategoryId" hidden />
+        <h2 style="text-align:center;">Update Candy</h2>
+        <div class="form-body">
+            <div class="form-group">
+                <label asp-for="Name" class="col-sm-2 control-label">Candy name</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-candy-cane"></i></span>
+                    <input asp-for="Name" class="form-control" />
+                </div>
             </div>
-            <div class="input-group col-sm-5 pull-right" title="Price">
-                <span class="input-group-addon"><i class="fa-solid fa-coins"></i></span>
-                <input style="text-align:end;" Price" asp-for="Price" class="form-control" placeholder="Price" />
-                <span class="input-group-addon">kr</span>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="col-sm-2 control-label">Category</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
+                    <select asp-for="CategoryId" id="selectCategory" class="form-control">
+                        <option selected>@Model.CurrentCategory</option>
+                        @await Component.InvokeAsync("CategoryOption")
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="col-sm-2 control-label">Description</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-glasses"></i></span>
+                    <textarea id="Description" asp-for="Description" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="StockAmount" class="col-sm-2 control-label">Amount in stock</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-cubes-stacked"></i></span>
+                    <input type="number" asp-for="StockAmount" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="col-sm-2 control-label">Price</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-coins"></i></span>
+                    <input id="Price" asp-for="Price" class="form-control"/>
+                    <span class="input-group-addon">kr</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileImage" class="col-sm-2 control-label">Image</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
+                    <input multiple asp-for="FileImage" class="form-control custom-file-input" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileImageThumbnail" class="col-sm-2 control-label">Thumbnail image</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
+                    <input multiple asp-for="FileImageThumbnail" class="form-control custom-file-input" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="IsOnSale">On sale</label>
+                <div class="input-group col-sm-1">
+                    <input type="checkbox" asp-for="IsOnSale" class="form-input checkbox-large" />
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="input-group col-sm-5 pull-left" title="Category">
-                <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
-                <select asp-for="CategoryId" id="selectCategory" class="form-control">
-                    <option selected></option>
-                    @await Component.InvokeAsync("CategoryOption")
-                </select>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="row-input col-sm-offset-5">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Home</a>
+                    </div>
+                </div>
             </div>
-            
-            <div class="input-group col-sm-5 pull-right" title="Amount in stock">
-                <span class="input-group-addon"><i class="fa-solid fa-cubes-stacked"></i></span>
-                <input style="text-align:end;" id="Stock" asp-for="StockAmount" class="form-control" placeholder="Amount in stock" />
-                <span class="input-group-addon text-right">st</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-group col-sm-5 pull-left" title="ImageThumbnailUrl">
-                <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
-                <input type="file" asp-for="FileImageThumbnail" class="form-control" />
-                <span asp-validation-for="ImageThumbnailUrl"></span>
-            </div>
-
-            <div class="input-group col-sm-5 pull-right" title="Is on sale">
-                <span class="input-group-addon"><input class="form-check-input" type="checkbox" asp-for="IsOnSale" id="checkOnSale" /></span>
-                <label class="form-control" asp-for="IsOnSale">On sale</label>
-            </div>
-
-        </div>
-        <div class="row">
-
-            <div class="input-group col-sm-5 pull-left" title="ImageUrl">
-                <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
-                <input type="file" asp-for="FileImage" class="form-control" />
-                <span asp-validation-for="ImageUrl"></span>
-            </div>
-            
-            
-            <div class="input-group col-sm-5 pull-right" title="Description">
-                <span class="input-group-addon"><i class="fa-solid fa-glasses"></i></span>
-                <textarea id="Description" asp-for="Description" class="form-control" placeholder="Description"></textarea>
-            </div>
-        </div>
-        <div class="row">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Home</a>            
         </div>
     </form>
+    <div class="form-group">
+        <img src="@imagePath" />
+        <img src="@imageThumbnailPath" />
+    </div>
 </div>
-

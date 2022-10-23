@@ -1,4 +1,7 @@
 ﻿@model CandyListViewModel
+@{
+    var imagePath = @"/Images/thumbnails/";
+}
 
 <h1>@Model.CurrentCategory</h1>
 <div class="container-fluid">
@@ -27,7 +30,7 @@
                 @foreach (var candy in Model.Candies)
                 {
                     <tr>
-                        <td><img src="@candy.ImageThumbnailUrl" class="img-thumbnail" style="max-width:30%;" /></td>
+                        <td><img src="@imagePath@candy.ImageThumbnailUrl" class="img-thumbnail" style="max-width:30%;" /></td>
                         <td>@candy.Name</td>
                         <td>@candy.Category.CategoryName</td>
                         <td>

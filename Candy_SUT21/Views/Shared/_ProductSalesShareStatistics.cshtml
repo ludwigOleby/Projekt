@@ -1,0 +1,66 @@
+﻿<div class="chartWidget">
+    <form id="productSalesSharePeriodForm" class="form-inline">
+        <label for="selectProductSalesPeriod">Select Period</label>
+        <select id="selectProductSalesPeriod" class="form-control">
+            <option value="days">Last 7 days</option>
+            <option value="weeks">Last 4 weeks</option>
+            <option value="months">Last 6 months</option>
+        </select>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <div class="chartContainer" id="productSalesShareChart">
+
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    $('#productSalesSharePeriodForm').submit(function (e) {
+        e.preventDefault();
+
+        var val = $('#selectProductSalesPeriod').val();
+        drawProductSalesChart(val);
+    });
+
+    
+      google.charts.setOnLoadCallback(drawProductSalesChart);
+
+    function drawProductSalesChart(period="days") {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Statistics/ProductSalesShare?period=' + period,
+                success: function (chartsdata) {
+
+                    var Data = chartsdata.jsonList;
+
+                    console.log(Data);
+
+                    var fromDate = chartsdata.fromDate;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Product');
+                    data.addColumn('number', 'Sales Count')
+
+                    for (var i = 0; i < Data.length; i++) {
+                        data.addRow([Data[i].productName, { v:Data[i].salesCount, f: Data[i].salesCount+' pcs' }]);
+                    }
+
+                    var options = {
+                        title: 'Product sales since ' + fromDate
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('productSalesShareChart'));
+                    chart.draw(data, options)
+                },
+                error: function () {
+                    alert("Error loading data!");
+                }
+            })
+        })
+    }
+
+
+</script>

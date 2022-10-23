@@ -33,7 +33,7 @@ namespace Candy_SUT21.Models
 
         public Candy GetCandyById(int? candyId)
         {
-            return _appDbContext.Candies.FirstOrDefault(c => c.CandyId == candyId);
+            return _appDbContext.Candies.Include(c => c.Category).FirstOrDefault(c => c.CandyId == candyId);
         }
 
         public void AddStock(int candyId, int amount)
@@ -67,9 +67,21 @@ namespace Candy_SUT21.Models
                 candyToUpdate.ImageThumbnailUrl = candy.ImageThumbnailUrl;
                 candyToUpdate.StockAmount = candy.StockAmount;
                 candyToUpdate.IsOnSale = candy.IsOnSale;
-
+                
                 _appDbContext.SaveChanges();
                 return candyToUpdate;
+            }
+            return null;
+        }
+
+        public Candy DeleteCandy(int candyId)
+        {
+            var candyToDelete = _appDbContext.Candies.FirstOrDefault(c => c.CandyId == candyId);
+            if(candyToDelete != null)
+            {
+                _appDbContext.Candies.Remove(candyToDelete);
+                _appDbContext.SaveChanges();
+                return candyToDelete;
             }
             return null;
         }
