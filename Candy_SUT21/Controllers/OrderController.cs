@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Candy_SUT21.Controllers
@@ -13,7 +14,7 @@ namespace Candy_SUT21.Controllers
     {
 
         private readonly IOrderRepository _orderRepository;
-        private readonly ShoppingCart    _shoppingCart;
+        private readonly ShoppingCart _shoppingCart;
         private readonly ICandyRepository _candyRepository;
 
         public OrderController(IOrderRepository orderRepository, ShoppingCart shoppingCart, ICandyRepository candyRepository)
@@ -61,17 +62,24 @@ namespace Candy_SUT21.Controllers
 
                 _shoppingCart.ClearCart();
 
-                return RedirectToAction("CheckoutComplete");
+                return RedirectToAction("CheckoutComplete", new { id = order.OrderId });
 
             }
 
             return View(order);
         }
 
-        public IActionResult CheckoutComplete()
+        public IActionResult CheckoutComplete(int id)
         {
-            ViewBag.CheckoutCompleteMessage = "Thank you for your order";
-            return View();
+            var order = _orderRepository.GetOrderDetails(id);
+            return View(order);
         }
+
+        public IActionResult OrderDetails(int id)
+        {
+            var order = _orderRepository.GetOrderDetails(id);
+            return View(order);
+        }
+
     }
 }

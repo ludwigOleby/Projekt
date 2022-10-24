@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<Order>
 <h1>Order History</h1>
-<table class="table table-striped">
-    <th scope="col">Order ID</th>
+
+<table class="table table-striped" style="border: solid 4px #2F445C">
+    <th>Order ID</th>
     <th scope="col">First Name</th>
     <th scope="col">Last Name</th>
     <th scope="col">Adress</th>
@@ -14,17 +15,19 @@
         <tr>
             @foreach (var item in Model)
             {
-                <tr/>
-                <td>@item.OrderId</td>
-                <td>@item.FirstName</td>
-                <td>@item.LastName</td>
-                <td>@item.Address</td>
-                <td>@item.City</td> 
-                <td>@item.OrderPlaced</td>
-                <td>@item.OrderTotal</td>
-                <td><button type="button" class="btn btn-primary"> Details</button></td>
+            <tr />
+        <td>@item.OrderId</td>
+        <td>@item.FirstName</td>
+        <td>@item.LastName</td>
+        <td>@item.Address</td>
+        <td>@item.City</td>
+        <td>@item.OrderPlaced</td>
+        <td>@item.OrderTotal</td>
+        <td>
+            <a class="btn btn-primary" asp-controller="Order" asp-action="OrderDetails" asp-route-id="@item.OrderId">Details </a>
+        </td>
             }
-        </tr>
+    </tr>
     </tbody>
 </table>
 

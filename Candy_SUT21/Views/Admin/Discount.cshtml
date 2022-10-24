@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Discount>
+
+<div class="container">
+    <div class="discount-management-header col-md-10">
+        <h2>Discount Management</h2>
+        <a class="btn"  asp-action="AddOrEditDiscount"><i class="glyphicon glyphicon-plus"></i></a>
+    </div>
+    <div class="table-responsive col-md-10">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Discount</th>
+                    <th>Candies</th>
+                    <th>Percentge</th>
+                    <th>Start date</th>
+                    <th>End date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var discount in Model)
+                {
+                    <tr>
+                        <td>@discount.Name</td>
+                        <td>
+                            <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" data-html="true" title="@string.Join("<br/>", discount.Candies.Select(c => c.Name))">@discount.Candies.Count()</button>
+                        </td>
+                        <td>@discount.Percentage%</td>
+                        <td>@discount.StartDate.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@discount.EndDate.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td style="justify-content: right; display:flex;"><a asp-action="AddOrEditDiscount" asp-route-id="@discount.Id" class="btn"><i class="glyphicon glyphicon-pencil"></i></a><a asp-action="DeleteDiscount" asp-route-discountId="@discount.Id" class="btn"><i class="glyphicon glyphicon-trash"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
