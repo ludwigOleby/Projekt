@@ -13,9 +13,6 @@ namespace Candy_SUT21.Models
         {
             _appDbContext = appDbContext;
         }
-
-        public IEnumerable<Category> GetAllCategory => _appDbContext.Categories;
-        
-        
+        public IEnumerable<Category> GetAllCategory => _appDbContext.Categories;       
     }
 }
