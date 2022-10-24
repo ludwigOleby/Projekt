@@ -1,0 +1,92 @@
+﻿@model CandyEditViewModel
+
+@{
+    ViewBag.Title = "Edit Candy";
+    var imageThumbnailPath = @"/Images/thumbnails/" + Model.ExistingImageThumbnailPath ?? @"/Images/thumbnails/noImage2-small.png";
+    var imagePath = @"/Images/" + Model.ExistingImagePath ?? @"/Images/noImage2.png";
+}
+
+<div class="container-flow">
+    <form method="post" asp-action="Edit" enctype="multipart/form-data">
+        <input asp-for="CandyId" hidden />
+        <input asp-for="ExistingImagePath" hidden />
+        <input asp-for="ExistingImageThumbnailPath" hidden />
+        <input asp-for="CategoryId" hidden />
+        <h2 style="text-align:center;">Update Candy</h2>
+        <div class="form-body">
+            <div class="form-group">
+                <label asp-for="Name" class="col-sm-2 control-label">Candy name</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-candy-cane"></i></span>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="col-sm-2 control-label">Category</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
+                    <select asp-for="CategoryId" id="selectCategory" class="form-control">
+                        <option selected>@Model.CurrentCategory</option>
+                        @await Component.InvokeAsync("CategoryOption")
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="col-sm-2 control-label">Description</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-glasses"></i></span>
+                    <textarea id="Description" asp-for="Description" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="StockAmount" class="col-sm-2 control-label">Amount in stock</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-cubes-stacked"></i></span>
+                    <input type="number" asp-for="StockAmount" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="col-sm-2 control-label">Price</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-coins"></i></span>
+                    <input id="Price" asp-for="Price" class="form-control"/>
+                    <span class="input-group-addon">kr</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileImage" class="col-sm-2 control-label">Image</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
+                    <input multiple asp-for="FileImage" class="form-control custom-file-input" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="FileImageThumbnail" class="col-sm-2 control-label">Thumbnail image</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
+                    <input multiple asp-for="FileImageThumbnail" class="form-control custom-file-input" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" asp-for="IsOnSale">On sale</label>
+                <div class="input-group col-sm-1">
+                    <input type="checkbox" asp-for="IsOnSale" class="form-input checkbox-large" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="row-input col-sm-offset-5">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a asp-controller="Candy" asp-action="AdminList" class="btn btn-primary">Return</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="form-group">
+        <img src="@imagePath" />
+        <img src="@imageThumbnailPath" />
+    </div>
+</div>

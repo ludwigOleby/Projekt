@@ -1,0 +1,67 @@
+﻿@model CandyListViewModel
+@{
+    var imagePath = @"/Images/thumbnails/";
+}
+
+<h1>@Model.CurrentCategory</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-11">
+            <h4>Product List</h4>
+        </div>
+        <div class="col-md-1">
+            <a asp-controller="Candy" asp-action="Create" class="btn btn-success" title="Add"><i class="fa-solid fa-circle-plus"></i>&nbsp;Add product</a>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Candy Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Price</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var candy in Model.Candies)
+                {
+                    <tr>
+                        <td><img src="@imagePath@candy.ImageThumbnailUrl" class="img-thumbnail" style="max-width:30%;" /></td>
+                        <td>@candy.Name</td>
+                        <td>@candy.Category.CategoryName</td>
+                        <td>
+                            @if (@candy.IsOnSale == true && candy.StockAmount > 20)
+                                {
+                                    <div>On sale</div>
+                                }
+                                else if (candy.IsOnSale == true && candy.StockAmount < 20 && candy.StockAmount > 1)
+                                {
+                                    <div>Low in stock</div>
+                                }
+                                else if (candy.StockAmount == 0)
+                                {
+                                    <div>Out of stock</div>
+                                }
+                                else
+                                {
+                                    <div>Not on sale</div>
+                                }
+                        </td>
+                        <td>@candy.StockAmount</td>
+                        <td>@candy.Price.ToString("c")</td>
+                        <td class="float-right">
+                            <a class="btn btn-sm btn-warning" asp-controller="Candy" asp-action="Edit" asp-route-id="@candy.CandyId" title="Edit"><i class="fa-solid fa-pen"></i></a>
+                            <a class="btn btn-sm btn-danger" asp-controller="Candy" asp-action="Delete" asp-route-id="@candy.CandyId" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
