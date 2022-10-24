@@ -1,0 +1,93 @@
+﻿@model CandyEditViewModel
+
+@{
+    ViewBag.Title = "Delete Candy";
+    //var imageThumbnailPath = @"/Images/thumbnails/" + Model.ExistingImageThumbnailPath ?? @"/Images/thumbnails/noImage2-small.png";
+    //var imagePath = @"/Images/" + Model.ExistingImagePath ?? @"/Images/noImage2.png";
+}
+
+<div class="container-flow">
+    <form class="form-horizontal" method="post" asp-action="Delete" asp-route-id="@Model.CandyId">
+        <input type="hidden" asp-for="CandyId" />
+        <input type="hidden" asp-for="StockAmount" />
+        <input type="hidden" asp-for="FileImage"/>
+        <input type="hidden" asp-for="FileImageThumbnail"/>
+        <h2 style="text-align:center;">Delete Candy</h2>
+        <div class="form-body">
+            <div class="form-group">
+                <label asp-for="Name" class="col-sm-2 control-label">Candy name</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-candy-cane"></i></span>
+                    <input asp-for="Name" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="col-sm-2 control-label">Category</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
+                    <input asp-for="@Model.CurrentCategory" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="col-sm-2 control-label">Price</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-coins"></i></span>
+                    <input asp-for="Price" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="col-sm-2 control-label">Description</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-glasses"></i></span>
+                    <textarea asp-for="Description" disabled class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Status</label>
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-sm-3 col-sm-offset-1">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" asp-for="IsOnSale" disabled class="checkbox-inline" />On sale
+                            </label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="checkbox-inline">
+                                <input type="checkbox"  disabled class="checkbox-inline" />In stock
+                            </label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="radio-inline">
+                                <input type="checkbox" disabled class="checkbox-inline" /> On discount
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for=@Model.ExistingImagePath class="col-sm-2 control-label">Imagefile</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
+                    <input asp-for=@Model.ExistingImagePath disabled class="form-control custom-file-input" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for=@Model.ExistingImageThumbnailPath class="col-sm-2 control-label">Imagefile</label>
+                <div class="input-group col-sm-9">
+                    <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
+                    <input asp-for=@Model.ExistingImageThumbnailPath disabled class="form-control custom-file-input" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="row-input col-sm-offset-5">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                        <a asp-controller="Candy" asp-action="AdminList" class="btn btn-primary">Return</a>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </form>
+</div>

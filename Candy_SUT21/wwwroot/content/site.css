@@ -242,4 +242,14 @@ footer {
         margin: 0 5rem;
     }
 }
-
+/*.img {
+    float: left;
+    max-width:30%;
+}*/
+.row, .row-input{
+    margin-bottom: 1em;
+}
+.form-body{
+    padding-top:2em;
+    padding-bottom:1em;
+}
