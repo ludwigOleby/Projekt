@@ -46,24 +46,14 @@ namespace Candy_SUT21.Controllers
 
                 var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
 
-
                 foreach (var shoppigCartItem in shoppingCartItems)
                 {
-                    var orderDetails = new OrderDetail
-                    {
-                        Amount = shoppigCartItem.Amount,
-                        Price = shoppigCartItem.Candy.Price,
-                        CandyId = shoppigCartItem.Candy.CandyId,
-                        OrderId = order.OrderId,
-                    };
-                    _candyRepository.DecreaseStock(orderDetails.CandyId, orderDetails.Amount);
+                    _candyRepository.DecreaseStock(shoppigCartItem.Candy.CandyId, shoppigCartItem.Amount);
                 }
-
 
                 _shoppingCart.ClearCart();
 
                 return RedirectToAction("CheckoutComplete", new { id = order.OrderId });
-
             }
 
             return View(order);

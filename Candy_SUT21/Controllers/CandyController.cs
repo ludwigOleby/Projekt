@@ -102,8 +102,7 @@ namespace Candy_SUT21.Controllers
                     ImageUrl = ProcessImageFile(candyItem),
                     ImageThumbnailUrl = ProcessImageThumbnailFile(candyItem),
                     Price = candyItem.Price,
-                    StockAmount = candyItem.StockAmount,
-                    IsOnSale = candyItem.IsOnSale
+                    StockAmount = candyItem.StockAmount
                 };
                 _candyRepository.CreateCandy(item);
             }
@@ -159,7 +158,6 @@ namespace Candy_SUT21.Controllers
                 candyToUpdate.Description = candyItem.Description;
                 candyToUpdate.Price = candyItem.Price;
                 candyToUpdate.StockAmount = candyItem.StockAmount;
-                candyToUpdate.IsOnSale = candyItem.IsOnSale;
                 if (candyItem.FileImage != null)
                 {
                     if(candyItem.ExistingImagePath != null)

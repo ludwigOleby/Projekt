@@ -7,6 +7,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Candy_SUT21.Controllers
 {
@@ -29,6 +30,7 @@ namespace Candy_SUT21.Controllers
             _discountRepository = discountRepository;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult OrderManagement()
         {
@@ -36,17 +38,20 @@ namespace Candy_SUT21.Controllers
             return View(orders);
         }
 
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Statistics()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Discount()
         {
             var discounts = await _discountRepository.GetDiscounts();
             return View(discounts);
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddOrEditDiscount(int? id)
         {
             var allCandies = _candyRepository.GetAllCandy;
@@ -67,6 +72,8 @@ namespace Candy_SUT21.Controllers
             return View(new AddOrEditDiscountViewModel( discount, allCandies ));
             
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddOrEditDiscount(AddOrEditDiscountViewModel discountVM)
         {
@@ -84,6 +91,8 @@ namespace Candy_SUT21.Controllers
             }                
             return View(discountVM);
         }
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteDiscount(int discountId)
         {
             if (await _discountRepository.DeleteDiscount(discountId) == null)

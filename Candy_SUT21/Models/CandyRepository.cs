@@ -68,7 +68,6 @@ namespace Candy_SUT21.Models
                 candyToUpdate.ImageUrl = candy.ImageUrl;
                 candyToUpdate.ImageThumbnailUrl = candy.ImageThumbnailUrl;
                 candyToUpdate.StockAmount = candy.StockAmount;
-                candyToUpdate.IsOnSale = candy.IsOnSale;
                 
                 _appDbContext.SaveChanges();
                 return candyToUpdate;

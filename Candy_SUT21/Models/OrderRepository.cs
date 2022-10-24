@@ -22,6 +22,7 @@ namespace Candy_SUT21.Models
         {
             order.OrderPlaced = DateTime.Now;
             order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
+            order.OrderDiscount = _shoppingCart.GetShoppingCartDiscount();
             _appDbContext.Orders.Add(order);
 
 
@@ -36,11 +37,15 @@ namespace Candy_SUT21.Models
                 var orderDetails = new OrderDetail
                 {
                     Amount = shoppigCartItem.Amount,
-                    Price = shoppigCartItem.Candy.Price,
+
+                    Price = shoppigCartItem.Candy.IsOnSale ?
+                    shoppigCartItem.Candy.GetDiscountPrice() : 
+                    shoppigCartItem.Candy.Price,
+                    
                     CandyId = shoppigCartItem.Candy.CandyId,
                     OrderId = order.OrderId,
                 };
-
+               
                 _appDbContext.OrderDetails.Add(orderDetails);
             }
             _appDbContext.SaveChanges();
