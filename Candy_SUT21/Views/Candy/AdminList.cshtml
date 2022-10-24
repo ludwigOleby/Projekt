@@ -55,7 +55,7 @@
                         <td>@candy.Price.ToString("c")</td>
                         <td class="float-right">
                             <a class="btn btn-sm btn-warning" asp-controller="Candy" asp-action="Edit" asp-route-id="@candy.CandyId" title="Edit"><i class="fa-solid fa-pen"></i></a>
-                            <a class="btn btn-sm btn-danger" asp-controller="Candy" asp-action="Remove" asp-route-id="@candy.CandyId" title="Remove"><i class="fa-regular fa-trash-can"></i></a>
+                            <a class="btn btn-sm btn-danger" asp-controller="Candy" asp-action="Delete" asp-route-id="@candy.CandyId" title="Delete"><i class="fa-regular fa-trash-can"></i></a>
                         </td>
                     </tr>
                 }
