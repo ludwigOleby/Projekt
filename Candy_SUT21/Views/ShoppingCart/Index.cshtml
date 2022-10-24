@@ -42,18 +42,18 @@
         }
     </tbody>
     <tfoot>
-        @if(Model.ShoppingCartDiscount > 0)
+        <tr>
+            <td colspan="3" class="text-right">Total</td>
+            <td class="text-right">@Model.ShoppingCartTotal.ToString("c")</td>
+        </tr>
+        @if (Model.ShoppingCartDiscount > 0)
         {
             <tr>
                 <td colspan="3" class="text-right">Discount</td>
                 <td class="text-right text-danger">- @Model.ShoppingCartDiscount.ToString("c")</td>
             </tr>
         }
-        
-        <tr>
-            <td colspan="3" class="text-right">Total</td>
-            <td class="text-right">@Model.ShoppingCartTotal.ToString("c")</td>
-        </tr>
+
     </tfoot>
 </table>
 
