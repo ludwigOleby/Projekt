@@ -3,6 +3,10 @@
     background-image: url('/images/CandyShopBackGround.png');
     background-size: cover;
     font-family: 'Source Sans Pro', sans-serif;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    max-width: 100vw;
 }
 
 

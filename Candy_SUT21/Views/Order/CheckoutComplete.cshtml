@@ -16,9 +16,9 @@
             <tr>
                 <td class="text-left">@item.Amount</td>
                 <td class="text-left">@item.Candy.Name</td>
-                <td class="text-right">@item.Candy.Price.ToString("c")</td>
+                <td class="text-right">@item.Price</td>
                 <td class="text-right">
-                    @((item.Amount * item.Candy.Price).ToString("c"))
+                    @((item.Amount * item.Price).ToString("c"))
                 </td>
             </tr>
         }
