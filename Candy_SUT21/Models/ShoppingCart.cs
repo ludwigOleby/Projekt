@@ -103,13 +103,27 @@ namespace Candy_SUT21.Models
                 Include(c => c.Candy).
                 ThenInclude(d => d.Discount).ToList();
 
-            var ordinary = items.Where(s => !s.Candy.IsOnSale).Select(c => c.Candy.Price * c.Amount).Sum();
+            var ordinary = items.Where(s => !s.Candy.IsOnSale).
+                Select(c => c.Candy.Price * c.Amount).Sum();
 
-            var discount = items.Where(s => s.Candy.IsOnSale).Select(c => c.Candy.GetDiscountPrice() * c.Amount).Sum();
+            var discount = items.Where(s => s.Candy.IsOnSale).
+                Select(c => c.Candy.GetDiscountPrice() * c.Amount).Sum();
 
             var total = ordinary + discount;
 
             return total;
+        }
+        public decimal GetShoppingCartDiscount()
+        {
+            var items = _appDbContext.ShoppingCartItems.
+                Where(c => c.ShoppingCartId == ShoppingCartID && c.Candy.DiscountId != null).
+                Include(c => c.Candy).
+                ThenInclude(d => d.Discount).ToList();
+
+            var discount = items.Where(s => s.Candy.IsOnSale).
+                Sum(d => (d.Candy.Price - d.Candy.GetDiscountPrice()) * d.Amount);
+           
+            return discount;
         }
 
     }

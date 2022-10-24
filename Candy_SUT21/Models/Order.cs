@@ -45,6 +45,8 @@ namespace Candy_SUT21.Models
         [BindNever]
         public decimal OrderTotal { get; set; }
         [BindNever]
+        public decimal OrderDiscount { get; set; }
+        [BindNever]
         public DateTime OrderPlaced { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }

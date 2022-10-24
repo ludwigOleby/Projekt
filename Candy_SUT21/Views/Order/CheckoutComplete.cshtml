@@ -28,6 +28,14 @@
             <td colspan="3" class="text-right">Total</td>
             <td class="text-right">@Model.OrderTotal.ToString("c")</td>
         </tr>
+        @if (Model.OrderDiscount > 0)
+        {
+            <tr>
+                <td colspan="3" class="text-right text-success">Congratulations! You Just Saved: </td>
+                <td class="text-right text-danger">@Model.OrderDiscount.ToString("c")</td>
+            </tr>
+        }
+
     </tfoot>
 </table>
 
