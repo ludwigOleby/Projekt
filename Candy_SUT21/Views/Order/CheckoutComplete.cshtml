@@ -16,9 +16,9 @@
             <tr>
                 <td class="text-left">@item.Amount</td>
                 <td class="text-left">@item.Candy.Name</td>
-                <td class="text-right">@item.Candy.Price.ToString("c")</td>
+                <td class="text-right">@item.Price</td>
                 <td class="text-right">
-                    @((item.Amount * item.Candy.Price).ToString("c"))
+                    @((item.Amount * item.Price).ToString("c"))
                 </td>
             </tr>
         }
@@ -28,6 +28,14 @@
             <td colspan="3" class="text-right">Total</td>
             <td class="text-right">@Model.OrderTotal.ToString("c")</td>
         </tr>
+        @if (Model.OrderDiscount > 0)
+        {
+            <tr>
+                <td colspan="3" class="text-right text-success">Congratulations! You Just Saved: </td>
+                <td class="text-right text-danger">@Model.OrderDiscount.ToString("c")</td>
+            </tr>
+        }
+
     </tfoot>
 </table>
 
