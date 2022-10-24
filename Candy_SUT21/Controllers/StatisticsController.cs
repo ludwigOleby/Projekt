@@ -12,10 +12,12 @@ namespace Candy_SUT21.Controllers
     public class StatisticsController : Controller
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly ICandyRepository _candyRepository;
 
-        public StatisticsController(IOrderRepository orderRepository)
+        public StatisticsController(IOrderRepository orderRepository, ICandyRepository candyRepository )
         {
             _orderRepository = orderRepository;
+            _candyRepository = candyRepository;
         }
 
         public JsonResult SalesAmount(string period = "days")
@@ -173,6 +175,13 @@ namespace Candy_SUT21.Controllers
             }
             return Json(new { JSONList = soldProducts, fromDate });
 
+        }
+
+        public JsonResult LowStock(int stockBelow = 10)
+        {
+            var candiesWithLowStock = _candyRepository.GetCandiesWithStockUnder(stockBelow);
+
+            return Json(new { JSONList = candiesWithLowStock });
         }
 
     }

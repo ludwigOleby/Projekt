@@ -86,5 +86,10 @@ namespace Candy_SUT21.Models
             }
             return null;
         }
+
+        public IEnumerable<Candy> GetCandiesWithStockUnder(int stockBelow)
+        {
+            return _appDbContext.Candies.Where(c => c.StockAmount < stockBelow);
+        }
     }
 }
