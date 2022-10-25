@@ -3,6 +3,10 @@
     background-image: url('/images/CandyShopBackGround.png');
     background-size: cover;
     font-family: 'Source Sans Pro', sans-serif;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    max-width: 100vw;
 }
 
 
@@ -95,6 +99,11 @@ footer {
 .chartContainer{
     background-color:white;
     padding-top:10px;
+}
+.chartWidget {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
 }
 
 .discount-circle {
@@ -203,6 +212,8 @@ footer {
     grid-column: 1/3;
     margin: 0 5rem;
 }
+
+
 @media screen and (max-width: 580px){
     .discount-edit-form .name {
         grid-row: 1;

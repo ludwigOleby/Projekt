@@ -84,7 +84,7 @@ namespace Candy_SUT21.Models
         {
             return ShoppingCartItems ?? (ShoppingCartItems = _appDbContext.ShoppingCartItems.
                 Where(c => c.ShoppingCartId == ShoppingCartID).
-                Include(s => s.Candy).ToList());
+                Include(s => s.Candy).ThenInclude(d => d.Discount).ToList());
         }
 
 
@@ -97,13 +97,33 @@ namespace Candy_SUT21.Models
 
 
         public decimal GetShoppingCartTotal()
-        {
-            var total = _appDbContext.ShoppingCartItems.
+        {         
+            var items = _appDbContext.ShoppingCartItems.
                 Where(c => c.ShoppingCartId == ShoppingCartID).
-                Select(c => c.Candy.Price * c.Amount).
-                Sum();
+                Include(c => c.Candy).
+                ThenInclude(d => d.Discount).ToList();
+
+            var ordinary = items.Where(s => !s.Candy.IsOnSale).
+                Select(c => c.Candy.Price * c.Amount).Sum();
+
+            var discount = items.Where(s => s.Candy.IsOnSale).
+                Select(c => c.Candy.GetDiscountPrice() * c.Amount).Sum();
+
+            var total = ordinary + discount;
 
             return total;
+        }
+        public decimal GetShoppingCartDiscount()
+        {
+            var items = _appDbContext.ShoppingCartItems.
+                Where(c => c.ShoppingCartId == ShoppingCartID && c.Candy.DiscountId != null).
+                Include(c => c.Candy).
+                ThenInclude(d => d.Discount).ToList();
+
+            var discount = items.Where(s => s.Candy.IsOnSale).
+                Sum(d => (d.Candy.Price - d.Candy.GetDiscountPrice()) * d.Amount);
+           
+            return discount;
         }
 
     }

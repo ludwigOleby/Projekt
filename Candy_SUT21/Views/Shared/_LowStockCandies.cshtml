@@ -1,0 +1,83 @@
+﻿<div class="chartWidget">
+    <form id="lowStockForm" class="form-inline">
+        <div class="form-group">
+            <label for="selectBelowStock">Select candies with stock below</label>
+            <input class="form-control" type="number" id="selectBelowStock"  value="10" />
+            <button type="submit" class="btn btn-default">Update</button>
+        </div>
+    </form>
+    <div class="chartContainer" id="lowStockChart">
+
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    $('#lowStockForm').submit(function (e) {
+        e.preventDefault();
+
+        var val = $('#selectBelowStock').val();
+        lowStockChart(val);
+    });
+
+    google.charts.setOnLoadCallback(lowStockChart);
+
+    function lowStockChart(stockBelow=10) {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Statistics/LowStock?stockBelow=' + stockBelow,
+                success: function (chartsdata) {
+
+                    var Data = chartsdata.jsonList;
+
+                    if (Data.length > 0) {
+                        document.getElementById('lowStockChart').innerHTML = "";
+
+
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Candy');
+                        data.addColumn('number', 'Stock')
+
+
+                        for (var i = 0; i < Data.length; i++) {
+                            data.addRow([Data[i].name, Data[i].stockAmount]);
+                        }
+
+                        var options = {
+                            chart: {
+                                title: 'Candies with stock below ' + stockBelow,
+                            },
+                            hAxis: { title: '  ', titleTextStyle: { color: 'white' } },
+                            backgroundColor: { fill: 'transparent' }
+
+
+
+                        };
+
+                        var lowStockChart = new google.charts.Bar(document.getElementById('lowStockChart'));
+                        lowStockChart.draw(data, google.charts.Bar.convertOptions(options))
+
+                        $(window).resize(function () {
+                            lowStockChart.draw(data, google.charts.Bar.convertOptions(options));
+                        });
+                    }
+                    else {
+                        document.getElementById('lowStockChart').innerHTML = "<p>No candies with a stock less than " + stockBelow;
+                    }
+
+                },
+                error: function () {
+                    alert("Error loading data!");
+                }
+            })
+        })
+    }
+
+
+
+
+</script>

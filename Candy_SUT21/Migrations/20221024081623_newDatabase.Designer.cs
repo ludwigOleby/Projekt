@@ -10,8 +10,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
+<<<<<<<< HEAD:Candy_SUT21/Migrations/20221024081623_newDatabase.Designer.cs
     [Migration("20221024081623_newDatabase")]
     partial class newDatabase
+========
+    [Migration("20221024110225_new DB")]
+    partial class newDB
+>>>>>>>> master:Candy_SUT21/Migrations/20221024110225_new DB.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,16 +100,27 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
+<<<<<<<< HEAD:Candy_SUT21/Migrations/20221024081623_newDatabase.Designer.cs
                             ConcurrencyStamp = "796ba0fb-3164-44a7-92cd-0a9b5f5b4aeb",
+========
+                            ConcurrencyStamp = "fe5ddcbd-4c65-4fa8-8c6b-4d3f110d6811",
+>>>>>>>> master:Candy_SUT21/Migrations/20221024110225_new DB.Designer.cs
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
+<<<<<<<< HEAD:Candy_SUT21/Migrations/20221024081623_newDatabase.Designer.cs
                             PasswordHash = "AQAAAAEAACcQAAAAEGhrcCvma7QvSWXDGzrCmrp3Fv73KIT2JwXBhhdKiy15BYSk2TCha9P07SUlkctMiA==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "116c49a2-159b-4fce-8d48-95c3b131a84d",
+========
+                            PasswordHash = "AQAAAAEAACcQAAAAEHJr4QVMYXLtSsVdlovYJAxtUVgdxR6y4M1yGq8Kf57z4R1HZ7CKBPetX6rnHQB4fg==",
+                            PhoneNumber = "123456789",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "616fe77f-5af6-45ef-8d9c-450bec49011a",
+>>>>>>>> master:Candy_SUT21/Migrations/20221024110225_new DB.Designer.cs
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });

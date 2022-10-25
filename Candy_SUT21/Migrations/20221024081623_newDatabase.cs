@@ -3,7 +3,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Candy_SUT21.Migrations
 {
+<<<<<<<< HEAD:Candy_SUT21/Migrations/20221024081623_newDatabase.cs
     public partial class newDatabase : Migration
+========
+    public partial class newDB : Migration
+>>>>>>>> master:Candy_SUT21/Migrations/20221024110225_new DB.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -320,7 +324,11 @@ namespace Candy_SUT21.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+<<<<<<<< HEAD:Candy_SUT21/Migrations/20221024081623_newDatabase.cs
                 values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "796ba0fb-3164-44a7-92cd-0a9b5f5b4aeb", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEGhrcCvma7QvSWXDGzrCmrp3Fv73KIT2JwXBhhdKiy15BYSk2TCha9P07SUlkctMiA==", "123456789", false, "116c49a2-159b-4fce-8d48-95c3b131a84d", false, "admin@djinn.com" });
+========
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "fe5ddcbd-4c65-4fa8-8c6b-4d3f110d6811", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEHJr4QVMYXLtSsVdlovYJAxtUVgdxR6y4M1yGq8Kf57z4R1HZ7CKBPetX6rnHQB4fg==", "123456789", false, "616fe77f-5af6-45ef-8d9c-450bec49011a", false, "admin@djinn.com" });
+>>>>>>>> master:Candy_SUT21/Migrations/20221024110225_new DB.cs
 
             migrationBuilder.InsertData(
                 table: "Categories",

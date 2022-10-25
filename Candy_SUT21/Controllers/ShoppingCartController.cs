@@ -26,7 +26,8 @@ namespace Candy_SUT21.Controllers
             var shoppigCartViewModel = new ShoppingCartViewModel
             {
                 ShoppingCart = _shoppingCart,
-                ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal()
+                ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal(),
+                ShoppingCartDiscount = _shoppingCart.GetShoppingCartDiscount()
 
             };
 
