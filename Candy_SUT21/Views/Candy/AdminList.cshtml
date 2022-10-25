@@ -23,6 +23,7 @@
                     <th scope="col">Status</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Discount</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -34,25 +35,22 @@
                         <td>@candy.Name</td>
                         <td>@candy.Category.CategoryName</td>
                         <td>
-                            @if (@candy.IsOnSale == true && candy.StockAmount > 20)
+                            @if (candy.StockAmount > 20)
                                 {
                                     <div>On sale</div>
                                 }
-                                else if (candy.IsOnSale == true && candy.StockAmount < 20 && candy.StockAmount > 1)
+                                else if (candy.StockAmount < 20 && candy.StockAmount > 1)
                                 {
                                     <div>Low in stock</div>
                                 }
-                                else if (candy.StockAmount == 0)
+                                else 
                                 {
                                     <div>Out of stock</div>
-                                }
-                                else
-                                {
-                                    <div>Not on sale</div>
                                 }
                         </td>
                         <td>@candy.StockAmount</td>
                         <td>@candy.Price.ToString("c")</td>
+                        <td>Placeholder</td> 
                         <td class="float-right">
                             <a class="btn btn-sm btn-warning" asp-controller="Candy" asp-action="Edit" asp-route-id="@candy.CandyId" title="Edit"><i class="fa-solid fa-pen"></i></a>
                             <a class="btn btn-sm btn-danger" asp-controller="Candy" asp-action="Delete" asp-route-id="@candy.CandyId" title="Delete"><i class="fa-regular fa-trash-can"></i></a>

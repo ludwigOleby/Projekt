@@ -1,0 +1,5 @@
+﻿@model IEnumerable<Discount>
+@foreach(var discount in Model)
+{
+    <option value="@discount.Id">@discount.Name @discount.Percentage</option>
+}
