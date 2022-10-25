@@ -14,12 +14,14 @@ namespace Candy_SUT21.Controllers
     {
         private readonly ICandyRepository _candyRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IDiscountRepository _discountRepository;
         public IWebHostEnvironment _hosting;
 
-        public CandyController(ICandyRepository candyRepository, ICategoryRepository categoryRepository, IWebHostEnvironment hosting)
+        public CandyController(ICandyRepository candyRepository, ICategoryRepository categoryRepository, IDiscountRepository discountRepository, IWebHostEnvironment hosting)
         {
             _candyRepository = candyRepository;
             _categoryRepository = categoryRepository;
+            _discountRepository = discountRepository;
             _hosting = hosting;
         }
 
@@ -47,9 +49,9 @@ namespace Candy_SUT21.Controllers
             });
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var candy = _candyRepository.GetCandyById(id);
+            var candy = await _candyRepository.GetCandyById(id);
             if (candy == null)
             {
                 return NotFound();
@@ -84,14 +86,16 @@ namespace Candy_SUT21.Controllers
         //Get: Candy/Create
         public IActionResult Create()
         {
-            return View();
+            return View(); 
         }
 
         //Create new Candy
         //Post: Candy/Create
         [HttpPost]
-        public IActionResult Create(CandyCreateViewModel candyItem)
-        {
+        public async Task<IActionResult> Create(CandyEditViewModel candyItem)
+        {            
+            Candy candyToGet = await _candyRepository.GetCandyById(candyItem.CandyId);
+           
             if (ModelState.IsValid)
             {
                 Candy item = new Candy
@@ -103,23 +107,24 @@ namespace Candy_SUT21.Controllers
                     ImageThumbnailUrl = ProcessImageThumbnailFile(candyItem),
                     Price = candyItem.Price,
                     StockAmount = candyItem.StockAmount,
-                    IsOnSale = candyItem.IsOnSale
+                    DiscountId = candyItem.DiscountId
+
                 };
-                _candyRepository.CreateCandy(item);
+                await _candyRepository.CreateCandy(item);
             }
-            return RedirectToAction("List");
+            return RedirectToAction("AdminList");
         }
 
         //Get: Candy/Edit/Id
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             string currentCategory;
             if (id == null)
             {
                 return NotFound();
             }
-            Candy candyToGet = _candyRepository.GetCandyById(id);
+            Candy candyToGet = await _candyRepository.GetCandyById(id);
             currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == candyToGet.Category.CategoryName)?.CategoryName;
 
             if (candyToGet == null)
@@ -137,13 +142,13 @@ namespace Candy_SUT21.Controllers
                 ExistingImageThumbnailPath = candyToGet.ImageThumbnailUrl,
                 Price = candyToGet.Price,
                 StockAmount = candyToGet.StockAmount,
-                IsOnSale = candyToGet.IsOnSale
+                DiscountId = candyToGet.DiscountId
             };
             return View(candyEditViewModel);
         }
         //Post: Candy/Edit/Id
         [HttpPost]
-        public IActionResult Edit(int id, CandyEditViewModel candyItem)
+        public async Task<IActionResult> Edit(int id, CandyEditViewModel candyItem)
         {
             if (id != candyItem.CandyId)
             {
@@ -151,15 +156,15 @@ namespace Candy_SUT21.Controllers
             }
             if (ModelState.IsValid)
             {
-                Candy candyToUpdate = _candyRepository.GetCandyById(candyItem.CandyId);
-
+                Candy candyToUpdate = await _candyRepository.GetCandyById(candyItem.CandyId);
+                
                 candyToUpdate.CandyId = candyItem.CandyId;
                 candyToUpdate.Name = candyItem.Name;
                 candyToUpdate.CategoryId = candyItem.CategoryId;
                 candyToUpdate.Description = candyItem.Description;
                 candyToUpdate.Price = candyItem.Price;
                 candyToUpdate.StockAmount = candyItem.StockAmount;
-                candyToUpdate.IsOnSale = candyItem.IsOnSale;
+                candyToUpdate.DiscountId = candyItem.DiscountId;
                 if (candyItem.FileImage != null)
                 {
                     if(candyItem.ExistingImagePath != null)
@@ -180,25 +185,24 @@ namespace Candy_SUT21.Controllers
                         System.IO.File.Delete(imageThumbnailPath);
                     }
                     candyToUpdate.ImageThumbnailUrl = ProcessImageThumbnailFile(candyItem);
-                }
-
-                _candyRepository.UpdateCandy(candyToUpdate);
-                return RedirectToAction("List");
+                } 
+                await _candyRepository.UpdateCandy(candyToUpdate);
+                return RedirectToAction("AdminList");
             }
             return View(candyItem);
         }
 
         //Get: Candy/Delete/Id
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {            
             string currentCategory;
             if (id == null)
             {
                 return NotFound();
             }
-            Candy candyToGet = _candyRepository.GetCandyById(id);
+            Candy candyToGet = await _candyRepository.GetCandyById(id);
             currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == candyToGet.Category.CategoryName)?.CategoryName;
-
+            
             if (candyToGet == null)
             {
                 return NotFound();
@@ -214,14 +218,14 @@ namespace Candy_SUT21.Controllers
                 ExistingImageThumbnailPath = candyToGet.ImageThumbnailUrl,
                 Price = candyToGet.Price,
                 StockAmount = candyToGet.StockAmount,
-                IsOnSale = candyToGet.IsOnSale
+                DiscountId = candyToGet.DiscountId                
             };
             return View(candyEditViewModel);
         }
 
         //Post: Candy/Delete/Id
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteCandy(int id, CandyEditViewModel candyItem)
+        public async Task<IActionResult> DeleteCandy(int id, CandyEditViewModel candyItem)
         {
             if (id != candyItem.CandyId)
             {
@@ -229,7 +233,7 @@ namespace Candy_SUT21.Controllers
             }
             if (ModelState.IsValid)
             {
-                Candy candyToDelete = _candyRepository.GetCandyById(candyItem.CandyId);
+                Candy candyToDelete = await _candyRepository.GetCandyById(candyItem.CandyId);
 
                     if (candyToDelete.ImageUrl != null)
                     {
@@ -244,8 +248,8 @@ namespace Candy_SUT21.Controllers
                             candyToDelete.ImageThumbnailUrl);
                         System.IO.File.Delete(imageThumbnailPath);
                     }
-                _candyRepository.DeleteCandy(candyToDelete.CandyId);
-                return RedirectToAction("List");
+                await _candyRepository.DeleteCandy(candyToDelete.CandyId);
+                return RedirectToAction("AdminList");
             }
             return View(candyItem);
         }
@@ -281,6 +285,7 @@ namespace Candy_SUT21.Controllers
                 }
             }
             return uniqueImageThumbnailName;
-        }
+        }     
+            
     }
 }

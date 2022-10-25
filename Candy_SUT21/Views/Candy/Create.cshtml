@@ -4,7 +4,9 @@
     ViewBag.Title = "Create Candy";
 }
 <div class="container-flow">
-    <form method="post" asp-action="Create" enctype="multipart/form-data">        
+    <form method="post" asp-action="Create" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Discounts" />
+        <input type="hidden" asp-for="CurrentCategory" />
         <h2 style="text-align:center;">Add new Candy</h2>
         <div class="form-body">
             <div class="form-group">
@@ -33,18 +35,29 @@
             </div>
             <div class="form-group">
                 <label asp-for="StockAmount" class="col-sm-2 control-label">Amount in stock</label>
-                <div class="input-group col-sm-9">
+                <div class="input-group col-sm-4">
                     <span class="input-group-addon"><i class="fa-solid fa-cubes-stacked"></i></span>
                     <input type="number" asp-for="StockAmount" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="col-sm-2 control-label">Price</label>
-                <div class="input-group col-sm-9">
+                <div class="input-group col-sm-4">
                     <span class="input-group-addon"><i class="fa-solid fa-coins"></i></span>
                     <input type="number" asp-for="Price" class="form-control" />
                     <span class="input-group-addon">kr</span>
                 </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiscountId" class="col-sm-2 control-label">Discount</label>
+                <div class="input-group col-sm-4">
+                    <span class="input-group-addon"><i class="fa-solid fa-piggy-bank"></i></span>
+                    <select asp-for="DiscountId" id="selectDiscount" class="form-control">
+                        <option selected></option>
+                        @await Component.InvokeAsync("DiscountOption")
+                    </select>
+                    <span class="input-group-addon">%</span>
+                </div>                   
             </div>
             <div class="form-group">
                 <label asp-for="FileImage" class="col-sm-2 control-label">Image</label>
@@ -59,13 +72,7 @@
                     <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
                     <input asp-for="FileImageThumbnail" class="form-control custom-file-input" />
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" asp-for="IsOnSale">On sale</label>
-                <div class="input-group col-sm-1">
-                    <input type="checkbox" asp-for="IsOnSale" class="form-input checkbox-large" />
-                </div>
-            </div>
+            </div>  
         </div>
         <div class="form-group">
             <div class="col-sm-12">

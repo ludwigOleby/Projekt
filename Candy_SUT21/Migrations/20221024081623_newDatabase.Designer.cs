@@ -10,13 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-<<<<<<<< HEAD:Candy_SUT21/Migrations/20221021061915_initial.Designer.cs
-    [Migration("20221021061915_initial")]
-    partial class initial
-========
-    [Migration("20221020094613_new database")]
-    partial class newdatabase
->>>>>>>> master:Candy_SUT21/Migrations/20221020094613_new database.Designer.cs
+    [Migration("20221024081623_newDatabase")]
+    partial class newDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,27 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-<<<<<<<< HEAD:Candy_SUT21/Migrations/20221021061915_initial.Designer.cs
-                            ConcurrencyStamp = "770caef5-094d-46d9-b772-491e0e827947",
-========
-                            ConcurrencyStamp = "8ca984ad-591d-4db7-9b0c-1cdc6b99ed9a",
->>>>>>>> master:Candy_SUT21/Migrations/20221020094613_new database.Designer.cs
+                            ConcurrencyStamp = "796ba0fb-3164-44a7-92cd-0a9b5f5b4aeb",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-<<<<<<<< HEAD:Candy_SUT21/Migrations/20221021061915_initial.Designer.cs
-                            PasswordHash = "AQAAAAEAACcQAAAAELhJFLi+lBz2YcqFFvtKeRKwVyqNiLJ3wbdE7w1c5c2ICHPAqb/50OXw3MSA41JmVA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGhrcCvma7QvSWXDGzrCmrp3Fv73KIT2JwXBhhdKiy15BYSk2TCha9P07SUlkctMiA==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "85d5cb8e-90bf-4588-8207-8d17b0eddb8b",
-========
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ4Mk8ViwFc7ynAMgmdLtGgKCm+6GK/rSHShSyHJg9Ag9zX5YllDrVh3QtzipZgUQA==",
-                            PhoneNumber = "123456789",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "f475dd45-631f-4fb1-936d-65808e767a13",
->>>>>>>> master:Candy_SUT21/Migrations/20221020094613_new database.Designer.cs
+                            SecurityStamp = "116c49a2-159b-4fce-8d48-95c3b131a84d",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -139,14 +123,14 @@ namespace Candy_SUT21.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("DiscountId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageThumbnailUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsOnSale")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -161,6 +145,8 @@ namespace Candy_SUT21.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("DiscountId");
+
                     b.ToTable("Candies");
 
                     b.HasData(
@@ -169,9 +155,9 @@ namespace Candy_SUT21.Migrations
                             CandyId = 1,
                             CategoryId = 1,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Tortor posuere ac ut consequat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Lacus sed turpis tincidunt id aliquet risus feugiat in. Viverra aliquet eget sit amet tellus cras adipiscing enim eu.",
+                            DiscountId = 1,
                             ImageThumbnailUrl = "chocolateCandy-small.jpg",
                             ImageUrl = "chocolateCandy.jpg",
-                            IsOnSale = false,
                             Name = "Mixed Chocolate Candy",
                             Price = 4.95m,
                             StockAmount = 100
@@ -181,9 +167,9 @@ namespace Candy_SUT21.Migrations
                             CandyId = 2,
                             CategoryId = 1,
                             Description = "Venenatis tellus in metus vulputate eu scelerisque felis imperdiet proin. Quisque egestas diam in arcu cursus. Sed viverra tellus in hac. Quis commodo odio aenean sed adipiscing diam donec adipiscing.",
+                            DiscountId = 2,
                             ImageThumbnailUrl = "chocolateCandy2-small.jpg",
                             ImageUrl = "chocolateCandy2.jpg",
-                            IsOnSale = true,
                             Name = "M&M's",
                             Price = 3.95m,
                             StockAmount = 100
@@ -193,9 +179,9 @@ namespace Candy_SUT21.Migrations
                             CandyId = 3,
                             CategoryId = 1,
                             Description = "Turpis egestas pretium aenean pharetra magna ac placerat vestibulum. Sed faucibus turpis in eu mi bibendum neque egestas. At in tellus integer feugiat scelerisque. Elementum integer enim neque volutpat ac tincidunt.",
+                            DiscountId = 3,
                             ImageThumbnailUrl = "chocolateCandy3-small.jpg",
                             ImageUrl = "chocolateCandy3.jpg",
-                            IsOnSale = false,
                             Name = "Another Mixed Chocolate Candy",
                             Price = 5.75m,
                             StockAmount = 100
@@ -205,9 +191,9 @@ namespace Candy_SUT21.Migrations
                             CandyId = 4,
                             CategoryId = 2,
                             Description = "Vitae congue eu consequat ac felis donec et. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Vel eros donec ac odio. A lacus vestibulum sed arcu non odio euismod lacinia at. Nisl suscipit adipiscing bibendum est ultricies integer. Nec tincidunt praesent semper feugiat nibh.",
+                            DiscountId = 4,
                             ImageThumbnailUrl = "fruitCandy-small.jpg",
                             ImageUrl = "fruitCandy.jpg",
-                            IsOnSale = false,
                             Name = "Mixed Candy",
                             Price = 3.95m,
                             StockAmount = 100
@@ -215,11 +201,10 @@ namespace Candy_SUT21.Migrations
                         new
                         {
                             CandyId = 5,
-                            CategoryId = 5,
+                            CategoryId = 2,
                             Description = "Purus sit amet luctus venenatis lectus magna fringilla. Consectetur lorem donec massa sapien faucibus et molestie ac. Sagittis nisl rhoncus mattis rhoncus urna neque viverra.",
                             ImageThumbnailUrl = "fruitCandy2-small.jpg",
                             ImageUrl = "fruitCandy2.jpg",
-                            IsOnSale = true,
                             Name = "Mixed Hard Candy",
                             Price = 7.00m,
                             StockAmount = 100
@@ -231,7 +216,6 @@ namespace Candy_SUT21.Migrations
                             Description = "Ultrices vitae auctor eu augue ut. Leo vel fringilla est ullamcorper eget. A diam maecenas sed enim ut. Massa tincidunt dui ut ornare lectus. Nullam non nisi est sit amet facilisis magna. ",
                             ImageThumbnailUrl = "fruitCandy3-small.jpg",
                             ImageUrl = "fruitCandy3.jpg",
-                            IsOnSale = true,
                             Name = "Sour Fruit Candy",
                             Price = 11.25m,
                             StockAmount = 100
@@ -243,7 +227,6 @@ namespace Candy_SUT21.Migrations
                             Description = "Diam sit amet nisl suscipit adipiscing bibendum est ultricies integer. Molestie at elementum eu facilisis sed odio morbi quis commodo. Odio facilisis mauris sit amet massa vitae tortor condimentum lacinia. Urna porttitor rhoncus dolor purus non enim praesent elementum facilisis.",
                             ImageThumbnailUrl = "gummyCandy-small.jpg",
                             ImageUrl = "gummyCandy.jpg",
-                            IsOnSale = true,
                             Name = "Gummy Bears",
                             Price = 3.95m,
                             StockAmount = 100
@@ -255,7 +238,6 @@ namespace Candy_SUT21.Migrations
                             Description = "Posuere ac ut consequat semper viverra nam libero justo laoreet. Ultrices dui sapien eget mi proin sed libero enim. Etiam non quam lacus suspendisse faucibus interdum. Amet nisl suscipit adipiscing bibendum est ultricies integer quis.",
                             ImageThumbnailUrl = "gummyCandy2-small.jpg",
                             ImageUrl = "gummyCandy2.jpg",
-                            IsOnSale = false,
                             Name = "Another Gummy Bears",
                             Price = 1.95m,
                             StockAmount = 100
@@ -267,7 +249,6 @@ namespace Candy_SUT21.Migrations
                             Description = "Ut ornare lectus sit amet est placerat in egestas. Iaculis nunc sed augue lacus viverra vitae. Bibendum ut tristique et egestas quis ipsum suspendisse ultrices gravida. Accumsan tortor posuere ac ut consequat semper viverra.",
                             ImageThumbnailUrl = "gummyCandy3-small.jpg",
                             ImageUrl = "gummyCandy3.jpg",
-                            IsOnSale = false,
                             Name = "Sour Gummy Bears",
                             Price = 13.95m,
                             StockAmount = 100
@@ -279,7 +260,6 @@ namespace Candy_SUT21.Migrations
                             Description = "Vitae congue eu consequat ac felis donec et odio. Tellus orci ac auctor augue mauris augue. Feugiat sed lectus vestibulum mattis ullamcorper velit sed. Sit amet consectetur adipiscing elit pellentesque habitant morbi tristique senectus. Sed pulvinar proin gravida hendrerit lectus a.",
                             ImageThumbnailUrl = "halloweenCandy-small.jpg",
                             ImageUrl = "halloweenCandy.jpg",
-                            IsOnSale = true,
                             Name = "Halloween Candy",
                             Price = 1.95m,
                             StockAmount = 100
@@ -291,7 +271,6 @@ namespace Candy_SUT21.Migrations
                             Description = "Hac habitasse platea dictumst quisque sagittis purus sit. Dui nunc mattis enim ut. Mauris commodo quis imperdiet massa tincidunt nunc pulvinar sapien et.",
                             ImageThumbnailUrl = "halloweenCandy2-small.jpg",
                             ImageUrl = "halloweenCandy2.jpg",
-                            IsOnSale = true,
                             Name = "Another Halloween Candy",
                             Price = 12.95m,
                             StockAmount = 100
@@ -303,7 +282,6 @@ namespace Candy_SUT21.Migrations
                             Description = "Pulvinar neque laoreet suspendisse interdum consectetur libero id faucibus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Vulputate eu scelerisque felis imperdiet proin fermentum.",
                             ImageThumbnailUrl = "halloweenCandy3-small.jpg",
                             ImageUrl = "halloweenCandy3.jpg",
-                            IsOnSale = true,
                             Name = "Mixed Halloween Candy",
                             Price = 21.95m,
                             StockAmount = 100
@@ -313,9 +291,8 @@ namespace Candy_SUT21.Migrations
                             CandyId = 13,
                             CategoryId = 5,
                             Description = "Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Arcu cursus euismod quis viverra.",
-                            ImageThumbnailUrl = "thumbnails\\hardCandy-small.jpg",
+                            ImageThumbnailUrl = "hardCandy-small.jpg",
                             ImageUrl = "hardCandy.jpg",
-                            IsOnSale = false,
                             Name = "Hard Candy",
                             Price = 6.95m,
                             StockAmount = 100
@@ -327,7 +304,6 @@ namespace Candy_SUT21.Migrations
                             Description = "Blandit massa enim nec dui nunc mattis enim ut tellus. Duis at consectetur lorem donec massa sapien faucibus et. At auctor urna nunc id cursus metus. Ut enim blandit volutpat maecenas volutpat blandit.",
                             ImageThumbnailUrl = "hardCandy2-small.jpg",
                             ImageUrl = "hardCandy2.jpg",
-                            IsOnSale = true,
                             Name = "Mixed Sweet/Sour & Hard Candy",
                             Price = 2.95m,
                             StockAmount = 100
@@ -339,7 +315,6 @@ namespace Candy_SUT21.Migrations
                             Description = "Nisi lacus sed viverra tellus in. Morbi non arcu risus quis varius quam quisque id. Cras adipiscing enim eu turpis egestas. Tristique nulla aliquet enim tortor. Quisque id diam vel quam. Id faucibus nisl tincidunt eget nullam.",
                             ImageThumbnailUrl = "hardCandy3-small.jpg",
                             ImageUrl = "hardCandy3.jpg",
-                            IsOnSale = false,
                             Name = "Another Hard Candy",
                             Price = 16.95m,
                             StockAmount = 100
@@ -419,6 +394,66 @@ namespace Candy_SUT21.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("Candy_SUT21.Models.Discount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<int>("Percentage")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Discounts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "MyDiscount",
+                            Percentage = 5,
+                            StartDate = new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "YourDiscount",
+                            Percentage = 15,
+                            StartDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            EndDate = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "AnotherDiscount",
+                            Percentage = 50,
+                            StartDate = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            EndDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "HellooDiscoconut",
+                            Percentage = 25,
+                            StartDate = new DateTime(2022, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Candy_SUT21.Models.Order", b =>
@@ -691,6 +726,10 @@ namespace Candy_SUT21.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Candy_SUT21.Models.Discount", "Discount")
+                        .WithMany("Candies")
+                        .HasForeignKey("DiscountId");
                 });
 
             modelBuilder.Entity("Candy_SUT21.Models.OrderDetail", b =>
