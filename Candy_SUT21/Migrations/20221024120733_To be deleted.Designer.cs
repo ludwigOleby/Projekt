@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221024094416_New migration folder because migrations in conflict after merge")]
-    partial class Newmigrationfolderbecausemigrationsinconflictaftermerge
+    [Migration("20221024120733_To be deleted")]
+    partial class Tobedeleted
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,16 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8ecd5278-abb8-4eeb-9375-06c197ebe57b",
+                            ConcurrencyStamp = "a26308b9-5bef-4a26-abb1-719129482b59",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHsOHSvyZVuA+QjEsQPCZxCuJL19GsFa+y9r5yNFN8HnGNyWt/p10OO2HhMQdTPa0Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHt4smutjKxuaRxpXAYfYwZmqsHdSvEVoEktjB1fgSf1GfvAsnKx7ZpMMjVDaAvLfA==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "abd7be46-6fc4-4ef3-a9c4-68aaab610b85",
+                            SecurityStamp = "2277224f-b35a-46b3-818a-e5b09f4957fa",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -393,7 +393,7 @@ namespace Candy_SUT21.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Candy_SUT21.Models.Discount", b =>

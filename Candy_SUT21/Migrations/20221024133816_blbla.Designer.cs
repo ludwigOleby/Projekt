@@ -4,14 +4,16 @@ using Candy_SUT21.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221024133816_blbla")]
+    partial class blbla
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,16 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "023a7ed5-292d-4952-b292-df7a924eeec6",
+                            ConcurrencyStamp = "076ad35f-8f67-46e5-9584-4d3ffefbcc36",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJi+638MB+PjcYHftDZKEdtK+ajGpFSl/h/S2CZ7gcRBa2DbAbfQi8TGC4azIMe5cQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELSQ7QdF1kGYvNbykP5wCpokwUrNazbMUkC0CG4Z4dFgaRJ7O6y3mr0vvngPWMvm6w==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bf5bc138-3756-4229-ab6d-c322f01871d7",
+                            SecurityStamp = "68d36f29-0e7e-4823-b748-94a62eba23c1",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });

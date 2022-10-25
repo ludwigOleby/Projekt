@@ -4,14 +4,16 @@ using Candy_SUT21.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221024133656_Added CouponCode")]
+    partial class AddedCouponCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,16 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "023a7ed5-292d-4952-b292-df7a924eeec6",
+                            ConcurrencyStamp = "f3305b89-d9ca-4de7-bd6a-c592ef285980",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJi+638MB+PjcYHftDZKEdtK+ajGpFSl/h/S2CZ7gcRBa2DbAbfQi8TGC4azIMe5cQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH84MGF0JYbeMEtWrLgy/dIPbPJjnKn+UT1zrElKe/R7PU4mRdvAYdzxkAhhGYB5Bg==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bf5bc138-3756-4229-ab6d-c322f01871d7",
+                            SecurityStamp = "8c700a08-be2a-4ff9-9961-f96072c91c4e",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -374,7 +376,7 @@ namespace Candy_SUT21.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DiscountId")
+                    b.Property<int?>("DiscountId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -755,11 +757,9 @@ namespace Candy_SUT21.Migrations
 
             modelBuilder.Entity("Candy_SUT21.Models.CouponCode", b =>
                 {
-                    b.HasOne("Candy_SUT21.Models.Discount", "Discount")
+                    b.HasOne("Candy_SUT21.Models.Discount", null)
                         .WithMany("CouponCodes")
-                        .HasForeignKey("DiscountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DiscountId");
                 });
 
             modelBuilder.Entity("Candy_SUT21.Models.OrderDetail", b =>
