@@ -18,10 +18,12 @@ namespace Candy_SUT21.Models
         public DbSet<Candy> Candies { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public DbSet<ShoppingCartCoupon> ShoppingCartCoupons { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Discount> Discounts { get; set; }
-
+        public DbSet<CouponCode> CouponCodes { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

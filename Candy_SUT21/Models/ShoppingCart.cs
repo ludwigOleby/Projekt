@@ -92,6 +92,9 @@ namespace Candy_SUT21.Models
         {
             var cartItems = _appDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartID);
             _appDbContext.ShoppingCartItems.RemoveRange(cartItems);
+            var cartCoupon = _appDbContext.ShoppingCartCoupons.FirstOrDefault(s => s.ShoppingCartId == ShoppingCartID);
+            if (cartCoupon != null)
+                _appDbContext.ShoppingCartCoupons.Remove(cartCoupon);
             _appDbContext.SaveChanges();
         }
 
@@ -108,22 +111,52 @@ namespace Candy_SUT21.Models
 
             var discount = items.Where(s => s.Candy.IsOnSale).
                 Select(c => c.Candy.GetDiscountPrice() * c.Amount).Sum();
-
+            
             var total = ordinary + discount;
+            
+            var couponCode = GetCouponCode();
+
+            if(couponCode != null)
+            {
+                total = Math.Round(total - (total * (Convert.ToDecimal(couponCode.Discount.Percentage) / 100M)), 2);
+            }
 
             return total;
         }
         public decimal GetShoppingCartDiscount()
         {
-            var items = _appDbContext.ShoppingCartItems.
-                Where(c => c.ShoppingCartId == ShoppingCartID && c.Candy.DiscountId != null).
-                Include(c => c.Candy).
-                ThenInclude(d => d.Discount).ToList();
+            var withoutDiscounts = _appDbContext.ShoppingCartItems.
+                Where(s => s.ShoppingCartId == ShoppingCartID).Sum(p => p.Candy.Price);
 
-            var discount = items.Where(s => s.Candy.IsOnSale).
-                Sum(d => (d.Candy.Price - d.Candy.GetDiscountPrice()) * d.Amount);
+            var withDiscounts = GetShoppingCartTotal();
+
+            var discount = withoutDiscounts - withDiscounts;
            
             return discount;
+        }
+
+        public bool AddCouponCode(int couponCodeId)
+        {
+            var result = _appDbContext.ShoppingCartCoupons.Add(new ShoppingCartCoupon
+            {
+                CouponCodeId = couponCodeId,
+                ShoppingCartId = ShoppingCartID
+            });
+            _appDbContext.SaveChanges();
+            return result == null ? false : true;
+        }
+
+        public CouponCode GetCouponCode()
+        {
+            var couponCode = _appDbContext.ShoppingCartCoupons
+                .Include(c => c.CouponCode).ThenInclude(d => d.Discount)
+                .FirstOrDefault(s => s.ShoppingCartId == ShoppingCartID);
+            if (couponCode != null)
+            {
+                return couponCode.CouponCode;
+            }
+            else
+                return null;
         }
 
     }
