@@ -34,9 +34,10 @@ namespace Candy_SUT21.Controllers
             return View(shoppigCartViewModel);
         }
 
-        public RedirectToActionResult AddToShoppingCart(int candyId)
+        public async Task<RedirectToActionResult> AddToShoppingCart(int candyId)
         {
-            var selectedCandy = _candyRepository.GetAllCandy.FirstOrDefault(c => c.CandyId == candyId);
+            var candies = await _candyRepository.GetAllCandy();
+            var selectedCandy = candies.FirstOrDefault(c => c.CandyId == candyId);
 
             if (selectedCandy != null)
             {
@@ -48,9 +49,10 @@ namespace Candy_SUT21.Controllers
         }
 
 
-        public RedirectToActionResult RemoveFromShoppingCart(int candyId)
+        public async Task<RedirectToActionResult> RemoveFromShoppingCart(int candyId)
         {
-            var selectedCandy = _candyRepository.GetAllCandy.FirstOrDefault(c => c.CandyId == candyId);
+            var candies = await _candyRepository.GetAllCandy();
+            var selectedCandy = candies.FirstOrDefault(c => c.CandyId == candyId);
 
             if (selectedCandy != null)
             {

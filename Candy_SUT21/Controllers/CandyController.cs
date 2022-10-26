@@ -25,26 +25,28 @@ namespace Candy_SUT21.Controllers
             _hosting = hosting;
         }
 
-        public ViewResult List(string category)
+        public async Task<ViewResult> List(string category)
         {
             IEnumerable<Candy> candies;
             string currentCategory;
 
             if (string.IsNullOrEmpty(category))
             {
-                candies = _candyRepository.GetAllCandy.OrderBy(c => c.CandyId);
+                candies = await _candyRepository.GetAllCandy();
+                var candiesByName = candies.OrderBy(c => c.Name);
                 currentCategory = "All Candy";
             }
             else
             {
-                candies = _candyRepository.GetAllCandy.Where(c => c.Category.CategoryName == category);
+                candies = await _candyRepository.GetAllCandy(); 
+                var candyCategory = candies.Where(c => c.Category.CategoryName == category);
 
                 currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
             }
 
             return View(new CandyListViewModel
             {
-                Candies = candies,
+                Candies = candies,                
                 CurrentCategory = currentCategory
             });
         }
@@ -59,19 +61,21 @@ namespace Candy_SUT21.Controllers
 
             return View(candy);
         }
-        public ViewResult AdminList(string category)
+        public async Task<ViewResult> AdminList(string category)
         {
             IEnumerable<Candy> candies;
             string currentCategory;
 
             if (string.IsNullOrEmpty(category))
             {
-                candies = _candyRepository.GetAllCandy.OrderBy(c => c.CandyId);
+                candies = await _candyRepository.GetAllCandy();
+                var sortedCandies = candies.OrderBy(c => c.Name);
                 currentCategory = "All Candy";
             }
             else
             {
-                candies = _candyRepository.GetAllCandy.Where(c => c.Category.CategoryName == category);
+                candies = await _candyRepository.GetAllCandy();
+                var candyCategory = candies.Where(c => c.Category.CategoryName == category);
 
                 currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
             }
@@ -82,7 +86,7 @@ namespace Candy_SUT21.Controllers
                 CurrentCategory = currentCategory
             });
         }
-                
+
         //Get: Candy/Create
         public IActionResult Create()
         {

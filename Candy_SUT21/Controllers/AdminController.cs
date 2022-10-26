@@ -54,7 +54,7 @@ namespace Candy_SUT21.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddOrEditDiscount(int? id)
         {
-            var allCandies = _candyRepository.GetAllCandy;
+            var allCandies = await _candyRepository.GetAllCandy();
             if(id == null)
             {
                 return View(new AddOrEditDiscountViewModel(
