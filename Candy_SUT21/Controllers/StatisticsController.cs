@@ -6,6 +6,7 @@ using Candy_SUT21.Models;
 using Candy_SUT21.Models.Statistics;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Candy_SUT21.Controllers
 {
@@ -20,6 +21,7 @@ namespace Candy_SUT21.Controllers
             _candyRepository = candyRepository;
         }
 
+        [Authorize(Roles = "Admin")]
         public JsonResult SalesAmount(string period = "days")
         {
             DateTime today = DateTime.Today;
@@ -115,6 +117,7 @@ namespace Candy_SUT21.Controllers
             return new JsonResult(null);
         }
 
+        [Authorize(Roles = "Admin")]
         public JsonResult ProductSalesShare(string period = "days")
         {
             DateTime today = DateTime.Today;
@@ -177,11 +180,51 @@ namespace Candy_SUT21.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         public JsonResult LowStock(int stockBelow = 10)
         {
             var candiesWithLowStock = _candyRepository.GetCandiesWithStockUnder(stockBelow);
 
             return Json(new { JSONList = candiesWithLowStock });
+        }
+
+        [Authorize(Roles = "Admin")]
+        public JsonResult WeatherStatistics(string period = "days")
+        {
+            var today = DateTime.Today;
+            string fromDate;
+
+            IEnumerable<Order> orders;
+
+            if(period == "days")
+            {
+                orders = _orderRepository.GetOrderWithWeatherByDate(today.AddDays(-6), DateTime.Now);
+                fromDate = DateTime.Today.AddDays(-6).ToShortDateString();
+            }
+            else if(period == "weeks")
+            {
+                CultureInfo cul = CultureInfo.CurrentCulture;
+
+                var monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
+                var checkFrom = monday.AddDays(-21);
+                fromDate = checkFrom.ToShortDateString();
+
+                orders = _orderRepository.GetOrderWithWeatherByDate(checkFrom, DateTime.Now);
+            }
+            else if(period == "months")
+            {
+                var firstDayOfCurrMonth = today.AddDays(-(today.Day - 1));
+
+                fromDate = firstDayOfCurrMonth.AddMonths(-5).ToShortDateString();
+                orders = _orderRepository.GetOrderWithWeatherByDate(firstDayOfCurrMonth.AddMonths(-5), DateTime.Now);
+            }
+            else
+            {
+                return new JsonResult(null);
+            }
+
+            return Json(new { JSONList = orders, fromDate });
+
         }
 
     }

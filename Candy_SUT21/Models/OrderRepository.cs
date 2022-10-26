@@ -37,6 +37,7 @@ namespace Candy_SUT21.Models
             double lat = 56.653773;
             double lon = 12.786712;
 
+
             var orderWeather = await _weatherService.GetOrderWeatherByLatLon(lat, lon, order);
 
             if (orderWeather != null)
