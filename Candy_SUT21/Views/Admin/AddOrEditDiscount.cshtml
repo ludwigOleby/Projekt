@@ -51,7 +51,7 @@
             <select id="selectCouponCodes" class="form-control" disabled asp-for="CouponCodes">
                 @if (Model.CouponCodes == null || Model.CouponCodes.Count() == 0)
                 {
-                    <option>No Codes Yet!</option>
+                    <option id="couponCodePlaceholder">No Codes Yet!</option>
                 }
                 else
                 {
@@ -78,7 +78,10 @@
     //Adds a new CouponCode to list
     function addCode() {
         const code = document.getElementById('codeInput').value;
-        document.getElementById('selectCouponCodes').innerHTML += "<option selected value=" + code + ">" + code + "</option>";
+        if (code.length > 0) {
+            document.getElementById('couponCodePlaceholder').hidden = "true";
+            document.getElementById('selectCouponCodes').innerHTML += "<option selected value=" + code + ">" + code + "</option>";
+        }
     }
 
 </script>

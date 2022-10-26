@@ -57,6 +57,7 @@ namespace Candy_SUT21.Models
             return null;
         }
 
+        //TODO Is it possible to make this async? Not thread safe when tried from Admin Controller
         public CouponCode CreateCouponCode(CouponCode couponCode)
         {
             var result = _context.CouponCodes.Add(couponCode);

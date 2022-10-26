@@ -104,13 +104,13 @@ namespace Candy_SUT21.Controllers
                 };
                 if (discountVM.DiscountId == 0)
                 {
-                    var newDiscount = await _discountRepository.CreateDiscount(discount);
                     if(discountVM.CouponCodes != null && discountVM.CouponCodes.Count > 0)
                     {
-                        discountVM.CouponCodes.ForEach(c =>
-                        _discountRepository.CreateCouponCode(
-                        new CouponCode { Code = c, DiscountId = newDiscount.Id }));
+                        var couponCodes = new List<CouponCode>();
+                        discountVM.CouponCodes.ForEach(c => couponCodes.Add(new CouponCode { Code = c }));
+                        discount.CouponCodes = couponCodes;
                     }                   
+                    var newDiscount = await _discountRepository.CreateDiscount(discount);
                 }
                 else
                 {
