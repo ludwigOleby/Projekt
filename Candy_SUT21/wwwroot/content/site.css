@@ -100,6 +100,11 @@ footer {
     background-color:white;
     padding-top:10px;
 }
+.chartWidget {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+}
 
 .discount-circle {
     position: absolute;
@@ -235,6 +240,8 @@ footer {
     grid-column: 1/3;
     margin: 0 5rem;
 }
+
+
 @media screen and (max-width: 580px){
     .discount-edit-form .name {
         grid-row: 1;

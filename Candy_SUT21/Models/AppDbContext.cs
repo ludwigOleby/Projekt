@@ -237,10 +237,11 @@ namespace Candy_SUT21.Models
         private void SeedDiscounts(ModelBuilder builder)
         {
             builder.Entity<Discount>().HasData(
-                new Discount { Id = 1, Name="MyDiscount", Percentage = 5, StartDate = DateTime.Parse("2022-10-10"), EndDate = DateTime.Parse("2022-12-31") },
-                new Discount { Id = 2, Name = "YourDiscount", Percentage = 15, StartDate = DateTime.Parse("2022-01-01"), EndDate = DateTime.Parse("2022-12-31") },
-                new Discount { Id = 3, Name = "AnotherDiscount", Percentage = 50, StartDate = DateTime.Parse("2022-01-01"), EndDate = DateTime.Parse("2022-10-01") },
-                new Discount { Id = 4, Name = "HellooDiscoconut", Percentage = 25, StartDate = DateTime.Parse("2022-11-10"), EndDate = DateTime.Parse("2023-02-02") }
+                new Discount { Id = 1, Name = "NoDiscount", Percentage = 0},
+                new Discount { Id = 2, Name = "MyDiscount", Percentage = 5, StartDate = DateTime.Parse("2022-10-10"), EndDate = DateTime.Parse("2022-12-31") },
+                new Discount { Id = 3, Name = "YourDiscount", Percentage = 15, StartDate = DateTime.Parse("2022-01-01"), EndDate = DateTime.Parse("2022-12-31") },
+                new Discount { Id = 4, Name = "AnotherDiscount", Percentage = 50, StartDate = DateTime.Parse("2022-01-01"), EndDate = DateTime.Parse("2022-10-01") },
+                new Discount { Id = 5, Name = "HellooDiscoconut", Percentage = 25, StartDate = DateTime.Parse("2022-11-10"), EndDate = DateTime.Parse("2023-02-02") }
                 );
         }
 

@@ -6,7 +6,7 @@
             <option value="weeks">Last 4 weeks</option>
             <option value="months">Last 6 months</option>
         </select>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default">Update</button>
     </form>
     <div class="chartContainer" id="salesAmountChart">
 
@@ -35,7 +35,6 @@
                 success: function (chartsdata) {
 
                     var Data = chartsdata.jsonList;
-                    console.log(Data);
                     var data = new google.visualization.DataTable();
                     data.addColumn('string', 'Day');
                     data.addColumn('number', 'Sales Amount')
@@ -46,26 +45,32 @@
                     }
 
                     var options = {
-                        width: 900,
                         series: {
-                            0: { axis: 'Sales Amount' }, 
-                            1: { axis: 'Nr of Orders' } 
+                            0: { axis: 'SalesAmount' }, 
+                            1: { axis: 'NrofOrders' } 
                         },
                         axes: {
                             y: {
-                                distance: { label: 'parsecs' }, // Left y-axis.
-                                brightness: { side: 'right', label: 'apparent magnitude' } // Right y-axis.
+                                SalesAmount: { label: 'Sales Amount' }, // Left y-axis.
+                                NrofOrders: { side: 'right', label: 'Nr of Orders' } // Right y-axis.
                             }
                         },
                         chart: {
                             title: 'Sales Statistics',
-                        }
+                        },
+                        hAxis: { title: '  ', titleTextStyle: { color: 'white' } },
+                        backgroundColor: { fill: 'transparent' }
+
 
 
                     };
 
                     var productSaleschart = new google.charts.Bar(document.getElementById('salesAmountChart'));
-                    productSaleschart.draw(data, google.charts.Bar.convertOptions(options))
+                    productSaleschart.draw(data, google.charts.Bar.convertOptions(options));
+
+                    $(window).resize(function () {
+                        productSaleschart.draw(data, google.charts.Bar.convertOptions(options));
+                    });
                 },
                 error: function () {
                     alert("Error loading data!");
@@ -73,6 +78,8 @@
             })
         })
     }
+
+
 
 
 </script>
