@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Candy_SUT21.Migrations
 {
-    public partial class newDB : Migration
+    public partial class UpdatedOrderWeather : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,6 +82,7 @@ namespace Candy_SUT21.Migrations
                     ZipCode = table.Column<string>(maxLength: 5, nullable: false),
                     Phone = table.Column<string>(nullable: false),
                     OrderTotal = table.Column<decimal>(nullable: false),
+                    OrderDiscount = table.Column<decimal>(nullable: false),
                     OrderPlaced = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -172,6 +173,28 @@ namespace Candy_SUT21.Migrations
                         principalTable: "Discounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderWeathers",
+                columns: table => new
+                {
+                    OrderWeatherId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RainMean = table.Column<float>(nullable: false),
+                    WeatherSymbol = table.Column<float>(nullable: false),
+                    Temperature = table.Column<float>(nullable: false),
+                    OrderId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderWeathers", x => x.OrderWeatherId);
+                    table.ForeignKey(
+                        name: "FK_OrderWeathers_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -320,7 +343,7 @@ namespace Candy_SUT21.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "fe5ddcbd-4c65-4fa8-8c6b-4d3f110d6811", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEHJr4QVMYXLtSsVdlovYJAxtUVgdxR6y4M1yGq8Kf57z4R1HZ7CKBPetX6rnHQB4fg==", "123456789", false, "616fe77f-5af6-45ef-8d9c-450bec49011a", false, "admin@djinn.com" });
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "485f08a2-8d19-409d-91c4-ee84ddc9ebf8", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAECaS5QpGSZVtziRWbBUCxZWUysJFO6gTdJD0QgEPL6V6xM2G8uPMmz0FWTdIBdeE3Q==", "123456789", false, "a96b4528-641f-4f2b-8201-23739b303b46", false, "admin@djinn.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -437,6 +460,12 @@ namespace Candy_SUT21.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderWeathers_OrderId",
+                table: "OrderWeathers",
+                column: "OrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_CandyId",
                 table: "ShoppingCartItems",
                 column: "CandyId");
@@ -461,6 +490,9 @@ namespace Candy_SUT21.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");
+
+            migrationBuilder.DropTable(
+                name: "OrderWeathers");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCartItems");

@@ -1,4 +1,6 @@
 using Candy_SUT21.Models;
+using Candy_SUT21.Models.Statistics;
+using Candy_SUT21.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -41,12 +43,14 @@ namespace Candy_SUT21
             services.AddScoped<ShoppingCart>(sc => ShoppingCart.GetCart(sc));
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IDiscountRepository, DiscountRepository>();
-
+            services.AddScoped<WeatherApiService>();
 
 
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddRazorPages();
+
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

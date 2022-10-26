@@ -4,16 +4,14 @@ using Candy_SUT21.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221024110225_new DB")]
-    partial class newDB
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,16 +93,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fe5ddcbd-4c65-4fa8-8c6b-4d3f110d6811",
+                            ConcurrencyStamp = "485f08a2-8d19-409d-91c4-ee84ddc9ebf8",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHJr4QVMYXLtSsVdlovYJAxtUVgdxR6y4M1yGq8Kf57z4R1HZ7CKBPetX6rnHQB4fg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECaS5QpGSZVtziRWbBUCxZWUysJFO6gTdJD0QgEPL6V6xM2G8uPMmz0FWTdIBdeE3Q==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "616fe77f-5af6-45ef-8d9c-450bec49011a",
+                            SecurityStamp = "a96b4528-641f-4f2b-8201-23739b303b46",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -483,6 +481,9 @@ namespace Candy_SUT21.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<decimal>("OrderDiscount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("OrderPlaced")
                         .HasColumnType("datetime2");
 
@@ -552,6 +553,33 @@ namespace Candy_SUT21.Migrations
                     b.HasIndex("CandyId");
 
                     b.ToTable("ShoppingCartItems");
+                });
+
+            modelBuilder.Entity("Candy_SUT21.Models.Statistics.OrderWeather", b =>
+                {
+                    b.Property<int>("OrderWeatherId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("RainMean")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Temperature")
+                        .HasColumnType("real");
+
+                    b.Property<float>("WeatherSymbol")
+                        .HasColumnType("real");
+
+                    b.HasKey("OrderWeatherId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("OrderWeathers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -752,6 +780,15 @@ namespace Candy_SUT21.Migrations
                     b.HasOne("Candy_SUT21.Models.Candy", "Candy")
                         .WithMany()
                         .HasForeignKey("CandyId");
+                });
+
+            modelBuilder.Entity("Candy_SUT21.Models.Statistics.OrderWeather", b =>
+                {
+                    b.HasOne("Candy_SUT21.Models.Order", "Order")
+                        .WithOne("OrderWeather")
+                        .HasForeignKey("Candy_SUT21.Models.Statistics.OrderWeather", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
