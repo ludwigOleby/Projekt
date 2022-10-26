@@ -48,7 +48,7 @@
         </div>
         <div class="couponCodes">
             <label asp-for="@Model.CouponCodes"></label>
-            <select id="selectCouponCodes" class="form-control" disabled asp-for="CouponCodes">
+            <select id="selectCouponCodes" disabled class="form-control" asp-for="CouponCodes">
                 @if (Model.CouponCodes == null || Model.CouponCodes.Count() == 0)
                 {
                     <option id="couponCodePlaceholder">No Codes Yet!</option>
@@ -81,8 +81,8 @@
         if (code.length > 0) {
             document.getElementById('couponCodePlaceholder').hidden = "true";
             document.getElementById('selectCouponCodes').innerHTML += "<option selected value=" + code + ">" + code + "</option>";
+            document.getElementById('codeInput').value = "";
         }
     }
-
 </script>
 

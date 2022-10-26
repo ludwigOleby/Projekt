@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221024120733_To be deleted")]
-    partial class Tobedeleted
+    [Migration("20221026115552_Added shoppingcartCouponCode table")]
+    partial class AddedshoppingcartCouponCodetable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,16 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a26308b9-5bef-4a26-abb1-719129482b59",
+                            ConcurrencyStamp = "fcb8a9bf-8fef-47b9-8795-71871eaaf4fc",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHt4smutjKxuaRxpXAYfYwZmqsHdSvEVoEktjB1fgSf1GfvAsnKx7ZpMMjVDaAvLfA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKn9hvs4yaVGBuBAIZW1cwxpCIz6sUAdNkDJ1D11ocDuaZq0Qq2i4Y2B/7BXYfe1Jw==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2277224f-b35a-46b3-818a-e5b09f4957fa",
+                            SecurityStamp = "4870920d-8cdb-401f-b815-aeab0e8960c1",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -366,6 +366,26 @@ namespace Candy_SUT21.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Candy_SUT21.Models.CouponCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DiscountId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DiscountId");
+
+                    b.ToTable("CouponCodes");
+                });
+
             modelBuilder.Entity("Candy_SUT21.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
@@ -425,6 +445,14 @@ namespace Candy_SUT21.Migrations
                         new
                         {
                             Id = 1,
+                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "NoDiscount",
+                            Percentage = 0,
+                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
                             EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "MyDiscount",
                             Percentage = 5,
@@ -432,7 +460,7 @@ namespace Candy_SUT21.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 3,
                             EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "YourDiscount",
                             Percentage = 15,
@@ -440,7 +468,7 @@ namespace Candy_SUT21.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 4,
                             EndDate = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "AnotherDiscount",
                             Percentage = 50,
@@ -448,7 +476,7 @@ namespace Candy_SUT21.Migrations
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 5,
                             EndDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "HellooDiscoconut",
                             Percentage = 25,
@@ -532,6 +560,26 @@ namespace Candy_SUT21.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("OrderDetails");
+                });
+
+            modelBuilder.Entity("Candy_SUT21.Models.ShoppingCartCoupon", b =>
+                {
+                    b.Property<int>("ShoppingCartCouponId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CouponCodeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ShoppingCartCouponId");
+
+                    b.HasIndex("CouponCodeId");
+
+                    b.ToTable("ShoppingCartCoupons");
                 });
 
             modelBuilder.Entity("Candy_SUT21.Models.ShoppingCartItem", b =>
@@ -735,6 +783,15 @@ namespace Candy_SUT21.Migrations
                         .HasForeignKey("DiscountId");
                 });
 
+            modelBuilder.Entity("Candy_SUT21.Models.CouponCode", b =>
+                {
+                    b.HasOne("Candy_SUT21.Models.Discount", "Discount")
+                        .WithMany("CouponCodes")
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Candy_SUT21.Models.OrderDetail", b =>
                 {
                     b.HasOne("Candy_SUT21.Models.Candy", "Candy")
@@ -746,6 +803,15 @@ namespace Candy_SUT21.Migrations
                     b.HasOne("Candy_SUT21.Models.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Candy_SUT21.Models.ShoppingCartCoupon", b =>
+                {
+                    b.HasOne("Candy_SUT21.Models.CouponCode", "CouponCode")
+                        .WithMany()
+                        .HasForeignKey("CouponCodeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

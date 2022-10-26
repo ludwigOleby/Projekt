@@ -64,6 +64,11 @@ namespace Candy_SUT21.Models
             _context.SaveChanges();
             return result.Entity;
         }
+
+        public async Task<IEnumerable<CouponCode>> GetCouponCodes()
+        {
+            return _context.CouponCodes;
+        }
     }
 
 }

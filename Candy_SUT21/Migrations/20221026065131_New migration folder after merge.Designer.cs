@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221024133656_Added CouponCode")]
-    partial class AddedCouponCode
+    [Migration("20221026065131_New migration folder after merge")]
+    partial class Newmigrationfolderaftermerge
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,16 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f3305b89-d9ca-4de7-bd6a-c592ef285980",
+                            ConcurrencyStamp = "85f7a7c0-4db2-4703-8a98-633f146e21f3",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH84MGF0JYbeMEtWrLgy/dIPbPJjnKn+UT1zrElKe/R7PU4mRdvAYdzxkAhhGYB5Bg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO7Ppu4E0ZeIR5nkzy8CLtCSiQYKTUHQjYTUskUBzLDKTt61SrQ4xgMad9gjyFxq/A==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "8c700a08-be2a-4ff9-9961-f96072c91c4e",
+                            SecurityStamp = "02bb1921-22dc-4b08-a3b0-c813b740296c",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -376,7 +376,7 @@ namespace Candy_SUT21.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("DiscountId")
+                    b.Property<int>("DiscountId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -445,6 +445,14 @@ namespace Candy_SUT21.Migrations
                         new
                         {
                             Id = 1,
+                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "NoDiscount",
+                            Percentage = 0,
+                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
                             EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "MyDiscount",
                             Percentage = 5,
@@ -452,7 +460,7 @@ namespace Candy_SUT21.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 3,
                             EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "YourDiscount",
                             Percentage = 15,
@@ -460,7 +468,7 @@ namespace Candy_SUT21.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 4,
                             EndDate = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "AnotherDiscount",
                             Percentage = 50,
@@ -468,7 +476,7 @@ namespace Candy_SUT21.Migrations
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 5,
                             EndDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "HellooDiscoconut",
                             Percentage = 25,
@@ -757,9 +765,11 @@ namespace Candy_SUT21.Migrations
 
             modelBuilder.Entity("Candy_SUT21.Models.CouponCode", b =>
                 {
-                    b.HasOne("Candy_SUT21.Models.Discount", null)
+                    b.HasOne("Candy_SUT21.Models.Discount", "Discount")
                         .WithMany("CouponCodes")
-                        .HasForeignKey("DiscountId");
+                        .HasForeignKey("DiscountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Candy_SUT21.Models.OrderDetail", b =>

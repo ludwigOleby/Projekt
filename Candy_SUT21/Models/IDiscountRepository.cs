@@ -11,5 +11,6 @@ namespace Candy_SUT21.Models
         Task<Discount> CreateDiscount(Discount discount);
         Task<Discount> DeleteDiscount(int id);
         CouponCode CreateCouponCode(CouponCode couponCode);
+        Task<IEnumerable<CouponCode>> GetCouponCodes();
     }
 }
