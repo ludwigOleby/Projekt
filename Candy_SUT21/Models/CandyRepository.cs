@@ -14,13 +14,10 @@ namespace Candy_SUT21.Models
         {
             _appDbContext = appDbContext;
         }
-        public IEnumerable<Candy> GetAllCandy
+        public async Task<IEnumerable<Candy>> GetAllCandy()
         
         {
-            get
-            {
-                return _appDbContext.Candies.Include(c => c.Category ).Include(d => d.Discount);
-            }
+                return await _appDbContext.Candies.Include(c => c.Category ).Include(d => d.Discount).ToListAsync();            
         }
 
         public IEnumerable<Candy> GetCandyOnSale
