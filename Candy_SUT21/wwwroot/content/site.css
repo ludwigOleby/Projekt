@@ -235,7 +235,6 @@ footer {
 
 .discount-edit-form .manageCouponCode .codeButtons button{
     margin: 1rem 1rem 1rem 0;
-
 }
 
 .discount-edit-form .btnSubmit{
@@ -244,8 +243,21 @@ footer {
     margin: 0 5rem;
 }
 
+@media screen and (min-width: 767px) {
+    .identity-menu{
+        float: right;
+        margin-left: 8rem;
+    }
+}
 
-@media screen and (max-width: 580px){
+@media screen and (max-width: 767px) {
+    .identity-menu {
+        margin-left: 8rem !important;
+    }
+}
+
+
+@media screen and (max-width: 580px) {
     .discount-edit-form .name {
         grid-row: 1;
         grid-column: 1;
@@ -257,6 +269,7 @@ footer {
         grid-column: 1;
         padding: 1rem 5rem;
     }
+
     .discount-edit-form .startDate {
         grid-row: 3;
         grid-column: 1;
@@ -273,6 +286,7 @@ footer {
         grid-row: 5;
         padding: 1rem 5rem;
     }
+
     .discount-edit-form .couponCodes {
         grid-row: 6;
         grid-column: 1;
@@ -283,9 +297,9 @@ footer {
         grid-column: 1;
     }
 
-    .discount-edit-form .manageCouponCode input {
-        max-width: 17rem;
-    }
+        .discount-edit-form .manageCouponCode input {
+            max-width: 17rem;
+        }
 
     .discount-edit-form .btnSubmit {
         grid-row: 8;
@@ -306,13 +320,14 @@ footer {
 
 
 /*.img {
-    float: left;
-    max-width:30%;
+float: left;
+max-width:30%;
 }*/
-.row, .row-input{
-    margin-bottom: 1em;
-}
-.form-body{
-    padding-top:2em;
-    padding-bottom:1em;
-}
+    .row, .row-input {
+        margin-bottom: 1em;
+    }
+
+    .form-body {
+        padding-top: 2em;
+        padding-bottom: 1em;
+    }

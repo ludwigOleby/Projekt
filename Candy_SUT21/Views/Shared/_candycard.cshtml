@@ -20,7 +20,7 @@
             @if (Model.IsOnSale)
             {
                 <h3 class="pull-right" style="color: red;">
-                    @Model.GetDiscountPrice()
+                    @Model.GetDiscountPrice().ToString("c")
                 </h3>
                 <h4 class="pull-right" style="text-decoration: line-through">@Model.Price</h4>
             }
