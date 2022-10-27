@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Candy_SUT21.Migrations
 {
-    public partial class Newmigrationfolderaftermerge : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -329,6 +329,26 @@ namespace Candy_SUT21.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartCoupons",
+                columns: table => new
+                {
+                    ShoppingCartCouponId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShoppingCartId = table.Column<string>(nullable: true),
+                    CouponCodeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartCoupons", x => x.ShoppingCartCouponId);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartCoupons_CouponCodes_CouponCodeId",
+                        column: x => x.CouponCodeId,
+                        principalTable: "CouponCodes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -341,7 +361,7 @@ namespace Candy_SUT21.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "85f7a7c0-4db2-4703-8a98-633f146e21f3", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEO7Ppu4E0ZeIR5nkzy8CLtCSiQYKTUHQjYTUskUBzLDKTt61SrQ4xgMad9gjyFxq/A==", "123456789", false, "02bb1921-22dc-4b08-a3b0-c813b740296c", false, "admin@djinn.com" });
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "2a4001d1-c1e2-4152-a666-5ee3454fcc04", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEJROx7VxiVyDT8FFzLzbtt0/b5+LaaBARnPbuiTf7a2adTEUnZXKLbLbinIDYjoWDA==", "123456789", false, "2de60d8f-d09c-4706-ba34-853ae51bc56c", false, "admin@djinn.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -464,6 +484,11 @@ namespace Candy_SUT21.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCartCoupons_CouponCodeId",
+                table: "ShoppingCartCoupons",
+                column: "CouponCodeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_CandyId",
                 table: "ShoppingCartItems",
                 column: "CandyId");
@@ -487,10 +512,10 @@ namespace Candy_SUT21.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CouponCodes");
+                name: "OrderDetails");
 
             migrationBuilder.DropTable(
-                name: "OrderDetails");
+                name: "ShoppingCartCoupons");
 
             migrationBuilder.DropTable(
                 name: "ShoppingCartItems");
@@ -503,6 +528,9 @@ namespace Candy_SUT21.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "CouponCodes");
 
             migrationBuilder.DropTable(
                 name: "Candies");
