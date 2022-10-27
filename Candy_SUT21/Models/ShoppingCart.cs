@@ -92,9 +92,7 @@ namespace Candy_SUT21.Models
         {
             var cartItems = _appDbContext.ShoppingCartItems.Where(c => c.ShoppingCartId == ShoppingCartID);
             _appDbContext.ShoppingCartItems.RemoveRange(cartItems);
-            var cartCoupon = _appDbContext.ShoppingCartCoupons.FirstOrDefault(s => s.ShoppingCartId == ShoppingCartID);
-            if (cartCoupon != null)
-                _appDbContext.ShoppingCartCoupons.Remove(cartCoupon);
+            ClearCouponCodes();
             _appDbContext.SaveChanges();
         }
 
@@ -137,6 +135,7 @@ namespace Candy_SUT21.Models
 
         public bool AddCouponCode(int couponCodeId)
         {
+            ClearCouponCodes();
             var result = _appDbContext.ShoppingCartCoupons.Add(new ShoppingCartCoupon
             {
                 CouponCodeId = couponCodeId,
@@ -146,6 +145,11 @@ namespace Candy_SUT21.Models
             return result == null ? false : true;
         }
 
+        public void ClearCouponCodes()
+        {
+            var currentCodes = _appDbContext.ShoppingCartCoupons.Where(s => s.ShoppingCartId == ShoppingCartID);
+            _appDbContext.ShoppingCartCoupons.RemoveRange(currentCodes);
+        }
         public CouponCode GetCouponCode()
         {
             var couponCode = _appDbContext.ShoppingCartCoupons
