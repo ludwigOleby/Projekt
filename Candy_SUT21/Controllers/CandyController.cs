@@ -25,53 +25,57 @@ namespace Candy_SUT21.Controllers
             _hosting = hosting;
         }
 
-        public ViewResult List(string category)
+        public async Task<ViewResult> List(string category)
         {
             IEnumerable<Candy> candies;
             string currentCategory;
 
             if (string.IsNullOrEmpty(category))
             {
-                candies = _candyRepository.GetAllCandy.OrderBy(c => c.CandyId);
+                candies = await _candyRepository.GetAllCandy();
+                var candiesByName = candies.OrderBy(c => c.Name);
                 currentCategory = "All Candy";
             }
             else
             {
-                candies = _candyRepository.GetAllCandy.Where(c => c.Category.CategoryName == category);
+                candies = await _candyRepository.GetAllCandy(); 
+                var candyCategory = candies.Where(c => c.Category.CategoryName == category);
 
                 currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
             }
 
             return View(new CandyListViewModel
             {
-                Candies = candies,
+                Candies = candies,                
                 CurrentCategory = currentCategory
             });
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             var candy = await _candyRepository.GetCandyById(id);
             if (candy == null)
-            {
+            {                
                 return NotFound();
             }
 
             return View(candy);
         }
-        public ViewResult AdminList(string category)
+        public async Task<ViewResult> AdminList(string category)
         {
             IEnumerable<Candy> candies;
             string currentCategory;
 
             if (string.IsNullOrEmpty(category))
             {
-                candies = _candyRepository.GetAllCandy.OrderBy(c => c.CandyId);
+                candies = await _candyRepository.GetAllCandy();
+                var sortedCandies = candies.OrderBy(c => c.Name);
                 currentCategory = "All Candy";
             }
             else
             {
-                candies = _candyRepository.GetAllCandy.Where(c => c.Category.CategoryName == category);
+                candies = await _candyRepository.GetAllCandy();
+                var candyCategory = candies.Where(c => c.Category.CategoryName == category);
 
                 currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
             }
@@ -82,7 +86,7 @@ namespace Candy_SUT21.Controllers
                 CurrentCategory = currentCategory
             });
         }
-                
+
         //Get: Candy/Create
         public IActionResult Create()
         {
@@ -125,12 +129,13 @@ namespace Candy_SUT21.Controllers
                 return NotFound();
             }
             Candy candyToGet = await _candyRepository.GetCandyById(id);
-            currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == candyToGet.Category.CategoryName)?.CategoryName;
-
             if (candyToGet == null)
             {
-                return NotFound();
-            }
+                Response.StatusCode = 404;
+                return View("CandyNotFound", id.Value);
+            }     
+            currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == candyToGet.Category.CategoryName)?.CategoryName;
+                        
             CandyEditViewModel candyEditViewModel = new CandyEditViewModel
             {
                 CandyId = candyToGet.CandyId,
@@ -198,14 +203,16 @@ namespace Candy_SUT21.Controllers
             string currentCategory;
             if (id == null)
             {
-                return NotFound();
+                Response.StatusCode = 404;
+                return View("CandyNotFound", id.Value);
             }
             Candy candyToGet = await _candyRepository.GetCandyById(id);
             currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == candyToGet.Category.CategoryName)?.CategoryName;
             
             if (candyToGet == null)
             {
-                return NotFound();
+                Response.StatusCode = 404;
+                return View("CandyNotFound", id.Value);
             }
             CandyEditViewModel candyEditViewModel = new CandyEditViewModel
             {

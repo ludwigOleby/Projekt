@@ -37,9 +37,10 @@ namespace Candy_SUT21.Controllers
             return View(shoppigCartViewModel);
         }
 
-        public RedirectToActionResult AddToShoppingCart(int candyId)
+        public async Task<RedirectToActionResult> AddToShoppingCart(int candyId)
         {
-            var selectedCandy = _candyRepository.GetAllCandy.FirstOrDefault(c => c.CandyId == candyId);
+            var candies = await _candyRepository.GetAllCandy();
+            var selectedCandy = candies.FirstOrDefault(c => c.CandyId == candyId);
 
             if (selectedCandy != null)
             {
@@ -48,9 +49,11 @@ namespace Candy_SUT21.Controllers
             return RedirectToAction("Index");
         }
 
-        public RedirectToActionResult RemoveFromShoppingCart(int candyId)
+
+        public async Task<RedirectToActionResult> RemoveFromShoppingCart(int candyId)
         {
-            var selectedCandy = _candyRepository.GetAllCandy.FirstOrDefault(c => c.CandyId == candyId);
+            var candies = await _candyRepository.GetAllCandy();
+            var selectedCandy = candies.FirstOrDefault(c => c.CandyId == candyId);
 
             if (selectedCandy != null)
             {
@@ -73,13 +76,17 @@ namespace Candy_SUT21.Controllers
             if (couponCodes != null)
             {
                 var result = couponCodes.FirstOrDefault(c => c.Code == codeInput);
-                if(result != null)
+                if (result != null)
                 {
-                    _shoppingCart.AddCouponCode(result.Id); //TODO Return message if coupon doesnt work
-                }       
-                return RedirectToAction(nameof(Index));
+                    _shoppingCart.AddCouponCode(result.Id);
+                }
+                else
+                    TempData["CouponError"] = "Coupon-Code is invalid!";
             }
-            return NotFound();
+            else
+                TempData["CouponError"] = "Unable to register Coupon-Codes at the moment!";
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

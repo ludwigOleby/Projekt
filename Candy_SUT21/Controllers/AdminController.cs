@@ -55,7 +55,7 @@ namespace Candy_SUT21.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddOrEditDiscount(int? id) 
         {
-            var allCandies = _candyRepository.GetAllCandy;
+            var allCandies = await _candyRepository.GetAllCandy();
             if(id == null)
             {
                 return View(new AddOrEditDiscountViewModel
@@ -115,8 +115,14 @@ namespace Candy_SUT21.Controllers
                 else
                 {
                     var result = await _discountRepository.UpdateDiscount(discount);
-                    if (discountVM.CouponCodes != null && discountVM.CouponCodes.Count > 0)
+                    if (discountVM.CouponCodes != null && discountVM.CouponCodes.Count >= 0)
                     {
+                        //Deletes the removed couponCodes from DB 
+                        var removedCodes = result.CouponCodes.Select(c => c.Code).Except(discountVM.CouponCodes);
+                        var toDelete = result.CouponCodes.Where(c => removedCodes.Contains(c.Code)).ToList();
+                        toDelete.ForEach(c => _discountRepository.DeleteCouponCode(c.Id));
+
+                        //Adds new couponCodes to DB
                         var newCodes = discountVM.CouponCodes.Except(result.CouponCodes.Select(c => c.Code)).ToList();
                         if(newCodes != null && newCodes.Count > 0)
                         {

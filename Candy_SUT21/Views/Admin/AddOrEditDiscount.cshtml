@@ -48,7 +48,7 @@
         </div>
         <div class="couponCodes">
             <label asp-for="@Model.CouponCodes"></label>
-            <select id="selectCouponCodes" disabled class="form-control" asp-for="CouponCodes">
+            <select id="selectCouponCodes"  class="form-control" asp-for="CouponCodes">
                 @if (Model.CouponCodes == null || Model.CouponCodes.Count() == 0)
                 {
                     <option id="couponCodePlaceholder">No Codes Yet!</option>
@@ -57,32 +57,48 @@
                 {
                     @foreach (var item in Model.CouponCodes)
                     {
-                        <option selected value="@item">@item</option>
+                        <option value="@item">@item</option>
                     }
                 }
 
             </select>
         </div>
-        <div class="addCouponCode">
+        <div class="manageCouponCode">
             <input type="text" id="codeInput" />
-            <button onclick="addCode()" type="button">Add Code</button>
+            <div class="codeButtons">
+                <button id="btnAddCode" onclick="addCode()" type="button">Add Code</button>
+                <button id="btnRemoveCode" onclick="removeCode()" type="button">Remove Code</button>
+            </div>   
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary btnSubmit">Save</button>
     </form>
 </div>
+
 <script>
-    //Prepares form to be submitted. 
+    //Prepares form to be submitted by selecting all items/options in select-tag. 
     function prepSubmit() {
-        document.getElementById('selectCouponCodes').disabled = "";
+        document.getElementById('selectCouponCodes').multiple = "multiple"
+        var selectList = document.getElementById('selectCouponCodes');
+        for (var i = 0; i < selectList.length; i++) {
+            selectList[i].selected = "true";
+        }
     }
     //Adds a new CouponCode to list
     function addCode() {
         const code = document.getElementById('codeInput').value;
         if (code.length > 0) {
-            document.getElementById('couponCodePlaceholder').hidden = "true";
-            document.getElementById('selectCouponCodes').innerHTML += "<option selected value=" + code + ">" + code + "</option>";
+            //Removes placeholder if it exists and if an item is added
+            if (document.getElementById('couponCodePlaceholder')) {
+                document.getElementById('selectCouponCodes').remove(0);
+            }
+            document.getElementById('selectCouponCodes').innerHTML += "<option value=" + code + ">" + code + "</option>";
             document.getElementById('codeInput').value = "";
         }
+    }
+    //Remove code from list
+    function removeCode() {
+        var selectList = document.getElementById('selectCouponCodes');
+        selectList.remove(selectList.selectedIndex);
     }
 </script>
 

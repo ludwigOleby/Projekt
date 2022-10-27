@@ -4,34 +4,35 @@
 <table class="table table-striped" style="border: solid 4px #2F445C">
     <thead>
         <tr>
-            <th>Order ID</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Adress</th>
-            <th scope="col">City</th>
-            <th scope="col">Order Date</th>
-            <th scope="col">Order Total</th>
-            <th scope="col">Order Details</th>
-        </tr>
+    <th>Order ID</th>
+    <th scope="col">First Name</th>
+    <th scope="col">Last Name</th>
+    <th scope="col">Adress</th>
+    <th scope="col">City</th>
+    <th scope="col">Order Date</th>
+    <th scope="col">Order Total</th>
+    <th scope="col">Order Details</th>
+    <th scope="col">Map/Route</th>
     </thead>
     <tbody>
-
-        @foreach (var item in Model)
-        {
+            @foreach (var item in Model)
+            {
             <tr>
-
-                <td>@item.OrderId</td>
-                <td>@item.FirstName</td>
-                <td>@item.LastName</td>
-                <td>@item.Address</td>
-                <td>@item.City</td>
-                <td>@item.OrderPlaced</td>
-                <td>@item.OrderTotal</td>
-                <td>
-                    <a class="btn btn-primary" asp-controller="Order" asp-action="OrderDetails" asp-route-id="@item.OrderId">Details </a>
-                </td>
-            </tr>
-        }
+        <td>@item.OrderId</td>
+        <td>@item.FirstName</td>
+        <td>@item.LastName</td>
+        <td>@item.Address</td>
+        <td>@item.City</td>
+        <td>@item.OrderPlaced</td>
+        <td>@item.OrderTotal</td>
+        <td>
+            <a class="btn btn-primary" asp-controller="Order" asp-action="OrderDetails" asp-route-id="@item.OrderId">Details </a>
+        </td>
+        <td>
+            <a class="btn btn-primary" asp-controller="Map" asp-action="Map" asp-route-id="@item.OrderId">Map/Route </a>
+        </td>
+        </tr>
+            }
 
     </tbody>
 </table>
