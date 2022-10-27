@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Net.Http;
+using Candy_SUT21.Models.APIModels;
+using System.Net.Http.Json;
 
 namespace Candy_SUT21.Controllers
 {
@@ -17,25 +20,85 @@ namespace Candy_SUT21.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IDiscountRepository _discountRepository;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public AdminController(
-            ICandyRepository candyRepository,
-            ICategoryRepository categoryRepository,
-            IOrderRepository orderRepository,
-            IDiscountRepository discountRepository)
+        public AdminController(ICandyRepository candyRepository, ICategoryRepository categoryRepository, IOrderRepository orderRepository, IDiscountRepository discountRepository, IHttpClientFactory httpClientFactory)
         {
             _candyRepository = candyRepository;
             _categoryRepository = categoryRepository;
             _orderRepository = orderRepository;
             _discountRepository = discountRepository;
+            _httpClientFactory = httpClientFactory;
         }
+        
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public IActionResult OrderManagement()
+        public async Task<IActionResult> OrderManagement(string Currency = "SEK")
         {
             IEnumerable<Order> orders = _orderRepository.OrderList().OrderBy(o => o.OrderId);
-            return View(orders);
+
+            ExchangeRateApiModels exchangeRate;
+
+
+            if (Currency != "SEK")
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, "https://api.exchangerate.host/convert?from=SEK&to=" + Currency);
+                request.Headers.Add("Accept", "application/json");
+
+                var client = _httpClientFactory.CreateClient();
+                try
+                {
+                    var response = await client.SendAsync(request);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        exchangeRate = await response.Content.ReadFromJsonAsync<ExchangeRateApiModels>();
+
+                        foreach (var order in orders)
+                        {
+                            var total = order.OrderTotal * Convert.ToDecimal(exchangeRate.info.rate);
+
+                            order.OrderTotal = Math.Round(total, 2);
+                        }
+
+                        var OrderManagmentViewModel = new OrderManagmentViewModel
+                        {
+                            Order = orders,
+                            CurrencyName = Currency,
+                        };
+
+                        return View(OrderManagmentViewModel);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                catch (Exception)
+                {
+                    var OrderManagmentViewModel = new OrderManagmentViewModel
+                    {
+                        Order = orders,
+                        CurrencyName = "SEK",
+                        //ExchangeRateList = exchangeRateList
+                    };
+
+                    return View(OrderManagmentViewModel);
+                }
+
+            }
+            else
+            {
+                var OrderManagmentViewModel = new OrderManagmentViewModel
+                {
+                    Order = orders,
+                    CurrencyName = "SEK",
+                    //ExchangeRateList = exchangeRateList
+                };
+
+                return View(OrderManagmentViewModel);
+            }
         }
 
         [Authorize(Roles = "Admin")]

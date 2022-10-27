@@ -43,10 +43,10 @@ namespace Candy_SUT21
             services.AddScoped<IDiscountRepository, DiscountRepository>();
 
 
-
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddRazorPages();
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
