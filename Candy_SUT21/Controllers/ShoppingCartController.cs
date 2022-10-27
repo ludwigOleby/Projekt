@@ -13,24 +13,27 @@ namespace Candy_SUT21.Controllers
 
         private readonly ICandyRepository _candyRepository;
         private readonly ShoppingCart _shoppingCart;
+        private readonly IDiscountRepository _discountRepository;
 
-        public ShoppingCartController(ICandyRepository candyRepository , ShoppingCart shoppingCart)
+        public ShoppingCartController(ICandyRepository candyRepository,
+            ShoppingCart shoppingCart,
+            IDiscountRepository discountRepository)
         {
             _candyRepository = candyRepository;
             _shoppingCart = shoppingCart;
+            _discountRepository = discountRepository;
         }
 
         public IActionResult Index()
-        {
+        { 
             _shoppingCart.ShoppingCartItems = _shoppingCart.GetShoppingCartItems();
             var shoppigCartViewModel = new ShoppingCartViewModel
             {
                 ShoppingCart = _shoppingCart,
                 ShoppingCartTotal = _shoppingCart.GetShoppingCartTotal(),
-                ShoppingCartDiscount = _shoppingCart.GetShoppingCartDiscount()
-
+                ShoppingCartDiscount = _shoppingCart.GetShoppingCartDiscount(),
+                CouponCode = _shoppingCart.GetCouponCode()
             };
-
             return View(shoppigCartViewModel);
         }
 
@@ -44,8 +47,6 @@ namespace Candy_SUT21.Controllers
                 _shoppingCart.AddToCart(selectedCandy, 1);
             }
             return RedirectToAction("Index");
-
-
         }
 
 
@@ -63,11 +64,25 @@ namespace Candy_SUT21.Controllers
 
         }
 
-
         public RedirectToActionResult ClearCart()
         {
             _shoppingCart.ClearCart();
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> AddCouponCode(string codeInput)
+        {
+            var couponCodes = await _discountRepository.GetCouponCodes();
+            if (couponCodes != null)
+            {
+                var result = couponCodes.FirstOrDefault(c => c.Code == codeInput);
+                if(result != null)
+                {
+                    _shoppingCart.AddCouponCode(result.Id); //TODO Return message if coupon doesnt work
+                }       
+                return RedirectToAction(nameof(Index));
+            }
+            return NotFound();
         }
     }
 }

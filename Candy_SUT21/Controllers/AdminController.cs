@@ -51,25 +51,40 @@ namespace Candy_SUT21.Controllers
             return View(discounts);
         }
 
+        
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> AddOrEditDiscount(int? id)
+        public async Task<IActionResult> AddOrEditDiscount(int? id) 
         {
             var allCandies = await _candyRepository.GetAllCandy();
             if(id == null)
             {
-                return View(new AddOrEditDiscountViewModel(
-                    new Discount {
-                        StartDate = DateTime.Now,
-                        EndDate = DateTime.Now.AddMonths(1),
-                        Candies = new List<Candy>()},
-                     allCandies));
+                return View(new AddOrEditDiscountViewModel
+                {
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddMonths(1),
+                    AllCandies = allCandies,
+                    CandiesInDiscount = new List<Candy>(),
+                    CandiesNotInDiscount = allCandies,
+                    CouponCodes = new List<string>()
+                });
             }
             var discount = await _discountRepository.GetDiscountById((int)id);
             if(discount == null)
             {
                 return NotFound();
             }
-            return View(new AddOrEditDiscountViewModel( discount, allCandies ));
+            return View(new AddOrEditDiscountViewModel
+            {
+                DiscountId = discount.Id,
+                DiscountName = discount.Name,
+                Percentage = discount.Percentage,
+                StartDate = discount.StartDate,
+                EndDate = discount.EndDate,
+                AllCandies = allCandies,
+                CouponCodes = discount.CouponCodes?.Select(c => c.Code).ToList(),
+                CandiesInDiscount = discount.Candies,
+                CandiesNotInDiscount = allCandies.Except(discount.Candies)
+            });
             
         }
 
@@ -79,13 +94,37 @@ namespace Candy_SUT21.Controllers
         {
             if(ModelState.IsValid)
             {
-                if (discountVM.Discount.Id == 0)
+                var discount = new Discount
                 {
-                    await _discountRepository.CreateDiscount(discountVM.Discount);
+                    Id = discountVM.DiscountId,
+                    Name = discountVM.DiscountName,
+                    StartDate = discountVM.StartDate,
+                    EndDate = discountVM.EndDate,
+                    Percentage = discountVM.Percentage                
+                };
+                if (discountVM.DiscountId == 0)
+                {
+                    if(discountVM.CouponCodes != null && discountVM.CouponCodes.Count > 0)
+                    {
+                        var couponCodes = new List<CouponCode>();
+                        discountVM.CouponCodes.ForEach(c => couponCodes.Add(new CouponCode { Code = c }));
+                        discount.CouponCodes = couponCodes;
+                    }                   
+                    var newDiscount = await _discountRepository.CreateDiscount(discount);
                 }
                 else
                 {
-                    await _discountRepository.UpdateDiscount(discountVM.Discount);
+                    var result = await _discountRepository.UpdateDiscount(discount);
+                    if (discountVM.CouponCodes != null && discountVM.CouponCodes.Count > 0)
+                    {
+                        var newCodes = discountVM.CouponCodes.Except(result.CouponCodes.Select(c => c.Code)).ToList();
+                        if(newCodes != null && newCodes.Count > 0)
+                        {
+                            newCodes.ForEach(c =>
+                            _discountRepository.CreateCouponCode(
+                                new CouponCode { Code = c, DiscountId = result.Id }));
+                        }
+                    }
                 }
                 return RedirectToAction("Discount");
             }                
