@@ -2,6 +2,8 @@
 <h1>Order History</h1>
 
 <table class="table table-striped" style="border: solid 4px #2F445C">
+    <thead>
+        <tr>
     <th>Order ID</th>
     <th scope="col">First Name</th>
     <th scope="col">Last Name</th>
@@ -13,10 +15,9 @@
     <th scope="col">Map/Route</th>
     </thead>
     <tbody>
-        <tr>
             @foreach (var item in Model)
             {
-            <tr />
+            <tr>
         <td>@item.OrderId</td>
         <td>@item.FirstName</td>
         <td>@item.LastName</td>
@@ -30,8 +31,9 @@
         <td>
             <a class="btn btn-primary" asp-controller="Map" asp-action="Map" asp-route-id="@item.OrderId">Map/Route </a>
         </td>
+        </tr>
             }
-    </tr>
+
     </tbody>
 </table>
 

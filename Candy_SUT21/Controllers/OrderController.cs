@@ -58,7 +58,7 @@ namespace Candy_SUT21.Controllers
 
 
         [HttpPost]
-        public IActionResult CheckOut(Order order)
+        public async Task<IActionResult> CheckOut(Order order)
         {
             _shoppingCart.ShoppingCartItems = _shoppingCart.GetShoppingCartItems();
 
@@ -69,7 +69,8 @@ namespace Candy_SUT21.Controllers
 
             if (ModelState.IsValid)
             {
-                _orderRepository.CreateOrder(order);
+                await _orderRepository.CreateOrder(order);
+
 
                 var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
 

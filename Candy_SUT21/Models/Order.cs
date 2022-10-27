@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Candy_SUT21.Models.Statistics;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -48,6 +49,9 @@ namespace Candy_SUT21.Models
         public decimal OrderDiscount { get; set; }
         [BindNever]
         public DateTime OrderPlaced { get; set; }
+
+        [BindNever]
+        public OrderWeather OrderWeather { get; set; }
 
         public List<OrderDetail> OrderDetails { get; set; }
 
