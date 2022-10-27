@@ -7,7 +7,7 @@ namespace Candy_SUT21.Models
 {
     public interface ICandyRepository
     {
-        IEnumerable<Candy> GetAllCandy { get; }
+        Task<IEnumerable<Candy>> GetAllCandy();
         IEnumerable<Candy> GetCandiesWithStockUnder(int stockBelow);
         IEnumerable<Candy> GetCandyOnSale { get; }
 

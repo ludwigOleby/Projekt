@@ -2,8 +2,8 @@
 
 @{
     ViewBag.Title = "Edit Candy";
-    var imageThumbnailPath = @"/Images/thumbnails/" + Model.ExistingImageThumbnailPath ?? @"/Images/thumbnails/noImage2-small.png";
-    var imagePath = @"/Images/" + Model.ExistingImagePath ?? @"/Images/noImage2.png";
+    var imageThumbnailPath = @"/Images/thumbnails/" + (Model.ExistingImageThumbnailPath ?? "noThumbnailDjinn.png");
+    var imagePath = @"/Images/" + (Model.ExistingImagePath ?? "noImageDjinn.png");
 }
 
 <div class="container-flow">
@@ -95,3 +95,15 @@
         <img src="@imageThumbnailPath" />
     </div>
 </div>
+
+ <script>
+     $(document).ready(function (){
+         $("#submit").click(function(){
+            var categories = $('#selectCategory');
+            if(categories.val() === ''){
+                $('#selectedCategory'.val() === '@Model.CurrentCategory');
+                return true;
+            }
+         });
+     });
+ </script>
