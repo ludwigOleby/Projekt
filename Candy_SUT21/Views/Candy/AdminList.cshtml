@@ -15,13 +15,23 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-center">Image</th>
-                    <th scope="col" class="text-center">Candy Name</th>
-                    <th scope="col" class="text-center">Category</th>
+                    <th scope="col" class="text-center">
+                        <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.NameSortParam">Candy Name</a>
+                        </th>
+                    <th scope="col" class="text-center">
+                    <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.CategorySortParam">Category</a>
+                    </th>
                     <th scope="col" class="text-center">Status</th>
-                    <th scope="col" class="text-center">Stock</th>
-                    <th scope="col" class="text-center">Price</th>
+                    <th scope="col" class="text-center">
+                        <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.StockSortParam">Stock</a>
+                    </th>
+                    <th scope="col" class="text-center">
+                        <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.PriceSortParam">Price</a>
+                    </th>
                     <th scope="col" class="text-center">Campaign</th>
-                    <th scope="col" class="text-center">Discount</th>
+                    <th scope="col" class="text-center">
+                        <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.DiscountSortParam">Discount</a>
+                    </th>
                     <th></th>
                 </tr>
             </thead>

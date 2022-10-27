@@ -34,13 +34,14 @@ namespace Candy_SUT21.Controllers
             {
                 candies = await _candyRepository.GetAllCandy();
                 var candiesByName = candies.OrderBy(c => c.Name);
+                candies = candiesByName;
                 currentCategory = "All Candy";
             }
             else
             {
                 candies = await _candyRepository.GetAllCandy(); 
                 var candyCategory = candies.Where(c => c.Category.CategoryName == category);
-
+                candies = candyCategory;
                 currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
             }
 
@@ -61,15 +62,53 @@ namespace Candy_SUT21.Controllers
 
             return View(candy);
         }
-        public async Task<ViewResult> AdminList(string category)
+        public async Task<IActionResult> AdminList(string category, string sortOrder)
         {
             IEnumerable<Candy> candies;
             string currentCategory;
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CategorySortParam = sortOrder == "Category" ? "category_desc" : "Category";
+            ViewBag.StockSortParam = sortOrder == "Stock" ? "stock_desc" : "Stock";
+            ViewBag.PriceSortParam = sortOrder == "Price" ? "price_desc" : "Price";
+            ViewBag.DiscountSortParam = sortOrder == "Discount" ? "discount_desc" : "Discount";
 
             if (string.IsNullOrEmpty(category))
             {
                 candies = await _candyRepository.GetAllCandy();
-                var sortedCandies = candies.OrderBy(c => c.Name);
+
+                switch(sortOrder)
+                {
+                    case "name_desc":
+                        candies = candies.OrderByDescending(c => c.Name);
+                        break;
+                    case "category_desc":
+                        candies = candies.OrderByDescending(c => c.CategoryId);
+                        break;
+                    case "Category":
+                        candies = candies.OrderBy(c => c.CategoryId);
+                        break;
+                    case "stock_desc":
+                        candies = candies.OrderByDescending(c => c.StockAmount);
+                        break;
+                    case "Stock":
+                        candies = candies.OrderBy(c => c.StockAmount);
+                        break;
+                    case "price_desc":
+                        candies = candies.OrderByDescending(c => c.Price);
+                        break;
+                    case "Price":
+                        candies = candies.OrderBy(c => c.Price);
+                        break;
+                    case "discount_desc":
+                        candies = candies.OrderByDescending(c => c.DiscountId);
+                        break;
+                    case "Discount":
+                        candies = candies.OrderBy(c => c.DiscountId);
+                        break;
+                    default:
+                        candies = candies.OrderBy(c => c.Name);
+                        break;
+                }
                 currentCategory = "All Candy";
             }
             else
