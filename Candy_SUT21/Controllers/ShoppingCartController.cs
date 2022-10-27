@@ -76,13 +76,17 @@ namespace Candy_SUT21.Controllers
             if (couponCodes != null)
             {
                 var result = couponCodes.FirstOrDefault(c => c.Code == codeInput);
-                if(result != null)
+                if (result != null)
                 {
-                    _shoppingCart.AddCouponCode(result.Id); //TODO Return message if coupon doesnt work
-                }       
-                return RedirectToAction(nameof(Index));
+                    _shoppingCart.AddCouponCode(result.Id);
+                }
+                else
+                    TempData["CouponError"] = "Coupon-Code is invalid!";
             }
-            return NotFound();
+            else
+                TempData["CouponError"] = "Unable to register Coupon-Codes at the moment!";
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

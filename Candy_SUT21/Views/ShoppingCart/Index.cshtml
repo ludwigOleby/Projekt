@@ -65,6 +65,13 @@
 </table>
 
 <div class="text-right">
+    @if(@TempData["CouponError"] != null)
+            {
+
+    <p class="text-danger">@TempData["CouponError"]</p>
+            }
+
+
     <input type="text" id="codeInput" />
     <button type="button" class="btn btn-primary" onclick="addCouponCode()">Add Coupon-Code</button>
 </div>
