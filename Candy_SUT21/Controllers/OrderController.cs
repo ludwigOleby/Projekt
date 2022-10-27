@@ -1,5 +1,7 @@
 ﻿using Candy_SUT21.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,18 +18,42 @@ namespace Candy_SUT21.Controllers
         private readonly IOrderRepository _orderRepository;
         private readonly ShoppingCart _shoppingCart;
         private readonly ICandyRepository _candyRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ICustomerRepository _customerRepository;
 
-        public OrderController(IOrderRepository orderRepository, ShoppingCart shoppingCart, ICandyRepository candyRepository)
+        public OrderController(IOrderRepository orderRepository,
+            ShoppingCart shoppingCart,
+            ICandyRepository candyRepository,
+            UserManager<ApplicationUser> userManager,
+            ICustomerRepository customerRepository)
         {
             _orderRepository = orderRepository;
             _shoppingCart = shoppingCart;
             _candyRepository = candyRepository;
-
+            _userManager = userManager;
+            _customerRepository = customerRepository;
         }
 
-        public IActionResult CheckOut()
+        public async Task<IActionResult> CheckOut()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if(user.CustomerId != null)
+            {
+                user.Customer = await _customerRepository.GetCustomerById((int)user.CustomerId);
+                var order = new Order
+                {
+                    FirstName = user.Customer.FirstName,
+                    LastName = user.Customer.LastName,
+                    Address = user.Customer.Address,
+                    City = user.Customer.City,
+                    ZipCode = user.Customer.ZipCode,
+                    Phone = user.Customer.Phone
+                };
+                return View(order);
+            }
+            return View(new Order());
+            
+            
         }
 
 

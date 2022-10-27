@@ -1,64 +1,88 @@
 ﻿@model AddOrEditDiscountViewModel
 
-    <div class="discount-edit-container col-md-10 col-md-offset-1">
-        <div class="discount-edit-header">
-            <h2>Discount Management</h2>
-        </div>
-        <form class="discount-edit-form form-group" asp-action="AddOrEditDiscount">
-            <input hidden asp-for="@Model.Discount.Id" />
-            <input hidden asp-for="@Model.Discount.Candies" />
-            <div class="name">
-                <label asp-for="@Model.Discount.Name"></label>
-                <input class="form-control" type="text" asp-for="@Model.Discount.Name" />
-                <span asp-validation-for="@Model.Discount.Name" class="text-danger"></span>
-            </div>
-            <div class="percentage">
-                <label asp-for="@Model.Discount.Percentage"></label>
-                <div class="input-group">
-                    <input class="form-control" type="number" asp-for="@Model.Discount.Percentage" /><span class="input-group-addon">%</span>
-                </div>
-                <span asp-validation-for="@Model.Discount.Percentage" class="text-danger"></span>
-                
-            </div>
-            <div class="startDate">
-                <label asp-for="@Model.Discount.StartDate"></label>
-                <input class="form-control" asp-for="@Model.Discount.StartDate" asp-format="{0:yyyy-MM-ddTHH:mm}" />
-                <span asp-validation-for="@Model.Discount.StartDate" class="text-danger"></span>
-            </div>
-            <div class="endDate">
-                <label asp-for="@Model.Discount.EndDate"></label>
-                <input class="form-control" asp-for="@Model.Discount.EndDate" asp-format="{0:yyyy-MM-ddTHH:mm}" />
-                <span asp-validation-for="@Model.Discount.EndDate" class="text-danger"></span>
-            </div>
-            <div class="candyInDiscount">
-                <label for="inDiscount">Candies in discount</label>
-                <select class="form-control" disabled multiple="multiple" id="inDiscount">
-                    @if (Model.Discount.Candies.Count() == 0)
-                    {
-                        <option>No candies in discount!</option>
-                    }
-                    else
-                    {
-                        @foreach (var candy in Model.Discount.Candies)
-                        {
-                            <option>@candy.Name</option>
-                        }
-                    }
-
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Save</button>
-        </form>
+<div class="discount-edit-container col-md-10 col-md-offset-1">
+    <div class="discount-edit-header">
+        <h2>Discount Management</h2>
     </div>
+    <form class="discount-edit-form form-group" asp-action="AddOrEditDiscount" onsubmit="prepSubmit()">
+        <input hidden asp-for="@Model.DiscountId" />
+        <input hidden asp-for="@Model.CandiesInDiscount" />
+        <div class="name">
+            <label asp-for="@Model.DiscountName"></label>
+            <input class="form-control" type="text" asp-for="@Model.DiscountName" />
+            <span asp-validation-for="@Model.DiscountName" class="text-danger"></span>
+        </div>
+        <div class="percentage">
+            <label asp-for="@Model.Percentage"></label>
+            <div class="input-group">
+                <input class="form-control" type="number" asp-for="@Model.Percentage" /><span class="input-group-addon">%</span>
+            </div>
+            <span asp-validation-for="@Model.Percentage" class="text-danger"></span>
 
-<!--A start for managing objects between lists in view-->
-@*<script>
-    $(function () {
-        function moveItems(origin, dest) {
-            $(origin).find(':selected').appendTo(dest);
+        </div>
+        <div class="startDate">
+            <label asp-for="@Model.StartDate"></label>
+            <input class="form-control" asp-for="@Model.StartDate" asp-format="{0:yyyy-MM-ddTHH:mm}" />
+            <span asp-validation-for="@Model.StartDate" class="text-danger"></span>
+        </div>
+        <div class="endDate">
+            <label asp-for="@Model.EndDate"></label>
+            <input class="form-control" asp-for="@Model.EndDate" asp-format="{0:yyyy-MM-ddTHH:mm}" />
+            <span asp-validation-for="@Model.EndDate" class="text-danger"></span>
+        </div>
+        <div class="candyInDiscount">
+            <label for="inDiscount">Candies in discount</label>
+            <select class="form-control" disabled multiple="multiple" id="inDiscount">
+                @if (Model.CandiesInDiscount.Count() == 0)
+                {
+                    <option>No candies in discount!</option>
+                }
+                else
+                {
+                    @foreach (var candy in Model.CandiesInDiscount)
+                    {
+                        <option>@candy.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="couponCodes">
+            <label asp-for="@Model.CouponCodes"></label>
+            <select id="selectCouponCodes" disabled class="form-control" asp-for="CouponCodes">
+                @if (Model.CouponCodes == null || Model.CouponCodes.Count() == 0)
+                {
+                    <option id="couponCodePlaceholder">No Codes Yet!</option>
+                }
+                else
+                {
+                    @foreach (var item in Model.CouponCodes)
+                    {
+                        <option selected value="@item">@item</option>
+                    }
+                }
+
+            </select>
+        </div>
+        <div class="addCouponCode">
+            <input type="text" id="codeInput" />
+            <button onclick="addCode()" type="button">Add Code</button>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+<script>
+    //Prepares form to be submitted. 
+    function prepSubmit() {
+        document.getElementById('selectCouponCodes').disabled = "";
+    }
+    //Adds a new CouponCode to list
+    function addCode() {
+        const code = document.getElementById('codeInput').value;
+        if (code.length > 0) {
+            document.getElementById('couponCodePlaceholder').hidden = "true";
+            document.getElementById('selectCouponCodes').innerHTML += "<option selected value=" + code + ">" + code + "</option>";
+            document.getElementById('codeInput').value = "";
         }
-        $('#right').click(function () {
-            moveItems('#notInDiscount', '#inDiscount');
-        });
-    });
-</script>*@
+    }
+</script>
+

@@ -35,7 +35,6 @@ namespace Candy_SUT21
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-
             //TEST_2
             services.AddControllersWithViews();
             services.AddScoped<ICandyRepository, CandyRepository>();
@@ -43,6 +42,7 @@ namespace Candy_SUT21
             services.AddScoped<ShoppingCart>(sc => ShoppingCart.GetCart(sc));
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IDiscountRepository, DiscountRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<WeatherApiService>();
 
 
