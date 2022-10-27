@@ -14,13 +14,10 @@ namespace Candy_SUT21.Models
         {
             _appDbContext = appDbContext;
         }
-        public IEnumerable<Candy> GetAllCandy 
+        public async Task<IEnumerable<Candy>> GetAllCandy()
         
         {
-            get
-            {
-                return _appDbContext.Candies.Include(c => c.Category ).Include(d => d.Discount);
-            }
+                return await _appDbContext.Candies.Include(c => c.Category ).Include(d => d.Discount).ToListAsync();            
         }
 
         public IEnumerable<Candy> GetCandyOnSale
@@ -33,9 +30,9 @@ namespace Candy_SUT21.Models
             }
         }
 
-        public Candy GetCandyById(int? candyId)
+        public async Task<Candy> GetCandyById(int? candyId)
         {
-            return _appDbContext.Candies.Include(c => c.Category).FirstOrDefault(c => c.CandyId == candyId);
+            return await _appDbContext.Candies.Include(c => c.Category).Include(d => d.Discount).FirstOrDefaultAsync(c => c.CandyId == candyId);
         }
 
         public void AddStock(int candyId, int amount)
@@ -50,15 +47,16 @@ namespace Candy_SUT21.Models
             candyToDecrease.StockAmount = candyToDecrease.StockAmount - amount;
             _appDbContext.Candies.Update(candyToDecrease);
         }
-        public void CreateCandy(Candy candy)
+        public async Task<Candy> CreateCandy(Candy candy)
         {
-            var candyToCreate = _appDbContext.Candies.Add(candy);
-            _appDbContext.SaveChanges();            
+            var candyToCreate = await _appDbContext.Candies.AddAsync(candy);
+            await _appDbContext.SaveChangesAsync();
+            return candyToCreate.Entity;
         }
 
-        public Candy UpdateCandy(Candy candy)
+        public async Task<Candy> UpdateCandy(Candy candy)
         {
-            var candyToUpdate = _appDbContext.Candies.FirstOrDefault(c => c.CandyId == candy.CandyId);
+            var candyToUpdate = await _appDbContext.Candies.FirstOrDefaultAsync(c => c.CandyId == candy.CandyId);
             if(candyToUpdate != null)
             {
                 candyToUpdate.Name = candy.Name;
@@ -68,20 +66,21 @@ namespace Candy_SUT21.Models
                 candyToUpdate.ImageUrl = candy.ImageUrl;
                 candyToUpdate.ImageThumbnailUrl = candy.ImageThumbnailUrl;
                 candyToUpdate.StockAmount = candy.StockAmount;
+                candyToUpdate.DiscountId = candy.DiscountId;
                 
-                _appDbContext.SaveChanges();
+                await _appDbContext.SaveChangesAsync();
                 return candyToUpdate;
             }
             return null;
         }
 
-        public Candy DeleteCandy(int candyId)
+        public async Task<Candy> DeleteCandy(int candyId)
         {
-            var candyToDelete = _appDbContext.Candies.FirstOrDefault(c => c.CandyId == candyId);
+            var candyToDelete = await _appDbContext.Candies.FirstOrDefaultAsync(c => c.CandyId == candyId);
             if(candyToDelete != null)
             {
                 _appDbContext.Candies.Remove(candyToDelete);
-                _appDbContext.SaveChanges();
+                await _appDbContext.SaveChangesAsync();
                 return candyToDelete;
             }
             return null;

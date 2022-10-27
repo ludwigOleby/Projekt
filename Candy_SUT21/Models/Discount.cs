@@ -18,7 +18,10 @@ namespace Candy_SUT21.Models
         public DateTime StartDate { get; set; }
         [Required(ErrorMessage = "End date is required!")]
         public DateTime EndDate { get; set; }
-        public IEnumerable<Candy> Candies { get; set; }
+#nullable enable
+        public IEnumerable<Candy>? Candies { get; set; }
+        public IEnumerable<CouponCode>? CouponCodes { get; set; }
+#nullable disable
 
         public bool IsActive()
         {

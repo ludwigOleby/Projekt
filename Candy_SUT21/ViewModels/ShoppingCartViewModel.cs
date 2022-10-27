@@ -11,5 +11,6 @@ namespace Candy_SUT21.ViewModels
         public ShoppingCart ShoppingCart { get; set; }
         public decimal ShoppingCartTotal { get; set; }
         public decimal ShoppingCartDiscount { get; set; }
+        public CouponCode? CouponCode { get; set; }
     }
 }

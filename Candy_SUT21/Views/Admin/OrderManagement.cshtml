@@ -42,6 +42,7 @@
             <th scope="col">Order Date</th>
             <th scope="col">Order Total</th>
             <th scope="col">Order Details</th>
+            <th scope="col">Map/Route</th>
         </tr>
     </thead>
     <tbody>
@@ -58,8 +59,12 @@
                 <td>
                     <a class="btn btn-primary" asp-controller="Order" asp-action="OrderDetails" asp-route-id="@item.OrderId">Details </a>
                 </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Map" asp-action="Map" asp-route-id="@item.OrderId">Map/Route </a>
+                 </td>
             </tr>
             }
+
     </tbody>
 </table>
 

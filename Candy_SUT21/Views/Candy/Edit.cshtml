@@ -2,16 +2,16 @@
 
 @{
     ViewBag.Title = "Edit Candy";
-    var imageThumbnailPath = @"/Images/thumbnails/" + Model.ExistingImageThumbnailPath ?? @"/Images/thumbnails/noImage2-small.png";
-    var imagePath = @"/Images/" + Model.ExistingImagePath ?? @"/Images/noImage2.png";
+    var imageThumbnailPath = @"/Images/thumbnails/" + (Model.ExistingImageThumbnailPath ?? "noThumbnailDjinn.png");
+    var imagePath = @"/Images/" + (Model.ExistingImagePath ?? "noImageDjinn.png");
 }
 
 <div class="container-flow">
     <form method="post" asp-action="Edit" enctype="multipart/form-data">
-        <input asp-for="CandyId" hidden />
-        <input asp-for="ExistingImagePath" hidden />
-        <input asp-for="ExistingImageThumbnailPath" hidden />
-        <input asp-for="CategoryId" hidden />
+        <input asp-for="CandyId" type="hidden" />
+        <input asp-for="ExistingImagePath" type="hidden" />
+        <input asp-for="ExistingImageThumbnailPath" type="hidden" />
+        <input type="hidden" asp-for="Discounts" />
         <h2 style="text-align:center;">Update Candy</h2>
         <div class="form-body">
             <div class="form-group">
@@ -26,7 +26,7 @@
                 <div class="input-group col-sm-9">
                     <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
                     <select asp-for="CategoryId" id="selectCategory" class="form-control">
-                        <option selected>@Model.CurrentCategory</option>
+                        <option value=@Model.CategoryId selected>Select Category</option>
                         @await Component.InvokeAsync("CategoryOption")
                     </select>
                 </div>
@@ -40,17 +40,28 @@
             </div>
             <div class="form-group">
                 <label asp-for="StockAmount" class="col-sm-2 control-label">Amount in stock</label>
-                <div class="input-group col-sm-9">
+                <div class="input-group col-sm-4">
                     <span class="input-group-addon"><i class="fa-solid fa-cubes-stacked"></i></span>
                     <input type="number" asp-for="StockAmount" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="col-sm-2 control-label">Price</label>
-                <div class="input-group col-sm-9">
+                <div class="input-group col-sm-4">
                     <span class="input-group-addon"><i class="fa-solid fa-coins"></i></span>
                     <input id="Price" asp-for="Price" class="form-control"/>
                     <span class="input-group-addon">kr</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiscountId" class="col-sm-2 control-label">Discount</label>
+                <div class="input-group col-sm-4">
+                    <span class="input-group-addon"><i class="fa-solid fa-piggy-bank"></i></span>
+                    <select asp-for="DiscountId" id="selectDiscount" class="form-control">
+                        <option value=@Model.DiscountId selected>Select discount</option>
+                        @await Component.InvokeAsync("DiscountOption")
+                    </select>
+                    <span class="input-group-addon">%</span>
                 </div>
             </div>
             <div class="form-group">
@@ -66,13 +77,7 @@
                     <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
                     <input multiple asp-for="FileImageThumbnail" class="form-control custom-file-input" />
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" asp-for="IsOnSale">On sale</label>
-                <div class="input-group col-sm-1">
-                    <input type="checkbox" asp-for="IsOnSale" class="form-input checkbox-large" />
-                </div>
-            </div>
+            </div>            
         </div>
         <div class="form-group">
             <div class="col-sm-12">
@@ -90,3 +95,15 @@
         <img src="@imageThumbnailPath" />
     </div>
 </div>
+
+ <script>
+     $(document).ready(function (){
+         $("#submit").click(function(){
+            var categories = $('#selectCategory');
+            if(categories.val() === ''){
+                $('#selectedCategory'.val() === '@Model.CurrentCategory');
+                return true;
+            }
+         });
+     });
+ </script>

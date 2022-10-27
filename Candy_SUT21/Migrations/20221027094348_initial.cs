@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Candy_SUT21.Migrations
 {
-    public partial class newDB : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -36,7 +36,7 @@ namespace Candy_SUT21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customer",
+                name: "Customers",
                 columns: table => new
                 {
                     CustomerId = table.Column<int>(nullable: false)
@@ -50,7 +50,7 @@ namespace Candy_SUT21.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -82,6 +82,7 @@ namespace Candy_SUT21.Migrations
                     ZipCode = table.Column<string>(maxLength: 5, nullable: false),
                     Phone = table.Column<string>(nullable: false),
                     OrderTotal = table.Column<decimal>(nullable: false),
+                    OrderDiscount = table.Column<decimal>(nullable: false),
                     OrderPlaced = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -135,9 +136,9 @@ namespace Candy_SUT21.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Customer_CustomerId",
+                        name: "FK_AspNetUsers_Customers_CustomerId",
                         column: x => x.CustomerId,
-                        principalTable: "Customer",
+                        principalTable: "Customers",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -172,6 +173,26 @@ namespace Candy_SUT21.Migrations
                         principalTable: "Discounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CouponCodes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(nullable: true),
+                    DiscountId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CouponCodes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CouponCodes_Discounts_DiscountId",
+                        column: x => x.DiscountId,
+                        principalTable: "Discounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -308,6 +329,26 @@ namespace Candy_SUT21.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartCoupons",
+                columns: table => new
+                {
+                    ShoppingCartCouponId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShoppingCartId = table.Column<string>(nullable: true),
+                    CouponCodeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartCoupons", x => x.ShoppingCartCouponId);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartCoupons_CouponCodes_CouponCodeId",
+                        column: x => x.CouponCodeId,
+                        principalTable: "CouponCodes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -320,7 +361,7 @@ namespace Candy_SUT21.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "fe5ddcbd-4c65-4fa8-8c6b-4d3f110d6811", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEHJr4QVMYXLtSsVdlovYJAxtUVgdxR6y4M1yGq8Kf57z4R1HZ7CKBPetX6rnHQB4fg==", "123456789", false, "616fe77f-5af6-45ef-8d9c-450bec49011a", false, "admin@djinn.com" });
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "4eb720b8-88ae-4f92-8a5f-ae258b55b271", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEHoto0EuUPHNjHxtgMdeDaq30gVG6asPeWKRm73i/0U0cwJS7nkCRfMs0G7N/b05wA==", "123456789", false, "42f798fc-0dde-4af9-8726-42f3ed6c0158", false, "admin@djinn.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -339,10 +380,11 @@ namespace Candy_SUT21.Migrations
                 columns: new[] { "Id", "EndDate", "Name", "Percentage", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "MyDiscount", 5, new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "YourDiscount", 15, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "AnotherDiscount", 50, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 4, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "HellooDiscoconut", 25, new DateTime(2022, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "NoDiscount", 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "MyDiscount", 5, new DateTime(2022, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "YourDiscount", 15, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "AnotherDiscount", 50, new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "HellooDiscoconut", 25, new DateTime(2022, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.InsertData(
@@ -427,6 +469,11 @@ namespace Candy_SUT21.Migrations
                 column: "DiscountId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CouponCodes_DiscountId",
+                table: "CouponCodes",
+                column: "DiscountId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_CandyId",
                 table: "OrderDetails",
                 column: "CandyId");
@@ -435,6 +482,11 @@ namespace Candy_SUT21.Migrations
                 name: "IX_OrderDetails_OrderId",
                 table: "OrderDetails",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCartCoupons_CouponCodeId",
+                table: "ShoppingCartCoupons",
+                column: "CouponCodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartItems_CandyId",
@@ -463,6 +515,9 @@ namespace Candy_SUT21.Migrations
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
+                name: "ShoppingCartCoupons");
+
+            migrationBuilder.DropTable(
                 name: "ShoppingCartItems");
 
             migrationBuilder.DropTable(
@@ -475,10 +530,13 @@ namespace Candy_SUT21.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
+                name: "CouponCodes");
+
+            migrationBuilder.DropTable(
                 name: "Candies");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Categories");

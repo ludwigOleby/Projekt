@@ -6,6 +6,6 @@ namespace Candy_SUT21.ViewModels
     {
         public int CandyId { get; set; }
         public string ExistingImagePath { get; set; }
-        public string ExistingImageThumbnailPath { get; set; }
+        public string ExistingImageThumbnailPath { get; set; }   
     }
 }

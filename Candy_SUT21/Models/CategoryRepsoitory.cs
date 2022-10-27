@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +14,6 @@ namespace Candy_SUT21.Models
         {
             _appDbContext = appDbContext;
         }
-        public IEnumerable<Category> GetAllCategory => _appDbContext.Categories;       
+        public IEnumerable<Category> GetAllCategory => _appDbContext.Categories;
     }
 }

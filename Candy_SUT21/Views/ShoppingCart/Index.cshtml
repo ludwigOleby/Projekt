@@ -46,6 +46,13 @@
             <td colspan="3" class="text-right">Total</td>
             <td class="text-right">@Model.ShoppingCartTotal.ToString("c")</td>
         </tr>
+        @if(Model.CouponCode != null)
+            {
+                <tr>
+                    <td colspan="3" class="text-right">Coupon-Code is Activated!</td>
+                    <td class="text-right text-success">"@Model.CouponCode.Code"</td>
+                </tr>
+            }
         @if (Model.ShoppingCartDiscount > 0)
         {
             <tr>
@@ -57,11 +64,31 @@
     </tfoot>
 </table>
 
+<div class="text-right">
+    @if(@TempData["CouponError"] != null)
+            {
+
+    <p class="text-danger">@TempData["CouponError"]</p>
+            }
+
+
+    <input type="text" id="codeInput" />
+    <button type="button" class="btn btn-primary" onclick="addCouponCode()">Add Coupon-Code</button>
+</div>
 <div class="text-center">
     <a class="btn btn-primary" asp-controller="ShoppingCart" asp-action="ClearCart">Clear Cart</a>
     <a class="btn btn-primary" asp-controller="Order" asp-action="CheckOut">Checkout</a>
 </div>
 
+<script>
+
+    function addCouponCode() {
+        var input = document.getElementById("codeInput").value;
+        if (input.length > 1) {
+            window.location.href = '@Url.Action("AddCouponCode", "ShoppingCart")' + '?codeInput=' + input;
+        }
+    }
+</script>
 
 
 

@@ -1,4 +1,6 @@
 using Candy_SUT21.Models;
+using Candy_SUT21.Models.Statistics;
+using Candy_SUT21.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,7 +35,6 @@ namespace Candy_SUT21
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-
             //TEST_2
             services.AddControllersWithViews();
             services.AddScoped<ICandyRepository, CandyRepository>();
@@ -41,11 +42,13 @@ namespace Candy_SUT21
             services.AddScoped<ShoppingCart>(sc => ShoppingCart.GetCart(sc));
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IDiscountRepository, DiscountRepository>();
-
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<WeatherApiService>();
 
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddRazorPages();
+
             services.AddHttpClient();
         }
 
