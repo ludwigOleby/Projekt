@@ -1,0 +1,98 @@
+﻿<div class="chartWidget">
+    <form id="weatherStatsPeriodForm" class="form-inline">
+        <label for="weatherStatsPeriod">Select Period</label>
+        <select id="weatherStatsPeriod" class="form-control">
+            <option value="days">Last 7 days</option>
+            <option value="weeks">Last 4 weeks</option>
+            <option value="months">Last 6 months</option>
+        </select>
+        <button type="submit" class="btn btn-default">Update</button>
+    </form>
+        <div class="chartContainer" id="temperatureStatsChart">
+
+        </div>
+        <div class="chartContainer" id="rainStatsChart">
+
+        </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    $('#weatherStatsPeriodForm').submit(function (e) {
+        e.preventDefault();
+
+        var val = $('#weatherStatsPeriod').val();
+        drawWeatherStatsChart(val);
+    });
+
+    google.charts.setOnLoadCallback(drawWeatherStatsChart);
+
+    function drawWeatherStatsChart(period="days") {
+        $(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Statistics/WeatherStatistics?period=' + period,
+                success: function (chartsdata) {
+
+                    var Data = chartsdata.jsonList;
+
+
+                    var data1 = new google.visualization.DataTable();
+                    data1.addColumn('number', 'Temperature');
+                    data1.addColumn('number', 'Sales Total');
+
+
+                    var data2 = new google.visualization.DataTable();
+                    data2.addColumn('number', 'Rain');
+                    data2.addColumn('number', 'Sales Total');
+
+                    for (var i = 0; i < Data.length; i++) {
+
+                        if (Data[i].orderWeather) {
+                            data1.addRow([{ v: Data[i].orderWeather.temperature, f: Data[i].orderWeather.temperature + '°C' }, { v: Data[i].orderTotal, f: Data[i].orderTotal + ' kr' }]);
+                            data2.addRow([{ v: Data[i].orderWeather.rainMean, f: Data[i].orderWeather.rainMean + 'mm/h' }, { v: Data[i].orderTotal, f: Data[i].orderTotal + ' kr' }]);
+                        }                                         
+                    }
+
+                    var options1 = {
+                        title: 'Temperature vs. Sales Total comparison',
+                        vAxis: { title: 'Sales Total(SEK)' },
+                        hAxis: { title: 'Temperature(°C)'},
+                        legend: 'none',
+                        backgroundColor: { fill: 'transparent' }
+                    };
+
+                    var options2 = {
+                        title: 'Rain vs. Sales Total comparison',
+                        vAxis: { title: 'Sales Total(SEK)' },
+                        hAxis: { title: 'Rain(mm/h)' },
+                        legend: 'none',
+                        backgroundColor: { fill: 'transparent' }
+                    };
+
+
+                    var tempStatschart = new google.charts.Scatter(document.getElementById('temperatureStatsChart'));
+                    tempStatschart.draw(data1, google.charts.Scatter.convertOptions(options1));
+
+                    var rainStatschart = new google.charts.Scatter(document.getElementById('rainStatsChart'));
+                    rainStatschart.draw(data2, google.charts.Scatter.convertOptions(options2));
+
+                    $(window).resize(function () {
+                        tempStatschart.draw(data1, google.charts.Scatter.convertOptions(options1));
+                        rainStatschart.draw(data2, google.charts.Scatter.convertOptions(options2));
+                    });
+                },
+                error: function () {
+                    alert("Error loading data!");
+                }
+            })
+        })
+    }
+
+
+
+
+</script>

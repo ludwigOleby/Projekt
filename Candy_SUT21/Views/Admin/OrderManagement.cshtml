@@ -1,37 +1,73 @@
-﻿@model IEnumerable<Order>
+﻿@model OrderManagmentViewModel
 <h1>Order History</h1>
 
+            <div id="selectForDropdown">
+                <p id="selectText">Currency: @Model.CurrencyName</p>
+                <span class="glyphicon glyphicon-circle-arrow-down"></span>
+                <ul id="list">
+                    <li class="options">SEK</li>
+                    <li class="options">EUR</li>
+                    <li class="options">USD</li>
+                    <li class="options">NOK</li>
+                </ul>
+            </div>
+
+<script>
+
+    let selectForDropdown = document.getElementById("selectForDropdown");
+    let list = document.getElementById("list");
+    let selectText = document.getElementById("selectText");
+    let options = document.getElementsByClassName("options");
+
+    selectForDropdown.onclick = function() {
+        list.classList.toggle("open");
+    }
+
+    for (option of options) {
+        option.onclick = function(){
+            window.location.href = '@Url.Action("OrderManagement", "Admin")' + '?currency=' + this.innerHTML;
+        }
+    }
+
+</script>
+
 <table class="table table-striped" style="border: solid 4px #2F445C">
-    <th>Order ID</th>
-    <th scope="col">First Name</th>
-    <th scope="col">Last Name</th>
-    <th scope="col">Adress</th>
-    <th scope="col">City</th>
-    <th scope="col">Order Date</th>
-    <th scope="col">Order Total</th>
-    <th scope="col">Order Details</th>
-    <th scope="col">Map/Route</th>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Adress</th>
+            <th scope="col">City</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Order Total</th>
+            <th scope="col">Order Details</th>
+            <th scope="col">Map/Route</th>
+        </tr>
     </thead>
     <tbody>
-        <tr>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Order)
             {
-            <tr />
-        <td>@item.OrderId</td>
-        <td>@item.FirstName</td>
-        <td>@item.LastName</td>
-        <td>@item.Address</td>
-        <td>@item.City</td>
-        <td>@item.OrderPlaced</td>
-        <td>@item.OrderTotal</td>
-        <td>
-            <a class="btn btn-primary" asp-controller="Order" asp-action="OrderDetails" asp-route-id="@item.OrderId">Details </a>
-        </td>
-        <td>
-            <a class="btn btn-primary" asp-controller="Map" asp-action="Map" asp-route-id="@item.OrderId">Map/Route </a>
-        </td>
+            <tr>
+                <td>@item.OrderId</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Address</td>
+                <td>@item.City</td>
+                <td>@item.OrderPlaced</td>
+                <td>@item.OrderTotal @Model.CurrencyName</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Order" asp-action="OrderDetails" asp-route-id="@item.OrderId">Details </a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Map" asp-action="Map" asp-route-id="@item.OrderId">Map/Route </a>
+                 </td>
+            </tr>
             }
-    </tr>
+
     </tbody>
 </table>
+
+
+
 
