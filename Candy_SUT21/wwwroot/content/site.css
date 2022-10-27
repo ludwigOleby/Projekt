@@ -123,11 +123,6 @@ footer {
     color: white;
 }
 
-/*.img {
-    float: left;
-    max-width:30%;
-}*/
-
 .discount-management-header {
     display: flex;
     flex-direction: row;
@@ -249,10 +244,7 @@ footer {
         margin: 0 5rem;
     }
 }
-/*.img {
-    float: left;
-    max-width:30%;
-}*/
+
 .row, .row-input{
     margin-bottom: 1em;
 }

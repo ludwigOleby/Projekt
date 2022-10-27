@@ -51,11 +51,11 @@ namespace Candy_SUT21.Controllers
             });
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
             var candy = await _candyRepository.GetCandyById(id);
             if (candy == null)
-            {
+            {                
                 return NotFound();
             }
 
@@ -129,12 +129,13 @@ namespace Candy_SUT21.Controllers
                 return NotFound();
             }
             Candy candyToGet = await _candyRepository.GetCandyById(id);
-            currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == candyToGet.Category.CategoryName)?.CategoryName;
-
             if (candyToGet == null)
             {
-                return NotFound();
-            }
+                Response.StatusCode = 404;
+                return View("CandyNotFound", id.Value);
+            }     
+            currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == candyToGet.Category.CategoryName)?.CategoryName;
+                        
             CandyEditViewModel candyEditViewModel = new CandyEditViewModel
             {
                 CandyId = candyToGet.CandyId,
@@ -202,14 +203,16 @@ namespace Candy_SUT21.Controllers
             string currentCategory;
             if (id == null)
             {
-                return NotFound();
+                Response.StatusCode = 404;
+                return View("CandyNotFound", id.Value);
             }
             Candy candyToGet = await _candyRepository.GetCandyById(id);
             currentCategory = _categoryRepository.GetAllCategory.FirstOrDefault(c => c.CategoryName == candyToGet.Category.CategoryName)?.CategoryName;
             
             if (candyToGet == null)
             {
-                return NotFound();
+                Response.StatusCode = 404;
+                return View("CandyNotFound", id.Value);
             }
             CandyEditViewModel candyEditViewModel = new CandyEditViewModel
             {

@@ -15,7 +15,7 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-center">Image</th>
-                    <th scope ="col" class="text-center">Candy Name</th>
+                    <th scope="col" class="text-center">Candy Name</th>
                     <th scope="col" class="text-center">Category</th>
                     <th scope="col" class="text-center">Status</th>
                     <th scope="col" class="text-center">Stock</th>
@@ -29,7 +29,14 @@
                 @foreach (var candy in Model.Candies)
                 {
                     <tr class="text-center">
-                        <td class="fit-to-image" style="background-image: url('@imagePath@candy.ImageThumbnailUrl');"></td>
+                        @if (candy.ImageThumbnailUrl != null)
+                        {
+                            <td class="fit-to-image" style="background-image: url('@imagePath@candy.ImageThumbnailUrl');"></td>
+                        }
+                        else
+                        {
+                            <td class="fit-to-image" style="background-image: url('/Images/thumbnails/miniJinn.png');"></td>
+                        }
                         <td>@candy.Name</td>
                         <td>@candy.Category.CategoryName</td>
                         <td>
