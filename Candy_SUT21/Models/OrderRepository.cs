@@ -15,12 +15,14 @@ namespace Candy_SUT21.Models
         private readonly AppDbContext _appDbContext;
         private readonly ShoppingCart _shoppingCart;
         private readonly WeatherApiService _weatherService;
+        private readonly GeocodingApiService _geocodingService;
 
-        public OrderRepository(AppDbContext appDbContext, ShoppingCart shoppingCart, WeatherApiService weatherService )
+        public OrderRepository(AppDbContext appDbContext, ShoppingCart shoppingCart, WeatherApiService weatherService, GeocodingApiService geocodingService )
         {
             _appDbContext = appDbContext;
             _shoppingCart = shoppingCart;
             _weatherService = weatherService;
+            _geocodingService = geocodingService;
         }
 
 
@@ -34,16 +36,23 @@ namespace Candy_SUT21.Models
             await _appDbContext.SaveChangesAsync();
 
 
-            double lat = 56.653773;
-            double lon = 12.786712;
+            //double lat = 56.65377;
+            //double lon = 12.78671;
+            var coordinates = await _geocodingService.GetOrderWeatherByLatLon(order.ZipCode, order.City);
 
-
-            var orderWeather = await _weatherService.GetOrderWeatherByLatLon(lat, lon, order);
-
-            if (orderWeather != null)
+            if (coordinates != null)
             {
-                _appDbContext.OrderWeathers.Add(orderWeather);
+                var orderWeather = await _weatherService.GetOrderWeatherByLatLon(coordinates[0], coordinates[1], order);
+
+                if (orderWeather != null)
+                {
+                    _appDbContext.OrderWeathers.Add(orderWeather);
+                }
             }
+
+
+
+
 
 
             var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
