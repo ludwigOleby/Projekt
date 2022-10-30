@@ -76,6 +76,11 @@ namespace Candy_SUT21.Models
             return order;
         }
 
+        public async Task<IEnumerable<Order>> GetOrdersByUserId(string userId)
+        {
+            var orders = await _appDbContext.Orders.Include(d => d.OrderDetails).Where(u => u.ApplicationUserId == userId).ToListAsync();
+            return orders;
+        }
 
         public IEnumerable<Order> GetOrdersByDate(DateTime from, DateTime? to)
         {
