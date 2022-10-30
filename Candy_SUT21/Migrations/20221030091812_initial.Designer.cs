@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221028065345_change in seed")]
-    partial class changeinseed
+    [Migration("20221030091812_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,16 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d599bdef-0752-4e8d-ae8e-4a7ac9a95b80",
+                            ConcurrencyStamp = "46987f8d-0a78-48bb-8c24-6660302bc59d",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDmy16lziy4u5woRjlBFUHmvVO7O6E1kDSjlLeLVyvIG1iIloVaj7W5rf4KukOxTjw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAYgTZZxFpo6nhusCHMvjCEcbSgsl0LW7TZ0g6FT6yxYAEfBofuTcJgCMP2r3BRK5A==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b331e46b-0336-4fd8-b1d9-af8e5d9a060c",
+                            SecurityStamp = "5449aeef-37a3-42c1-8930-d3047f48b2ec",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -138,7 +138,8 @@ namespace Candy_SUT21.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("StockAmount")
+                    b.Property<int?>("StockAmount")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("CandyId");
@@ -155,7 +156,7 @@ namespace Candy_SUT21.Migrations
                             CandyId = 1,
                             CategoryId = 1,
                             Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Cursus risus at ultrices mi tempus imperdiet nulla malesuada pellentesque. Tortor posuere ac ut consequat. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Lacus sed turpis tincidunt id aliquet risus feugiat in. Viverra aliquet eget sit amet tellus cras adipiscing enim eu.",
-                            DiscountId = 2,
+                            DiscountId = 1,
                             ImageThumbnailUrl = "chocolateCandy-small.jpg",
                             ImageUrl = "chocolateCandy.jpg",
                             Name = "Mixed Chocolate Candy",
@@ -445,6 +446,14 @@ namespace Candy_SUT21.Migrations
                         new
                         {
                             Id = 1,
+                            EndDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "NoDiscount",
+                            Percentage = 0,
+                            StartDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
                             EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "MyDiscount",
                             Percentage = 5,
@@ -452,7 +461,7 @@ namespace Candy_SUT21.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = 3,
                             EndDate = new DateTime(2022, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "YourDiscount",
                             Percentage = 15,
@@ -460,7 +469,7 @@ namespace Candy_SUT21.Migrations
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 4,
                             EndDate = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "AnotherDiscount",
                             Percentage = 50,
@@ -468,7 +477,7 @@ namespace Candy_SUT21.Migrations
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 5,
                             EndDate = new DateTime(2023, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "HellooDiscoconut",
                             Percentage = 25,

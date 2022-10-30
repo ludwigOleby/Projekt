@@ -4,10 +4,31 @@
 }
 
 <div class="container-fluid">
-    <h2 style="text-align:center;">@Model.CurrentCategory</h2>
+    <h2 style="text-align:center; padding-bottom:5px;">@Model.CurrentCategory</h2>
     <div class="row">
-        <div class="col-md-1">
-            <a asp-controller="Candy" asp-action="Create" class="btn btn-success" title="Add"><i class="fa-solid fa-circle-plus"></i>&nbsp;Add product</a>
+        <div class="col-sm-2">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:150px;">
+                Order by
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.NameSortParam">Candyname</a></li>
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.CategorySortParam">Category</a></li>
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.PriceSortParam">Price</a></li>
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.StockSortParam">Stock</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-2">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:150px;">
+                Show
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.DiscountSortParam">Candy on Discount</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-2">
+            <a asp-controller="Candy" asp-action="Create" class="btn btn-success" title="Add" style="width:150px;"><i class="fa-solid fa-circle-plus"></i>&nbsp;Add product</a>
         </div>
     </div>
     <div class="table-responsive">
@@ -15,23 +36,13 @@
             <thead>
                 <tr>
                     <th scope="col" class="text-center">Image</th>
-                    <th scope="col" class="text-center">
-                        <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.NameSortParam">Candy Name</a>
-                        </th>
-                    <th scope="col" class="text-center">
-                    <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.CategorySortParam">Category</a>
-                    </th>
+                    <th scope="col" class="text-center">Candy Name</th>
+                    <th scope="col" class="text-center">Category</th>
                     <th scope="col" class="text-center">Status</th>
-                    <th scope="col" class="text-center">
-                        <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.StockSortParam">Stock</a>
-                    </th>
-                    <th scope="col" class="text-center">
-                        <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.PriceSortParam">Price</a>
-                    </th>
+                    <th scope="col" class="text-center">Stock</th>
+                    <th scope="col" class="text-center">Price </th>
                     <th scope="col" class="text-center">Campaign</th>
-                    <th scope="col" class="text-center">
-                        <a asp-action="AdminList" asp-route-sortOrder="@ViewBag.DiscountSortParam">Discount</a>
-                    </th>
+                    <th scope="col" class="text-center">Discount</th>
                     <th></th>
                 </tr>
             </thead>

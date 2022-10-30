@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Candy_SUT21.Migrations
 {
-    public partial class first : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -150,8 +150,8 @@ namespace Candy_SUT21.Migrations
                     CandyId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
                     ImageThumbnailUrl = table.Column<string>(nullable: true),
                     DiscountId = table.Column<int>(nullable: true),
@@ -361,7 +361,7 @@ namespace Candy_SUT21.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "2a4001d1-c1e2-4152-a666-5ee3454fcc04", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEJROx7VxiVyDT8FFzLzbtt0/b5+LaaBARnPbuiTf7a2adTEUnZXKLbLbinIDYjoWDA==", "123456789", false, "2de60d8f-d09c-4706-ba34-853ae51bc56c", false, "admin@djinn.com" });
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "46987f8d-0a78-48bb-8c24-6660302bc59d", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEAYgTZZxFpo6nhusCHMvjCEcbSgsl0LW7TZ0g6FT6yxYAEfBofuTcJgCMP2r3BRK5A==", "123456789", false, "5449aeef-37a3-42c1-8930-d3047f48b2ec", false, "admin@djinn.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221027084227_first")]
-    partial class first
+    [Migration("20221030092705_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,16 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2a4001d1-c1e2-4152-a666-5ee3454fcc04",
+                            ConcurrencyStamp = "394e4f3f-ba26-45f3-b7ac-2ced7689e4f4",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJROx7VxiVyDT8FFzLzbtt0/b5+LaaBARnPbuiTf7a2adTEUnZXKLbLbinIDYjoWDA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHDyapYst76oS+GD1cFk24ZSdbyWUqR91lTJW39vSqIZ6LEozFwkT9UHbLGNUj0QfQ==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2de60d8f-d09c-4706-ba34-853ae51bc56c",
+                            SecurityStamp = "66278cae-8c95-49d7-89c0-720ee7c3ab6e",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -133,12 +133,14 @@ namespace Candy_SUT21.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("StockAmount")
+                    b.Property<int?>("StockAmount")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("CandyId");
