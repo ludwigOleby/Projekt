@@ -80,36 +80,45 @@ namespace Candy_SUT21.Controllers
                 {
                     case "name_desc":
                         candies = candies.OrderByDescending(c => c.Name);
+                        currentCategory = "All Candy";
                         break;
                     case "category_desc":
                         candies = candies.OrderByDescending(c => c.CategoryId);
+                        currentCategory = "All Candy";
                         break;
                     case "Category":
                         candies = candies.OrderBy(c => c.CategoryId);
+                        currentCategory = "All Candy";
                         break;
                     case "stock_desc":
                         candies = candies.OrderByDescending(c => c.StockAmount);
+                        currentCategory = "All Candy";
                         break;
                     case "Stock":
                         candies = candies.OrderBy(c => c.StockAmount);
+                        currentCategory = "All Candy";
                         break;
                     case "price_desc":
                         candies = candies.OrderByDescending(c => c.Price);
+                        currentCategory = "All Candy";
                         break;
                     case "Price":
                         candies = candies.OrderBy(c => c.Price);
+                        currentCategory = "All Candy";
                         break;
                     case "discount_desc":
-                        candies = candies.OrderByDescending(c => c.DiscountId);
+                        candies = candies.OrderByDescending(c => c.DiscountId).Where(c => c.IsOnSale);
+                        currentCategory = "Candy on discount";
                         break;
                     case "Discount":
-                        candies = candies.OrderBy(c => c.DiscountId);
+                        candies = candies.OrderBy(c => c.DiscountId).Where(c => c.IsOnSale);
+                        currentCategory = "Candy on discount";
                         break;
                     default:
                         candies = candies.OrderBy(c => c.Name);
+                        currentCategory = "All Candy";
                         break;
-                }
-                currentCategory = "All Candy";
+                }                
             }
             else
             {
@@ -332,6 +341,5 @@ namespace Candy_SUT21.Controllers
             }
             return uniqueImageThumbnailName;
         }     
-            
     }
 }

@@ -26,7 +26,7 @@
                 <div class="input-group col-sm-9">
                     <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
                     <select asp-for="CategoryId" id="selectCategory" class="form-control">
-                        <option value=@Model.CategoryId selected>Select Category</option>
+                        <option value=@Model.CategoryId selected>@Model.CurrentCategory</option>
                         @await Component.InvokeAsync("CategoryOption")
                     </select>
                 </div>
@@ -58,7 +58,7 @@
                 <div class="input-group col-sm-4">
                     <span class="input-group-addon"><i class="fa-solid fa-piggy-bank"></i></span>
                     <select asp-for="DiscountId" id="selectDiscount" class="form-control">
-                        <option value=@Model.DiscountId selected>Select discount</option>
+                        <option value=@Model.DiscountId selected>@Model.DiscountId</option>
                         @await Component.InvokeAsync("DiscountOption")
                     </select>
                     <span class="input-group-addon">%</span>
@@ -106,4 +106,13 @@
             }
          });
      });
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            var discounts = $('#selectDiscount');
+            if (discounts.val() === '') {
+                $('#selectedDiscount'.val() === '@Model.DiscountId');
+                return true;
+            }
+        });
+    });
  </script>
