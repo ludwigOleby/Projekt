@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "Your orders";
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<div class="row">
+   <div class="col-md-12">
+       <table  class="table">
+           <thead>
+               <tr>
+                    <th>Order Id</th>
+                    <th>Order Date</th>
+                    <th>Order Amount</th>
+                    <th>Order Details</th>
+               </tr>
+           </thead>
+           <tbody>
+               @foreach (var order in Model)
+               {
+                   <tr>
+                       <td>@order.OrderId</td>
+                       <td>@order.OrderPlaced</td>
+                       <td>@order.OrderTotal</td>
+                       <td><a class="btn btn-primary"asp-action="OrderDetails" asp-route-id="@order.OrderId">Details</a></td>
+                   </tr>
+               }
+           </tbody>
+       </table>
+   </div>
+</div>

@@ -7,10 +7,12 @@ namespace Candy_SUT21.Models
 {
     public interface IOrderRepository
     {
-        void CreateOrder(Order order);
+        Task CreateOrder(Order order);
+        IEnumerable<Order> GetOrderWithWeatherByDate(DateTime from, DateTime? to);
 
         Order GetOrderDetails(int id);
 
+        Task<IEnumerable<Order>> GetOrdersByUserId(string userId);
 
         IEnumerable<Order> GetOrdersByDate(DateTime from, DateTime? to);
 

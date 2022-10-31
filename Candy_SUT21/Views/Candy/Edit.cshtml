@@ -13,6 +13,7 @@
         <input asp-for="ExistingImageThumbnailPath" type="hidden" />
         <input type="hidden" asp-for="Discounts" />
         <h2 style="text-align:center;">Update Candy</h2>
+
         <div class="form-body">
             <div class="form-group">
                 <label asp-for="Name" class="col-sm-2 control-label">Candy name</label>
@@ -20,16 +21,20 @@
                     <span class="input-group-addon"><i class="fa-solid fa-candy-cane"></i></span>
                     <input asp-for="Name" class="form-control" />
                 </div>
+                <span asp-validation-for="Name" class="text-danger col-sm-offset-2"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="CategoryId" class="col-sm-2 control-label">Category</label>
                 <div class="input-group col-sm-9">
                     <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
                     <select asp-for="CategoryId" id="selectCategory" class="form-control">
-                        <option value=@Model.CategoryId selected>Select Category</option>
+                        <option value=@Model.CategoryId selected>@Model.CurrentCategory</option>
                         @await Component.InvokeAsync("CategoryOption")
                     </select>
                 </div>
+                <span asp-validation-for="CategoryId" class="text-danger col-sm-offset-2"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="col-sm-2 control-label">Description</label>
@@ -38,32 +43,39 @@
                     <textarea id="Description" asp-for="Description" class="form-control"></textarea>
                 </div>
             </div>
+
             <div class="form-group">
                 <label asp-for="StockAmount" class="col-sm-2 control-label">Amount in stock</label>
                 <div class="input-group col-sm-4">
                     <span class="input-group-addon"><i class="fa-solid fa-cubes-stacked"></i></span>
                     <input type="number" asp-for="StockAmount" class="form-control" />
                 </div>
+                 <span asp-validation-for="StockAmount" class="text-danger col-sm-offset-2"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="col-sm-2 control-label">Price</label>
                 <div class="input-group col-sm-4">
                     <span class="input-group-addon"><i class="fa-solid fa-coins"></i></span>
-                    <input id="Price" asp-for="Price" class="form-control"/>
+                    <input id="Price" asp-for="Price" class="form-control" />
                     <span class="input-group-addon">kr</span>
                 </div>
+                <span asp-validation-for="Price" class="text-danger col-sm-offset-2"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="DiscountId" class="col-sm-2 control-label">Discount</label>
                 <div class="input-group col-sm-4">
                     <span class="input-group-addon"><i class="fa-solid fa-piggy-bank"></i></span>
                     <select asp-for="DiscountId" id="selectDiscount" class="form-control">
-                        <option value=@Model.DiscountId selected>Select discount</option>
+                        <option value=@Model.DiscountId selected>@Model.CurrentDiscount</option>
                         @await Component.InvokeAsync("DiscountOption")
                     </select>
-                    <span class="input-group-addon">%</span>
+                    <span class="input-group-addon">%</span>                   
                 </div>
+                <span asp-validation-for="DiscountId" class="text-danger col-sm-offset-2"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="FileImage" class="col-sm-2 control-label">Image</label>
                 <div class="input-group col-sm-9">
@@ -77,8 +89,9 @@
                     <span class="input-group-addon"><i class="fa-solid fa-image"></i></span>
                     <input multiple asp-for="FileImageThumbnail" class="form-control custom-file-input" />
                 </div>
-            </div>            
+            </div>
         </div>
+
         <div class="form-group">
             <div class="col-sm-12">
                 <div class="row">
@@ -91,19 +104,42 @@
         </div>
     </form>
     <div class="form-group">
-        <img src="@imagePath" />
-        <img src="@imageThumbnailPath" />
-    </div>
-</div>
+        <div class="row">            
+                <div class="image-column">
+                    <h5>Existing image:</h5>
+                </div>
+                <div class="image-column">
+                    <h5>Existing thumbnail image:</h5>
+                </div>           
+        </div>
+        <div class="row">
+                <div class="image-column">
+                    <img src="@imagePath" alt="Picture of candy" style="width:100%">
+                </div>
+                <div class="image-column">
+                    <img src="@imageThumbnailPath" alt="Thumbnail picture of candy" style="width:100%">
+                </div>
+            </div>
+        </div>
+    </div>   
 
- <script>
-     $(document).ready(function (){
-         $("#submit").click(function(){
-            var categories = $('#selectCategory');
-            if(categories.val() === ''){
-                $('#selectedCategory'.val() === '@Model.CurrentCategory');
-                return true;
-            }
-         });
-     });
- </script>
+    <script>
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                var categories = $('#selectCategory');
+                if (categories.val() === '') {
+                    $('#selectedCategory'.val() === '@Model.CurrentCategory');
+                    return true;
+                }
+            });
+        });
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                var discounts = $('#selectDiscount');
+                if (discounts.val() === '') {
+                    $('#selectedDiscount'.val() === '@Model.DiscountId');
+                    return true;
+                }
+            });
+        });
+    </script>

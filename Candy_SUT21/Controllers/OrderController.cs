@@ -37,7 +37,7 @@ namespace Candy_SUT21.Controllers
         public async Task<IActionResult> CheckOut()
         {
             var user = await _userManager.GetUserAsync(User);
-            if(user.CustomerId != null)
+            if (user.CustomerId != null)
             {
                 user.Customer = await _customerRepository.GetCustomerById((int)user.CustomerId);
                 var order = new Order
@@ -47,18 +47,20 @@ namespace Candy_SUT21.Controllers
                     Address = user.Customer.Address,
                     City = user.Customer.City,
                     ZipCode = user.Customer.ZipCode,
-                    Phone = user.Customer.Phone
+                    Phone = user.Customer.Phone,
+                    ApplicationUserId = user.Id
+
                 };
                 return View(order);
             }
-            return View(new Order());
+            return View(new Order{ApplicationUserId = user.Id});
             
             
         }
 
 
         [HttpPost]
-        public IActionResult CheckOut(Order order)
+        public async Task<IActionResult> CheckOut(Order order)
         {
             _shoppingCart.ShoppingCartItems = _shoppingCart.GetShoppingCartItems();
 
@@ -69,7 +71,8 @@ namespace Candy_SUT21.Controllers
 
             if (ModelState.IsValid)
             {
-                _orderRepository.CreateOrder(order);
+                await _orderRepository.CreateOrder(order);
+
 
                 var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
 
@@ -86,17 +89,43 @@ namespace Candy_SUT21.Controllers
             return View(order);
         }
 
-        public IActionResult CheckoutComplete(int id)
+        public async Task<IActionResult> CheckoutComplete(int id)
         {
             var order = _orderRepository.GetOrderDetails(id);
-            return View(order);
+            var user = await _userManager.GetUserAsync(User);
+
+            if (order!=null && order.ApplicationUserId == user.Id)
+            {
+                return View(order);
+            }
+
+            return View("OrderError");
+
+
         }
 
-        public IActionResult OrderDetails(int id)
+        public async Task<IActionResult> OrderDetails(int id)
         {
             var order = _orderRepository.GetOrderDetails(id);
-            return View(order);
+            var user = await _userManager.GetUserAsync(User);
+
+
+            if (order != null && (order.ApplicationUserId == user.Id | User.IsInRole("Admin")))
+            {
+                return View(order);
+            }
+
+            return View("OrderError");
+
         }
+
+        public async Task<IActionResult> OrderHistory()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var orders = await _orderRepository.GetOrdersByUserId(user.Id);
+            return View(orders);
+        }
+
 
     }
 }

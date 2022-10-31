@@ -102,9 +102,10 @@ footer {
 }
 .chartWidget {
     background-color: white;
-    padding: 10px;
+    padding: 10px 20px;
     margin-bottom: 10px;
 }
+
 
 .discount-circle {
     position: absolute;
@@ -235,7 +236,6 @@ footer {
 
 .discount-edit-form .manageCouponCode .codeButtons button{
     margin: 1rem 1rem 1rem 0;
-
 }
 
 .discount-edit-form .btnSubmit{
@@ -244,8 +244,21 @@ footer {
     margin: 0 5rem;
 }
 
+@media screen and (min-width: 767px) {
+    .identity-menu{
+        float: right;
+        margin-left: 8rem;
+    }
+}
 
-@media screen and (max-width: 580px){
+@media screen and (max-width: 767px) {
+    .identity-menu {
+        margin-left: 8rem !important;
+    }
+}
+
+
+@media screen and (max-width: 580px) {
     .discount-edit-form .name {
         grid-row: 1;
         grid-column: 1;
@@ -257,6 +270,7 @@ footer {
         grid-column: 1;
         padding: 1rem 5rem;
     }
+
     .discount-edit-form .startDate {
         grid-row: 3;
         grid-column: 1;
@@ -273,6 +287,7 @@ footer {
         grid-row: 5;
         padding: 1rem 5rem;
     }
+
     .discount-edit-form .couponCodes {
         grid-row: 6;
         grid-column: 1;
@@ -283,9 +298,9 @@ footer {
         grid-column: 1;
     }
 
-    .discount-edit-form .manageCouponCode input {
-        max-width: 17rem;
-    }
+        .discount-edit-form .manageCouponCode input {
+            max-width: 17rem;
+        }
 
     .discount-edit-form .btnSubmit {
         grid-row: 8;
@@ -306,8 +321,8 @@ footer {
 
 
 /*.img {
-    float: left;
-    max-width:30%;
+float: left;
+max-width:30%;
 }*/
 .row, .row-input{
     margin-bottom: 1em;
@@ -315,4 +330,53 @@ footer {
 .form-body{
     padding-top:2em;
     padding-bottom:1em;
+}
+
+#selectForDropdown {
+    background: #5c85b3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    width: 150px;
+    padding: 5px 10px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 4px;
+    border-color: #2f445c;
+    border-style:solid;
+    float: right;
+    margin-bottom: 5px;
+}
+    #selectForDropdown ul {
+        position: absolute;
+        top: 120%;
+        left: 0;
+        list-style: none;
+        background: #fff;
+        color: #555;
+        width: 100%;
+        border: 1px;
+        border-radius: 10px;
+        border-color: #2f445c;
+        border-style: solid;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s;
+    }
+
+#selectForDropdown ul li{
+    padding: 10px 20px;
+    cursor: pointer;
+
+}
+
+#selectForDropdown ul.open{
+    max-height: 300px;
+}
+
+.image-column{
+    float:left;
+    width: 25%;
+    padding: 10px;
 }

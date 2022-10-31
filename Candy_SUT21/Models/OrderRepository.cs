@@ -1,7 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Candy_SUT21.Models.Statistics;
+using Candy_SUT21.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Candy_SUT21.Models
@@ -10,27 +14,48 @@ namespace Candy_SUT21.Models
     {
         private readonly AppDbContext _appDbContext;
         private readonly ShoppingCart _shoppingCart;
+        private readonly WeatherApiService _weatherService;
+        private readonly GeocodingApiService _geocodingService;
 
-        public OrderRepository(AppDbContext appDbContext, ShoppingCart shoppingCart)
+        public OrderRepository(AppDbContext appDbContext, ShoppingCart shoppingCart, WeatherApiService weatherService, GeocodingApiService geocodingService )
         {
             _appDbContext = appDbContext;
             _shoppingCart = shoppingCart;
+            _weatherService = weatherService;
+            _geocodingService = geocodingService;
         }
 
 
-        public void CreateOrder(Order order)
+        public async Task CreateOrder(Order order)
         {
             order.OrderPlaced = DateTime.Now;
             order.OrderTotal = _shoppingCart.GetShoppingCartTotal();
             order.OrderDiscount = _shoppingCart.GetShoppingCartDiscount();
             _appDbContext.Orders.Add(order);
 
+            await _appDbContext.SaveChangesAsync();
 
 
-            _appDbContext.SaveChanges();
+            //double lat = 56.65377;
+            //double lon = 12.78671;
+            var coordinates = await _geocodingService.GetOrderWeatherByLatLon(order.ZipCode, order.City);
+
+            if (coordinates != null)
+            {
+                var orderWeather = await _weatherService.GetOrderWeatherByLatLon(coordinates[0], coordinates[1], order);
+
+                if (orderWeather != null)
+                {
+                    _appDbContext.OrderWeathers.Add(orderWeather);
+                }
+            }
+
+
+
+
+
 
             var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
-
 
             foreach (var shoppigCartItem in shoppingCartItems)
             {
@@ -48,7 +73,7 @@ namespace Candy_SUT21.Models
                
                 _appDbContext.OrderDetails.Add(orderDetails);
             }
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
         }
 
 
@@ -60,6 +85,11 @@ namespace Candy_SUT21.Models
             return order;
         }
 
+        public async Task<IEnumerable<Order>> GetOrdersByUserId(string userId)
+        {
+            var orders = await _appDbContext.Orders.Include(d => d.OrderDetails).Where(u => u.ApplicationUserId == userId).ToListAsync();
+            return orders;
+        }
 
         public IEnumerable<Order> GetOrdersByDate(DateTime from, DateTime? to)
         {
@@ -72,8 +102,15 @@ namespace Candy_SUT21.Models
 
         }
 
+        public IEnumerable<Order> GetOrderWithWeatherByDate(DateTime from, DateTime? to)
+        {
+            if (to == null)
+            {
+                to = DateTime.Now;
+            }
 
-
+            return _appDbContext.Orders.Include(o => o.OrderWeather).Where(o => o.OrderPlaced > from & o.OrderPlaced < to);
+        }
 
         public IEnumerable<Order> OrderList()
         {
