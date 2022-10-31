@@ -124,7 +124,7 @@ namespace Candy_SUT21.Models
         public decimal GetShoppingCartDiscount()
         {
             var withoutDiscounts = _appDbContext.ShoppingCartItems.
-                Where(s => s.ShoppingCartId == ShoppingCartID).Sum(p => p.Candy.Price);
+                Where(s => s.ShoppingCartId == ShoppingCartID).Sum(p => p.Candy.Price * p.Amount);
 
             var withDiscounts = GetShoppingCartTotal();
 
