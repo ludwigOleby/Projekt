@@ -24,7 +24,12 @@ namespace Candy_SUT21.Services
             WeatherApiModel weather;
 
 
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/" + lon.ToString(System.Globalization.CultureInfo.InvariantCulture) + "/lat/" + lat.ToString(System.Globalization.CultureInfo.InvariantCulture) + "/data.json");
+            string lo = $"{lon:F6}".Replace(',', '.');
+            string la = $"{lat:F6}".Replace(',', '.');
+
+
+
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/" + lo + "/lat/" + la+ "/data.json");
             request.Headers.Add("Accept", "application/json");
             var client = _clientFactory.CreateClient();
 
