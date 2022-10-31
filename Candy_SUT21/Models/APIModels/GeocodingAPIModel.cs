@@ -13,7 +13,7 @@ namespace Candy_SUT21.Models.APIModels
 
 
     }
-    public class Query
+    public class geocodingQuery
     {
         public string Text { get; set; }
         public Parsed Parsed { get; set; }
