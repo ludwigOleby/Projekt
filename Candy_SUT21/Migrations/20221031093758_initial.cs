@@ -70,27 +70,6 @@ namespace Candy_SUT21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(maxLength: 25, nullable: false),
-                    LastName = table.Column<string>(maxLength: 50, nullable: false),
-                    Address = table.Column<string>(maxLength: 100, nullable: false),
-                    City = table.Column<string>(maxLength: 50, nullable: false),
-                    ZipCode = table.Column<string>(maxLength: 5, nullable: false),
-                    Phone = table.Column<string>(nullable: false),
-                    OrderTotal = table.Column<decimal>(nullable: false),
-                    OrderDiscount = table.Column<decimal>(nullable: false),
-                    OrderPlaced = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -149,7 +128,7 @@ namespace Candy_SUT21.Migrations
                 {
                     CandyId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
@@ -281,31 +260,31 @@ namespace Candy_SUT21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderDetails",
+                name: "Orders",
                 columns: table => new
                 {
-                    OrderDetailId = table.Column<int>(nullable: false)
+                    OrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<int>(nullable: false),
-                    CandyId = table.Column<int>(nullable: false),
-                    Amount = table.Column<int>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false)
+                    FirstName = table.Column<string>(maxLength: 25, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    Address = table.Column<string>(maxLength: 100, nullable: false),
+                    City = table.Column<string>(maxLength: 50, nullable: false),
+                    ZipCode = table.Column<string>(maxLength: 5, nullable: false),
+                    Phone = table.Column<string>(nullable: false),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    OrderTotal = table.Column<decimal>(nullable: false),
+                    OrderDiscount = table.Column<decimal>(nullable: false),
+                    OrderPlaced = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDetails", x => x.OrderDetailId);
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_OrderDetails_Candies_CandyId",
-                        column: x => x.CandyId,
-                        principalTable: "Candies",
-                        principalColumn: "CandyId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderDetails_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Orders_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -349,6 +328,56 @@ namespace Candy_SUT21.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OrderDetails",
+                columns: table => new
+                {
+                    OrderDetailId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(nullable: false),
+                    CandyId = table.Column<int>(nullable: false),
+                    Amount = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderDetails", x => x.OrderDetailId);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Candies_CandyId",
+                        column: x => x.CandyId,
+                        principalTable: "Candies",
+                        principalColumn: "CandyId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderDetails_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderWeathers",
+                columns: table => new
+                {
+                    OrderWeatherId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RainMean = table.Column<float>(nullable: false),
+                    WeatherSymbol = table.Column<float>(nullable: false),
+                    Temperature = table.Column<float>(nullable: false),
+                    OrderId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderWeathers", x => x.OrderWeatherId);
+                    table.ForeignKey(
+                        name: "FK_OrderWeathers_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -361,7 +390,7 @@ namespace Candy_SUT21.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CustomerId", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "4eb720b8-88ae-4f92-8a5f-ae258b55b271", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEHoto0EuUPHNjHxtgMdeDaq30gVG6asPeWKRm73i/0U0cwJS7nkCRfMs0G7N/b05wA==", "123456789", false, "42f798fc-0dde-4af9-8726-42f3ed6c0158", false, "admin@djinn.com" });
+                values: new object[] { "b74ddd14-6340-4840-95c2-db12554843e5", 0, "b90856cc-8f91-4e72-b2bf-e55b38dcf9e6", null, "admin@djinn.com", true, false, null, "ADMIN@DJINN.COM", "ADMIN@DJINN.COM", "AQAAAAEAACcQAAAAEDsVdHU6+pdKX0BSDAswOBhEHWbZhURE5tVL7UR1bbsg3ATIC2Wrja6XMG1pgju20w==", "123456789", false, "4b7ee666-0b14-4b8a-80c8-c22abbec2496", false, "admin@djinn.com" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -484,6 +513,17 @@ namespace Candy_SUT21.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_ApplicationUserId",
+                table: "Orders",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderWeathers_OrderId",
+                table: "OrderWeathers",
+                column: "OrderId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCartCoupons_CouponCodeId",
                 table: "ShoppingCartCoupons",
                 column: "CouponCodeId");
@@ -515,6 +555,9 @@ namespace Candy_SUT21.Migrations
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
+                name: "OrderWeathers");
+
+            migrationBuilder.DropTable(
                 name: "ShoppingCartCoupons");
 
             migrationBuilder.DropTable(
@@ -522,9 +565,6 @@ namespace Candy_SUT21.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -536,13 +576,16 @@ namespace Candy_SUT21.Migrations
                 name: "Candies");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Discounts");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
         }
     }
 }
