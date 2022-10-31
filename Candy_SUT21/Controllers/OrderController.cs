@@ -89,16 +89,34 @@ namespace Candy_SUT21.Controllers
             return View(order);
         }
 
-        public IActionResult CheckoutComplete(int id)
+        public async Task<IActionResult> CheckoutComplete(int id)
         {
             var order = _orderRepository.GetOrderDetails(id);
-            return View(order);
+            var user = await _userManager.GetUserAsync(User);
+
+            if (order!=null && order.ApplicationUserId == user.Id)
+            {
+                return View(order);
+            }
+
+            return View("OrderError");
+
+
         }
 
-        public IActionResult OrderDetails(int id)
+        public async Task<IActionResult> OrderDetails(int id)
         {
             var order = _orderRepository.GetOrderDetails(id);
-            return View(order);
+            var user = await _userManager.GetUserAsync(User);
+
+
+            if (order != null && (order.ApplicationUserId == user.Id | User.IsInRole("Admin")))
+            {
+                return View(order);
+            }
+
+            return View("OrderError");
+
         }
 
         public async Task<IActionResult> OrderHistory()
