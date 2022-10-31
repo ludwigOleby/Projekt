@@ -29,7 +29,7 @@ namespace Candy_SUT21.Models
 #nullable disable
         public bool IsInStock => StockAmount > 0;
         public int StockAmount { get; set; }
-        [Required(ErrorMessage = "You must select a category")]
+        
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 

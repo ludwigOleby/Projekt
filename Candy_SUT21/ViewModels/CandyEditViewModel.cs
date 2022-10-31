@@ -17,7 +17,7 @@ namespace Candy_SUT21.ViewModels
         [Required(ErrorMessage = "Stockamount is required!")]
         [Range(0, 10000, ErrorMessage = "The maximum stock amount is 10 000!")]
         public int StockAmount { get; set; }
-        [Required(ErrorMessage = "Category is required!")]
+        [Required(ErrorMessage = "Category is required!")]        
         public int CategoryId { get; set; }
         public string? CurrentCategory { get; set; }
         public int? DiscountId { get; set; }

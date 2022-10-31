@@ -1,10 +1,12 @@
 ﻿using Candy_SUT21.Models;
 using Candy_SUT21.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,6 +65,7 @@ namespace Candy_SUT21.Controllers
 
             return View(candy);
         }
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AdminList(string category, string sortOrder)
         {
             IEnumerable<Candy> candies;
@@ -71,7 +74,14 @@ namespace Candy_SUT21.Controllers
             if (string.IsNullOrEmpty(category))
             {                
                 candies = await CandiesInOrder(sortOrder);
-                currentCategory = "All Candy";
+                if(sortOrder == "Discount" || sortOrder == "discount_desc")
+                {
+                    currentCategory = "Candy on Discount";
+                }
+                else
+                {
+                    currentCategory = "All Candy";
+                }                
             }
             else
             {
@@ -89,6 +99,7 @@ namespace Candy_SUT21.Controllers
         }
 
         //Get: Candy/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -96,6 +107,7 @@ namespace Candy_SUT21.Controllers
 
         //Create new Candy
         //Post: Candy/Create
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create(CandyEditViewModel candyItem)
         {
@@ -118,7 +130,6 @@ namespace Candy_SUT21.Controllers
                     Price = candyItem.Price,
                     StockAmount = candyItem.StockAmount,
                     DiscountId = candyItem.DiscountId
-
                 };
                 await _candyRepository.CreateCandy(item);
                 return RedirectToAction("AdminList");
@@ -127,6 +138,7 @@ namespace Candy_SUT21.Controllers
         }
 
         //Get: Candy/Edit/Id
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -163,6 +175,7 @@ namespace Candy_SUT21.Controllers
             return View(candyEditViewModel);
         }
         //Post: Candy/Edit/Id
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(int id, CandyEditViewModel candyItem)
         {
@@ -209,6 +222,7 @@ namespace Candy_SUT21.Controllers
         }
 
         //Get: Candy/Delete/Id
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             string currentCategory;
@@ -242,6 +256,7 @@ namespace Candy_SUT21.Controllers
         }
 
         //Post: Candy/Delete/Id
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteCandy(int id, CandyEditViewModel candyItem)
         {

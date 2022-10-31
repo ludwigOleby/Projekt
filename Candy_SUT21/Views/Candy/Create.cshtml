@@ -24,7 +24,7 @@
                 <label asp-for="CategoryId" class="col-sm-2 control-label">Category</label>
                 <div class="input-group col-sm-9">
                     <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
-                    <select asp-for="CategoryId" id="selectCategory" class="form-control" value="">
+                    <select asp-for="CategoryId" id="selectCategory" class="form-control">
                         <option selected></option>
                         @await Component.InvokeAsync("CategoryOption")
                     </select>
