@@ -19,12 +19,14 @@ namespace Candy_SUT21.ViewModels
         public int StockAmount { get; set; }
         [Required(ErrorMessage = "Category is required!")]        
         public int CategoryId { get; set; }
+#nullable enable
         public string? CurrentCategory { get; set; }
         public int? DiscountId { get; set; }
         public string? CurrentDiscount { get; set; }
         public IEnumerable<Discount>? Discounts { get; set; }
         public IFormFile? FileImage { get; set; }
         public IFormFile? FileImageThumbnail { get; set; }
+#nullable disable
         public string ExistingImagePath { get; set; }
         public string ExistingImageThumbnailPath { get; set; }   
     }
