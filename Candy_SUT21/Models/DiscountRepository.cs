@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Candy_SUT21.Models
@@ -68,6 +69,17 @@ namespace Candy_SUT21.Models
         public async Task<IEnumerable<CouponCode>> GetCouponCodes()
         {
             return _context.CouponCodes;
+        }
+
+        public CouponCode DeleteCouponCode(int id)
+        {
+            var toRemove = _context.CouponCodes.FirstOrDefault(c => c.Id == id);
+            if (toRemove == null)
+                return null;
+            var result = _context.CouponCodes.Remove(toRemove);
+            _context.SaveChanges();
+            return result.Entity;
+
         }
     }
 
