@@ -4,7 +4,7 @@
 <form asp-action="CheckOut" method="post" class="form-horizontal" role="form">
 
     <div asp-validation-summary="All" class="danger"></div>
-
+    <input asp-for="ApplicationUserId" type="hidden" />
     <div class=" form-group">
         <label asp-for="FirstName" class="col-md-2 control-label"></label>
         <div class="col-md-5">

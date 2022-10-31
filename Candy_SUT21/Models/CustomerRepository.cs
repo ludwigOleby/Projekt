@@ -33,9 +33,14 @@ namespace Candy_SUT21.Models
             throw new System.NotImplementedException();
         }
 
-        public Task<Customer> UpdateCustomer(Customer customer)
+        public async Task<Customer> UpdateCustomer(Customer customer)
         {
-            throw new System.NotImplementedException();
+            if (await _appDbContext.Customers.AsNoTracking().
+                FirstOrDefaultAsync(c => c.CustomerId == customer.CustomerId) == null)
+                return null;
+            var result = _appDbContext.Customers.Update((customer));
+            await _appDbContext.SaveChangesAsync();
+            return result.Entity;
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Candy_SUT21.Models
 
         Order GetOrderDetails(int id);
 
+        Task<IEnumerable<Order>> GetOrdersByUserId(string userId);
 
         IEnumerable<Order> GetOrdersByDate(DateTime from, DateTime? to);
 

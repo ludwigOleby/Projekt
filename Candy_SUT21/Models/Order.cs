@@ -43,6 +43,8 @@ namespace Candy_SUT21.Models
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         [BindNever]
         public decimal OrderTotal { get; set; }
         [BindNever]

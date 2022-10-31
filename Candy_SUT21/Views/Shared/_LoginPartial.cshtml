@@ -11,6 +11,9 @@
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>
             <li>
+                <a asp-action="OrderHistory" asp-controller="Order">Your Orders</a>
+            </li>
+            <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
             </li>
         </ul>

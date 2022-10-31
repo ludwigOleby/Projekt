@@ -46,7 +46,6 @@ namespace Candy_SUT21
             services.AddScoped<WeatherApiService>();
             services.AddScoped<GeocodingApiService>();
 
-
             services.AddHttpContextAccessor();
             services.AddSession();
             services.AddRazorPages();
