@@ -1,4 +1,6 @@
 using Candy_SUT21.Models;
+using Candy_SUT21.Models.Statistics;
+using Candy_SUT21.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +15,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Localization;
 
 namespace Candy_SUT21
 {
@@ -35,6 +38,13 @@ namespace Candy_SUT21
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("sv-SE");
+                options.RequestCultureProviders.Clear();
+            }
+            );
+
             //TEST_2
             services.AddControllersWithViews();
             services.AddScoped<ICandyRepository, CandyRepository>();
@@ -43,8 +53,8 @@ namespace Candy_SUT21
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IDiscountRepository, DiscountRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-
-
+            services.AddScoped<WeatherApiService>();
+            services.AddScoped<GeocodingApiService>();
 
             services.AddHttpContextAccessor();
             services.AddSession();
@@ -54,6 +64,8 @@ namespace Candy_SUT21
                 options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
                     _ => "The field is required.");
             });
+            
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +81,7 @@ namespace Candy_SUT21
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseRequestLocalization();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
