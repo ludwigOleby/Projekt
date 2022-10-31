@@ -4,16 +4,14 @@ using Candy_SUT21.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221030104146_Added ApplicationUser info to Order table")]
-    partial class AddedApplicationUserinfotoOrdertable
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,16 +93,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "79d1f8b3-8d29-4066-a9c3-fe67579bf984",
+                            ConcurrencyStamp = "b90856cc-8f91-4e72-b2bf-e55b38dcf9e6",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBojCzS3+7L+GqDW+fogRHYrbPcWaAYu9H9zirr4tAHttmZaKJtaWgJoQc5UTxLnYQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDsVdHU6+pdKX0BSDAswOBhEHWbZhURE5tVL7UR1bbsg3ATIC2Wrja6XMG1pgju20w==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "507a8c9a-f6d5-4739-9bb1-4b02d6be1caa",
+                            SecurityStamp = "4b7ee666-0b14-4b8a-80c8-c22abbec2496",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -133,6 +131,7 @@ namespace Candy_SUT21.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")

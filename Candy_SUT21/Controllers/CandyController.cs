@@ -367,8 +367,7 @@ namespace Candy_SUT21.Controllers
                     
                 default:
                     return candies = candies.OrderBy(c => c.Name);   
-            }
-            return null;
+            }           
 
         }
     }
