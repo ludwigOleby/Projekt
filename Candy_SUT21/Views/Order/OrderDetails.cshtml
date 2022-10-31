@@ -31,10 +31,17 @@
         </tr>
     </tfoot>
 </table>
-
 <div class="text-center">
-    <a class="btn btn-primary" asp-controller="Admin" asp-action="OrderManagement">Order List</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-primary" asp-controller="Admin" asp-action="OrderManagement">Order List</a>
+    }
+    else
+    {
+        <a class="btn btn-primary" asp-controller="Order" asp-action="OrderHistory">Back to orders</a>
+    }
 </div>
+
 
 
 
