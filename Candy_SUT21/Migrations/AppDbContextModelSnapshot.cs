@@ -93,16 +93,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4eb720b8-88ae-4f92-8a5f-ae258b55b271",
+                            ConcurrencyStamp = "e5cf8b20-bc0b-4de9-9496-8569462c75ec",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHoto0EuUPHNjHxtgMdeDaq30gVG6asPeWKRm73i/0U0cwJS7nkCRfMs0G7N/b05wA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEALd2Hy7H48Jt7ENK/a/+z/1m40ewH5tRpReCA4dCRmEBuB5ds9X3LDyDHR+8xMknw==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "42f798fc-0dde-4af9-8726-42f3ed6c0158",
+                            SecurityStamp = "11f63176-e2bb-4747-a9d7-cd073d051c85",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -603,6 +603,33 @@ namespace Candy_SUT21.Migrations
                     b.ToTable("ShoppingCartItems");
                 });
 
+            modelBuilder.Entity("Candy_SUT21.Models.Statistics.OrderWeather", b =>
+                {
+                    b.Property<int>("OrderWeatherId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("RainMean")
+                        .HasColumnType("real");
+
+                    b.Property<float>("Temperature")
+                        .HasColumnType("real");
+
+                    b.Property<float>("WeatherSymbol")
+                        .HasColumnType("real");
+
+                    b.HasKey("OrderWeatherId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("OrderWeathers");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -819,6 +846,15 @@ namespace Candy_SUT21.Migrations
                     b.HasOne("Candy_SUT21.Models.Candy", "Candy")
                         .WithMany()
                         .HasForeignKey("CandyId");
+                });
+
+            modelBuilder.Entity("Candy_SUT21.Models.Statistics.OrderWeather", b =>
+                {
+                    b.HasOne("Candy_SUT21.Models.Order", "Order")
+                        .WithOne("OrderWeather")
+                        .HasForeignKey("Candy_SUT21.Models.Statistics.OrderWeather", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
