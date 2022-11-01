@@ -4,17 +4,18 @@
 <table class="table table-bordered table-striped">
     <thead>
         <tr>
-            <th>&nbsp;</th>
-            <th>Selected Amount</th>
-            <th>Candy</th>
-            <th class="text-right">Price</th>
-            <th class="text-right">Subtotal</th>
+            <th class="col-sm-1">&nbsp;</th>
+            <th class="col-md-2">Selected Amount</th>
+            <th class="col-md-5">Candy</th>
+            <th class="text-right col-md-2">Price</th>
+            <th class="text-right col-md-2">Subtotal</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.OrderDetails)
         {
             <tr>
+                <td></td>
                 <td class="text-center">@item.Amount</td>
                 <td class="text-left">@item.Candy.Name</td>
                 <td class="text-right">@item.Candy.Price.ToString("c")</td>

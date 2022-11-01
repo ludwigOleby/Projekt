@@ -34,7 +34,8 @@ namespace Candy_SUT21
 
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddUserManager<ApplicationUserManager>();
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
