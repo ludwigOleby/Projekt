@@ -50,7 +50,7 @@
                     <span class="input-group-addon"><i class="fa-solid fa-cubes-stacked"></i></span>
                     <input type="number" asp-for="StockAmount" class="form-control" />
                 </div>
-                 <span asp-validation-for="StockAmount" class="text-danger col-sm-offset-2"></span>
+                <span asp-validation-for="StockAmount" class="text-danger col-sm-offset-2"></span>
 
             </div>
             <div class="form-group">
@@ -71,7 +71,7 @@
                         <option value=@Model.DiscountId selected>@Model.CurrentDiscount</option>
                         @await Component.InvokeAsync("DiscountOption")
                     </select>
-                    <span class="input-group-addon">%</span>                   
+                    <span class="input-group-addon">%</span>
                 </div>
                 <span asp-validation-for="DiscountId" class="text-danger col-sm-offset-2"></span>
             </div>
@@ -104,42 +104,42 @@
         </div>
     </form>
     <div class="form-group">
-        <div class="row">            
-                <div class="image-column">
-                    <h5>Existing image:</h5>
-                </div>
-                <div class="image-column">
-                    <h5>Existing thumbnail image:</h5>
-                </div>           
-        </div>
         <div class="row">
-                <div class="image-column">
-                    <img src="@imagePath" alt="Picture of candy" style="width:100%">
-                </div>
-                <div class="image-column">
-                    <img src="@imageThumbnailPath" alt="Thumbnail picture of candy" style="width:100%">
-                </div>
+            <div class="image-column">
+                <h5>Existing image:</h5>
+            </div>
+            <div class="image-column">
+                <h5>Existing thumbnail image:</h5>
             </div>
         </div>
-    </div>   
+        <div class="row">
+            <div class="image-column">
+                <img src="@imagePath" alt="Picture of candy" style="width:100%">
+            </div>
+            <div class="image-column">
+                <img src="@imageThumbnailPath" alt="Thumbnail picture of candy" style="width:100%">
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script>
-        $(document).ready(function () {
-            $("#submit").click(function () {
-                var categories = $('#selectCategory');
-                if (categories.val() === '') {
-                    $('#selectedCategory'.val() === '@Model.CurrentCategory');
-                    return true;
-                }
-            });
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            var categories = $('#selectCategory');
+            if (categories.val() === '') {
+                $('#selectedCategory'.val() === '@Model.CurrentCategory');
+                return true;
+            }
         });
-        $(document).ready(function () {
-            $("#submit").click(function () {
-                var discounts = $('#selectDiscount');
-                if (discounts.val() === '') {
-                    $('#selectedDiscount'.val() === '@Model.DiscountId');
-                    return true;
-                }
-            });
+    });
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            var discounts = $('#selectDiscount');
+            if (discounts.val() === '') {
+                $('#selectedDiscount'.val() === '@Model.DiscountId');
+                return true;
+            }
         });
-    </script>
+    });
+</script>
