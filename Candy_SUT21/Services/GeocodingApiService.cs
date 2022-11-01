@@ -17,7 +17,7 @@ namespace Candy_SUT21.Services
             _clientFactory = clientFactory;
         }
 
-        public async Task<double[]> GetOrderWeatherByLatLon(string postalCode, string city)
+        public async Task<double[]> GetCoordinatesByZipcodeAndCity(string postalCode, string city)
         {
             GeocodingAPIModel position;
 
