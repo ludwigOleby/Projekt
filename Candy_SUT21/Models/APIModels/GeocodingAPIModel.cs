@@ -9,11 +9,11 @@ namespace Candy_SUT21.Models.APIModels
     {
 
         public Result[] Results { get; set; }
-        public Query Query { get; set; }
+        public GeocodeQuery Query { get; set; }
 
 
     }
-    public class geocodingQuery
+    public class Query
     {
         public string Text { get; set; }
         public Parsed Parsed { get; set; }
