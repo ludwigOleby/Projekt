@@ -7,8 +7,6 @@
     <div asp-validation-summary="None"></div>
     <form method="post" asp-action="Create" enctype="multipart/form-data">
         <input type="hidden" asp-for="Discounts" />
-        <input type="hidden" asp-for="CurrentCategory" />
-        <input type="hidden" asp-for="CurrentDiscount" />
         <h2 style="text-align:center;">Add new Candy</h2>
         <div class="form-body">
             <div class="form-group">
@@ -25,7 +23,14 @@
                 <div class="input-group col-sm-9">
                     <span class="input-group-addon"><i class="fa-solid fa-list"></i></span>
                     <select asp-for="CategoryId" id="selectCategory" class="form-control">
-                        <option selected></option>
+                        @if (Model.CurrentCategory == null)
+                        {
+                            <option selected></option>
+                        }
+                        else
+                        {
+                            <option selected value="@Model.CategoryId">@Model.CurrentCategory</option>
+                        }
                         @await Component.InvokeAsync("CategoryOption")
                     </select>
                 </div>
@@ -63,8 +68,15 @@
                 <label asp-for="DiscountId" class="col-sm-2 control-label">Discount</label>
                 <div class="input-group col-sm-4">
                     <span class="input-group-addon"><i class="fa-solid fa-piggy-bank"></i></span>
-                    <select asp-for="DiscountId" id="selectDiscount" class="form-control">
-                        <option selected></option>
+                    <select asp-for="DiscountId" id="selectDiscount" class="form-control">                        
+                        @if (Model.CurrentDiscount == null)
+                        {
+                            <option selected></option>
+                        }
+                        else
+                        {
+                            <option selected value="@Model.DiscountId">@Model.CurrentDiscount</option>
+                        }
                         @await Component.InvokeAsync("DiscountOption")
                     </select>
                     <span class="input-group-addon">%</span>

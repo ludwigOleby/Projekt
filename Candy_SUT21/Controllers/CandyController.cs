@@ -103,7 +103,7 @@ namespace Candy_SUT21.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            return View();
+            return View(new CandyEditViewModel { CurrentCategory = null, CurrentDiscount = null});
         }
 
         //Create new Candy
@@ -112,11 +112,10 @@ namespace Candy_SUT21.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CandyEditViewModel candyItem)
         {
-            Candy candyToGet = await _candyRepository.GetCandyById(candyItem.CandyId);
-
             if (candyItem.DiscountId != null)
             {
-                candyItem.CurrentDiscount = await FindDiscountName((int)candyItem.DiscountId);
+                Discount discountToGet = await _discountRepository.GetDiscountById((int)candyItem.DiscountId);
+                candyItem.CurrentDiscount = discountToGet.Name;
             }
            
             if (candyItem.CategoryId > 0)
