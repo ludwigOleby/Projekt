@@ -3,9 +3,24 @@
 <partial name="_Carousel" />
 <h2>Candy On Sale</h2>
 
+<div class="row">
+    @foreach (var candy in Model.CandyOnSale)
+    {
+        <partial name="_candyCard" model="candy" />
+    }
+
+</div>
+
+
+@if (Model.BestSelling.Count() > 0)
+{
+    <h2>Best Selling Candy Right Now</h2>
+}
+
 
 <div class="row">
-    @foreach (var candy in Model.CandyOnSale)    {
+    @foreach (var candy in Model.BestSelling)
+    {
         <partial name="_candyCard" model="candy" />
     }
 

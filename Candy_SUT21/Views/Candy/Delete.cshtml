@@ -2,8 +2,6 @@
 
 @{
     ViewBag.Title = "Delete Candy";
-    //var imageThumbnailPath = @"/Images/thumbnails/" + Model.ExistingImageThumbnailPath ?? @"/Images/thumbnails/noImage2-small.png";
-    //var imagePath = @"/Images/" + Model.ExistingImagePath ?? @"/Images/noImage2.png";
 }
 
 <div class="container-flow">
@@ -52,7 +50,7 @@
             <div class="col-sm-12">
                 <div class="row">
                     <div class="row-input col-sm-offset-5">
-                        <button type="submit" class="btn btn-primary">Delete</button>
+                        <button type="submit" class="btn btn-primary" onclick="return confirm('Confirm to delete candy.')">Delete</button>
                         <a asp-controller="Candy" asp-action="AdminList" class="btn btn-primary">Return</a>
                     </div>
                 </div>

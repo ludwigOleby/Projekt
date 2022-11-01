@@ -21,10 +21,7 @@ namespace Candy_SUT21.Services
         {
             GeocodingAPIModel position;
 
-
-
-
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.geoapify.com/v1/geocode/search?postcode="+postalCode+"&city="+city+"&format=json&apiKey=67d29a448af8443b9f3bd2f1f4de813c");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.geoapify.com/v1/geocode/search?postcode=" + postalCode + "&city=" + city + "&format=json&apiKey=67d29a448af8443b9f3bd2f1f4de813c");
             request.Headers.Add("Accept", "application/json");
             var client = _clientFactory.CreateClient();
 
@@ -36,13 +33,19 @@ namespace Candy_SUT21.Services
                 {
                     position = await response.Content.ReadFromJsonAsync<GeocodingAPIModel>();
 
-                    double[] cordinates = new double[2]
+                    if (position?.Results != null)
                     {
-                        position.Results[0].Lat,
-                        position.Results[0].Lon
-                    };
+                        double[] coordinates = new double[2]
+                        {
+                            position.Results[0].Lat,
+                            position.Results[0].Lon
+                        };
 
-                    return cordinates;
+                        return coordinates;
+                    }
+
+                    return null;
+
                 }
                 return null;
             }

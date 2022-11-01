@@ -3,13 +3,36 @@
     var imagePath = @"/Images/thumbnails/";
 }
 
-<div class="container-fluid">
-    <h2 style="text-align:center;">All Candy</h2>
+<div class="container-fluid">    
     <div class="row">
-        <div class="col-md-1">
-            <a asp-controller="Candy" asp-action="Create" class="btn btn-success" title="Add"><i class="fa-solid fa-circle-plus"></i>&nbsp;Add product</a>
+        <div class="col-sm-2">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:150px;" title="Order by">
+                Order by
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.NameSortParam">Candy Name</a></li>
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.CategorySortParam">Category</a></li>
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.PriceSortParam">Price</a></li>
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.StockSortParam">Stock</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-2">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:150px;" title="Show">
+                Show
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a asp-action="AdminList" asp-route-sortOrder="@ViewBag.DiscountSortParam">Candy on Discount</a></li>
+                <li><a asp-action="AdminList">All Candy</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-2">
+            <a asp-controller="Candy" asp-action="Create" class="btn btn-success" title="Add" style="width:150px;"><i class="fa-solid fa-circle-plus"></i>&nbsp;Add product</a>
         </div>
     </div>
+   
+    <h2 style="text-align:left; padding-bottom:5px;">@Model.CurrentCategory</h2>
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -19,7 +42,7 @@
                     <th scope="col" class="text-center">Category</th>
                     <th scope="col" class="text-center">Status</th>
                     <th scope="col" class="text-center">Stock</th>
-                    <th scope="col" class="text-center">Price</th>
+                    <th scope="col" class="text-center">Price </th>
                     <th scope="col" class="text-center">Campaign</th>
                     <th scope="col" class="text-center">Discount</th>
                     <th></th>
@@ -28,7 +51,7 @@
             <tbody>
                 @foreach (var candy in Model.Candies)
                 {
-                    <tr class="text-center">
+                    <tr>
                         @if (candy.ImageThumbnailUrl != null)
                         {
                             <td class="fit-to-image" style="background-image: url('@imagePath@candy.ImageThumbnailUrl');"></td>
@@ -39,18 +62,18 @@
                         }
                         <td>@candy.Name</td>
                         <td>@candy.Category.CategoryName</td>
-                        <td>
+                        <td class="text-center">
                             @if (candy.StockAmount > 20)
                             {
-                                <div>On sale</div>
+                                <div class="label-success">On sale</div>
                             }
                             else if (candy.StockAmount < 20 && candy.StockAmount > 1)
                             {
-                                <div>Low in stock</div>
+                                <div class="label-warning">Low in stock</div>
                             }
                             else
                             {
-                                <div>Out of stock</div>
+                                <div class="label-danger">Out of stock</div>
                             }
                         </td>
                         <td>@candy.StockAmount</td>
