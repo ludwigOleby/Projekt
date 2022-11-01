@@ -8,6 +8,7 @@ namespace Candy_SUT21.Models
     public interface ICategoryRepository
     {
         IEnumerable<Category> GetAllCategory { get; }
-        
+        Task<Category> GetCategoryById(int? categoryId);
+
     }
 }
