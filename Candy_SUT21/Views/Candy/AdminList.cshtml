@@ -54,11 +54,11 @@
                     <tr>
                         @if (candy.ImageThumbnailUrl != null)
                         {
-                            <td class="fit-to-image" style="background-image: url('@imagePath@candy.ImageThumbnailUrl');"></td>
+                            <td><img src="@imagePath@candy.ImageThumbnailUrl" style="width: 60px;" /></td>
                         }
                         else
                         {
-                            <td class="fit-to-image" style="background-image: url('/Images/thumbnails/miniJinn.png');"></td>
+                            <td><img src="/Images/thumbnails/miniJinn.png" style="width: 60px;" /></td>
                         }
                         <td>@candy.Name</td>
                         <td>@candy.Category.CategoryName</td>
