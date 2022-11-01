@@ -63,7 +63,7 @@
                     <a class="btn btn-primary" asp-controller="Order" asp-action="OrderDetails" asp-route-id="@item.OrderId">Details </a>
                 </td>
                 <td>
-                    <a class="btn btn-primary" asp-controller="Map" asp-action="Map" >Map/Route </a>
+                    <a class="btn btn-primary" asp-controller="Map" asp-action="GetCustomerCoordinates" asp-route-id="@item.OrderId">Map/Route </a>
                  </td>
             </tr>
             }

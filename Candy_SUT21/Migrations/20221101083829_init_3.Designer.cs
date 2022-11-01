@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Candy_SUT21.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221031101730_init")]
-    partial class init
+    [Migration("20221101083829_init_3")]
+    partial class init_3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,16 +95,16 @@ namespace Candy_SUT21.Migrations
                         {
                             Id = "b74ddd14-6340-4840-95c2-db12554843e5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "34f28780-f534-462e-93db-bb9d34c3e1b6",
+                            ConcurrencyStamp = "a95b578e-116f-4874-98d5-ac921b2a5d29",
                             Email = "admin@djinn.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@DJINN.COM",
                             NormalizedUserName = "ADMIN@DJINN.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENTFODd5fd4wHe4nlNznFFg4zee455AMyQZWQ2wu+4N2RPYtjHuyxelT5kpBCorWMw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGuhw0qDAXq1s7yXBtfKlyX9BXFaKmZMgBnd3LY7C/TFAo5XfdU8HzCXCisQK1Nmug==",
                             PhoneNumber = "123456789",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3b0024ef-349c-457d-aa4b-a67a4f66a801",
+                            SecurityStamp = "3510345f-6fb8-459b-ab72-c72d18fd513d",
                             TwoFactorEnabled = false,
                             UserName = "admin@djinn.com"
                         });
@@ -133,6 +133,7 @@ namespace Candy_SUT21.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
