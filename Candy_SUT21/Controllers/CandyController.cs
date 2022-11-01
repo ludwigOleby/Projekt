@@ -1,4 +1,5 @@
-﻿using Candy_SUT21.Models;
+﻿
+using Candy_SUT21.Models;
 using Candy_SUT21.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -113,9 +114,15 @@ namespace Candy_SUT21.Controllers
         {
             Candy candyToGet = await _candyRepository.GetCandyById(candyItem.CandyId);
 
-            if (candyItem.DiscountId == null)
+            if (candyItem.DiscountId != null)
             {
-                candyItem.DiscountId = 1;
+                candyItem.CurrentDiscount = await FindDiscountName((int)candyItem.DiscountId);
+            }
+           
+            if (candyItem.CategoryId > 0)
+            {
+                Category categoryToGet = await _categoryRepository.GetCategoryById(candyItem.CategoryId);
+                candyItem.CurrentCategory = categoryToGet.CategoryName;
             }
 
             if (ModelState.IsValid)
@@ -182,6 +189,15 @@ namespace Candy_SUT21.Controllers
             if (id != candyItem.CandyId)
             {
                 return NotFound();
+            }
+            if(candyItem.CategoryId > 0)
+            {
+                Category categoryToGet = await _categoryRepository.GetCategoryById(candyItem.CategoryId);
+                candyItem.CurrentCategory = categoryToGet.CategoryName;
+            }
+            if(candyItem.DiscountId != null)
+            {
+                candyItem.CurrentDiscount = await FindDiscountName((int)candyItem.DiscountId);
             }
             if (ModelState.IsValid)
             {

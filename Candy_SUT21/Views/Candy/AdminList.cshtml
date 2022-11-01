@@ -51,7 +51,7 @@
             <tbody>
                 @foreach (var candy in Model.Candies)
                 {
-                    <tr class="text-center">
+                    <tr>
                         @if (candy.ImageThumbnailUrl != null)
                         {
                             <td class="fit-to-image" style="background-image: url('@imagePath@candy.ImageThumbnailUrl');"></td>
@@ -62,10 +62,10 @@
                         }
                         <td>@candy.Name</td>
                         <td>@candy.Category.CategoryName</td>
-                        <td>
+                        <td class="text-center">
                             @if (candy.StockAmount > 20)
                             {
-                                <div>On sale</div>
+                                <div class="label-success">On sale</div>
                             }
                             else if (candy.StockAmount < 20 && candy.StockAmount > 1)
                             {

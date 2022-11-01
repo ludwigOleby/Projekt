@@ -15,5 +15,10 @@ namespace Candy_SUT21.Models
             _appDbContext = appDbContext;
         }
         public IEnumerable<Category> GetAllCategory => _appDbContext.Categories;
+
+        public async Task<Category> GetCategoryById(int? categoryId)
+        {
+            return await _appDbContext.Categories.Include(c => c.Candies).ThenInclude(d => d.Discount).FirstOrDefaultAsync(c => c.CategoryId == categoryId);
+        }
     }
 }
