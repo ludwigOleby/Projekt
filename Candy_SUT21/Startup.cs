@@ -54,6 +54,7 @@ namespace Candy_SUT21
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<WeatherApiService>();
             services.AddScoped<GeocodingApiService>();
+            services.AddScoped<GreetingsApiService>();
 
             services.AddHttpContextAccessor();
             services.AddSession();
