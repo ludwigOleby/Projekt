@@ -76,14 +76,37 @@ namespace Candy_SUT21.Controllers
 
                 var shoppingCartItems = _shoppingCart.GetShoppingCartItems();
 
+
+                bool allInStock = true;
+                string stockString = "Error. Not enough candies in stock of: ";
+
                 foreach (var shoppigCartItem in shoppingCartItems)
                 {
-                    _candyRepository.DecreaseStock(shoppigCartItem.Candy.CandyId, shoppigCartItem.Amount);
+                    var candy = await _candyRepository.GetCandyById(shoppigCartItem.Candy.CandyId);
+                     if(candy.StockAmount< shoppigCartItem.Amount)
+                    {
+                        allInStock = false;
+                        stockString += " " + candy.Name + ",";
+                    }
                 }
 
-                _shoppingCart.ClearCart();
+                if (allInStock)
+                {
+                    foreach (var shoppigCartItem in shoppingCartItems)
+                    {
+                        _candyRepository.DecreaseStock(shoppigCartItem.Candy.CandyId, shoppigCartItem.Amount);
+                    }
 
-                return RedirectToAction("CheckoutComplete", new { id = order.OrderId });
+                    _shoppingCart.ClearCart();
+
+                    return RedirectToAction("CheckoutComplete", new { id = order.OrderId });
+                }
+                else
+                {
+                    ViewData["CheckOutStockError"] = stockString;
+                    return View(order);
+                }
+
             }
 
             return View(order);

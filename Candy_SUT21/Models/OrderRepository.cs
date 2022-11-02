@@ -38,7 +38,7 @@ namespace Candy_SUT21.Models
 
             //double lat = 56.65377;
             //double lon = 12.78671;
-            var coordinates = await _geocodingService.GetOrderWeatherByLatLon(order.ZipCode, order.City);
+            var coordinates = await _geocodingService.GetCoordinatesByZipcodeAndCity(order.ZipCode, order.City);
 
             if (coordinates != null)
             {
