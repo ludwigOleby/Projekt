@@ -26,6 +26,7 @@
 .caption {
     height: 130px;
     overflow: hidden;
+    padding: 0 1rem;
 }
 
 .caption h4 {
@@ -33,7 +34,16 @@
 }
 
 .thumbnail img {
+   /* width: 100%;*/
+   overflow:hidden;
+}
+
+.candyCard-image {
     width: 100%;
+    height: 16.8rem;
+    display: flex;
+    justify-content: center;
+    padding: 0.3rem;
 }
 
 .addToCart {
