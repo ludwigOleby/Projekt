@@ -52,14 +52,16 @@
                 @foreach (var candy in Model.Candies)
                 {
                     <tr>
+                        <td style="display: flex; justify-content: center;">
                         @if (candy.ImageThumbnailUrl != null)
                         {
-                            <td><img src="@imagePath@candy.ImageThumbnailUrl" style="width: 60px;" /></td>
+                            <img src="@imagePath@candy.ImageThumbnailUrl"                       style="height: 30px;" />
                         }
                         else
                         {
-                            <td><img src="/Images/thumbnails/miniJinn.png" style="width: 60px;" /></td>
+                            <img src="/Images/thumbnails/miniJinn.png" style="height:           30px;" />
                         }
+                        </td>
                         <td>@candy.Name</td>
                         <td>@candy.Category.CategoryName</td>
                         <td class="text-center">
