@@ -63,11 +63,11 @@
                         <td>@candy.Name</td>
                         <td>@candy.Category.CategoryName</td>
                         <td class="text-center">
-                            @if (candy.StockAmount > 20)
+                            @if (candy.StockAmount >= 20)
                             {
                                 <div class="label-success">On sale</div>
                             }
-                            else if (candy.StockAmount < 20 && candy.StockAmount > 1)
+                            else if (candy.StockAmount < 20 && candy.StockAmount >= 1)
                             {
                                 <div class="label-warning">Low in stock</div>
                             }
