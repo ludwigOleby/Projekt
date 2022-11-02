@@ -33,7 +33,7 @@
 }
 
 .thumbnail img {
-    width: 100%;
+    max-height : 200px
 }
 
 .addToCart {
@@ -42,7 +42,8 @@
 }
 
 .thumbnail {
-    padding: 0;
+    padding: 30px;
+    
 }
 
     .thumbnail .caption-full {
