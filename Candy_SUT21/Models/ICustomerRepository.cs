@@ -7,6 +7,7 @@ namespace Candy_SUT21.Models
     {
         Task<IEnumerable<Customer>> GetCustomers();
         Task<Customer> GetCustomerById(int id);
+        Task<Customer> GetCustomerByApplicationUserId(string id);
         Task<Customer> UpdateCustomer(Customer customer);
         Task<Customer> CreateCustomer(Customer customer);
         Task<Customer> DeleteCustomer(int id);

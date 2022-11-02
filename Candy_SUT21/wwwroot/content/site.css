@@ -33,7 +33,7 @@
 }
 
 .thumbnail img {
-    width: 100%;
+    height : 200px
 }
 
 .addToCart {
@@ -42,7 +42,8 @@
 }
 
 .thumbnail {
-    padding: 0;
+    padding: 30px;
+    
 }
 
     .thumbnail .caption-full {
@@ -319,11 +320,11 @@ footer {
 
 /*  Discont AddOrEdit View End*/
 
-
-/*.img {
-float: left;
-max-width:30%;
-}*/
+.candydetail-thumbnail {
+    max-width: 600px;
+    background-color: white;
+    padding: 2px;
+}
 .row, .row-input{
     margin-bottom: 1em;
 }
@@ -381,6 +382,7 @@ max-width:30%;
     padding: 10px;
 }
 
+
 .thumbnail {
     transition: all 0.2s ease;
 }
@@ -389,3 +391,4 @@ max-width:30%;
         transform: scale(1.03);
         box-shadow: lightgray 2px 5px 5px 2px;
     }
+

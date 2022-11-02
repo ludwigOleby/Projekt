@@ -36,7 +36,8 @@ namespace Candy_SUT21
 
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>();
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddUserManager<ApplicationUserManager>();
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
@@ -55,6 +56,7 @@ namespace Candy_SUT21
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<WeatherApiService>();
             services.AddScoped<GeocodingApiService>();
+            services.AddScoped<GreetingsApiService>();
 
             services.AddHttpContextAccessor();
             services.AddSession();

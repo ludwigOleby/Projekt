@@ -20,8 +20,6 @@ namespace Candy_SUT21.Services
         public async Task<double[]> GetOrderWeatherByLatLon(string postalCode, string city)
         {
             GeocodingAPIModel position;
-
-
             var request = new HttpRequestMessage(HttpMethod.Get, "https://api.geoapify.com/v1/geocode/search?postcode=" + postalCode + "&city=" + city +  "&format=json&apiKey=67d29a448af8443b9f3bd2f1f4de813c");
             request.Headers.Add("Accept", "application/json");
             var client = _clientFactory.CreateClient();
@@ -97,8 +95,5 @@ namespace Candy_SUT21.Services
             }
 
         }
-
-
-
     }
 }

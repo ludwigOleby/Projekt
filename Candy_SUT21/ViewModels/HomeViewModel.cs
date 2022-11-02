@@ -9,5 +9,6 @@ namespace Candy_SUT21.ViewModels
     public class HomeViewModel
     {
         public IEnumerable<Candy> CandyOnSale { get; set; }
+        public IEnumerable<Candy> BestSelling { get; set; }
     }
 }
