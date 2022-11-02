@@ -16,7 +16,7 @@ namespace Candy_SUT21.Services
             _clientFactory = clientFactory;
         }
 
-        public async Task<string> GetRandomGreeting()
+        public async Task<string[]> GetRandomGreeting()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, "https://www.greetingsapi.com/random");
             var client = _clientFactory.CreateClient();
@@ -26,14 +26,14 @@ namespace Candy_SUT21.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var greetingModel = await response.Content.ReadFromJsonAsync<GreetingModel>();
-                    return greetingModel.greeting;
+                    return new string[] { greetingModel.greeting, greetingModel.language };
                 }
                 else
-                    return "Hello";
+                    return new string[] { "Hello", "English" };
             }
             catch
             {
-                return "Hello";
+                return new string[] { "Hello", "English" };
             }
         }
     }

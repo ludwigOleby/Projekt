@@ -4,12 +4,16 @@
 @inject ApplicationUserManager UserManager
 @inject GreetingsApiService GreetingsApi
 
+@{
+    string[] greeting = await GreetingsApi.GetRandomGreeting();
+}
+
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@await GreetingsApi.GetRandomGreeting()👋 @await UserManager.GetUserFullName(UserManager.GetUserId(User))!</a>
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><span style="color:white !important;" data-toggle="tooltip" data-placement="bottom" data-html="true" title="@greeting[1]">@greeting[0]</span>👋 @await UserManager.GetUserFullName(UserManager.GetUserId(User))!</a>
             </li>
             <li>
                 <a asp-action="OrderHistory" asp-controller="Order">Your Orders</a>
@@ -27,3 +31,6 @@ else
         <li><a asp-area="Identity" asp-page="/Account/Login">Login</a></li>
     </ul>
 }
+
+
+
