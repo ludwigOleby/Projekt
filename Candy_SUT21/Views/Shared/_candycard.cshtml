@@ -30,10 +30,10 @@
                 <h3 class="pull-right">@Model.Price.ToString("c")</h3>
             }
             <h3><a asp-controller="Candy" asp-action="Details" asp-route-id="@Model.CandyId">@Model.Name</a></h3>
-            <p>@Model.Description</p>
+            <p style="overflow:scroll; padding:2px; height:80px;">@Model.Description</p>
         </div>
 
-        <div class="addToCart">
+        <div class="addToCart" style="margin-top:5px;">
             @if (Model.IsInStock == true)
            {
                 <p class="button">
