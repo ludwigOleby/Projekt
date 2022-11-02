@@ -18,7 +18,7 @@
             </ul>
         </div>
         <div class="col-sm-2">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:150px; title="Show"">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:150px;" title="Show">
                 Show
                 <span class="caret"></span>
             </button>
@@ -51,21 +51,21 @@
             <tbody>
                 @foreach (var candy in Model.Candies)
                 {
-                    <tr class="text-center">
+                    <tr>
                         @if (candy.ImageThumbnailUrl != null)
                         {
-                            <td class="fit-to-image" style="background-image: url('@imagePath@candy.ImageThumbnailUrl');"></td>
+                            <td><img src="@imagePath@candy.ImageThumbnailUrl" style="width: 60px;" /></td>
                         }
                         else
                         {
-                            <td class="fit-to-image" style="background-image: url('/Images/thumbnails/miniJinn.png');"></td>
+                            <td><img src="/Images/thumbnails/miniJinn.png" style="width: 60px;" /></td>
                         }
                         <td>@candy.Name</td>
                         <td>@candy.Category.CategoryName</td>
-                        <td>
+                        <td class="text-center">
                             @if (candy.StockAmount >= 20)
                             {
-                                <div>On sale</div>
+                                <div class="label-success">On sale</div>
                             }
                             else if (candy.StockAmount < 20 && candy.StockAmount >= 1)
                             {

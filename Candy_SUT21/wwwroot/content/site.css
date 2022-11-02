@@ -319,11 +319,11 @@ footer {
 
 /*  Discont AddOrEdit View End*/
 
-
-/*.img {
-float: left;
-max-width:30%;
-}*/
+.candydetail-thumbnail {
+    max-width: 600px;
+    background-color: white;
+    padding: 2px;
+}
 .row, .row-input{
     margin-bottom: 1em;
 }
