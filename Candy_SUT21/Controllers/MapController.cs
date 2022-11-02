@@ -36,7 +36,7 @@ namespace Candy_SUT21.Controllers
             var street = order.Address.Remove(order.Address.LastIndexOf(" "));
             var housenumber = order.Address.Substring(order.Address.LastIndexOf(" "));
 
-            double[] coordinates = await _geocodingService.GetCustomerCoordinates(zip, city, housenumber, street);
+            double[] coordinates = await _geocodingService.GetCustomerCoordinates(zip, city, street, housenumber);
 
 
             return RedirectToAction("Map", new { customerCoordinates = coordinates });
