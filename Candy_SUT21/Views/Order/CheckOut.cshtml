@@ -1,6 +1,7 @@
 ﻿@model Order
 
 
+<p class="text-danger">@ViewData["CheckOutStockError"]</p>
 <form asp-action="CheckOut" method="post" class="form-horizontal" role="form">
 
     <div asp-validation-summary="All" class="danger"></div>
@@ -65,4 +66,5 @@
             <input type="submit" class="btn btn-primary" value="Complete order" />
         </div>
     </div>
+
 </form>
