@@ -3,31 +3,39 @@
 @{
     ViewData["Title"] = "Your orders";
 }
-
-<h4>@ViewData["Title"]</h4>
+<div class="col-md-10 col-md-offset-2">
+    <h2>@ViewData["Title"]</h2>
+</div>
 
 <div class="row">
-   <div class="col-md-12">
-       <table  class="table">
+   <div class="col-md-8 col-md-offset-2">
+       <table  class="table table-hover">
            <thead>
                <tr>
                     <th>Order Id</th>
-                    <th>Order Date</th>
-                    <th>Order Amount</th>
-                    <th>Order Details</th>
+                    <th class="text-center">Order Date</th>
+                    <th class="text-center">Order Amount</th>
                </tr>
            </thead>
            <tbody>
                @foreach (var order in Model)
                {
-                   <tr>
-                       <td>@order.OrderId</td>
-                       <td>@order.OrderPlaced</td>
-                       <td>@order.OrderTotal</td>
-                       <td><a class="btn btn-primary"asp-action="OrderDetails" asp-route-id="@order.OrderId">Details</a></td>
-                   </tr>
+
+                       <tr onclick="OrderDetails(@order.OrderId)" style="cursor: pointer;">
+                           <td>@order.OrderId</td>
+                           <td class="text-center">@order.OrderPlaced</td>
+                           <td class="text-center">@order.OrderTotal.ToString("c")</td>
+                       </tr>
+
+
                }
            </tbody>
        </table>
    </div>
 </div>
+
+<script>
+    function OrderDetails(orderId) {
+        window.location.href = '@Url.Action("OrderDetails", "Order")' + '?id=' + orderId;
+    }
+</script>

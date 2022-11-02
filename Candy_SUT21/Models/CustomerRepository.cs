@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Candy_SUT21.Models
@@ -26,6 +27,12 @@ namespace Candy_SUT21.Models
         {
             var customer = await _appDbContext.Customers.FirstOrDefaultAsync(c => c.CustomerId == id);
             return customer;
+        }
+
+        public async Task<Customer> GetCustomerByApplicationUserId(string id)
+        {
+            var user = await _appDbContext.Users.Include(c => c.Customer).FirstOrDefaultAsync(u => u.Id == id);
+            return user.Customer;
         }
 
         public Task<IEnumerable<Customer>> GetCustomers()

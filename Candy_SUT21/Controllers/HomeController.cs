@@ -77,6 +77,14 @@ namespace Candy_SUT21.Controllers
 
             return View(homeViewModel);
         }
+        public IActionResult OnSale()
+        {
+            var homeViewModel = new HomeViewModel
+            {
+                CandyOnSale = _candyRepository.GetCandyOnSale
+            };
+            return View(homeViewModel);
+        }
 
 
     }
