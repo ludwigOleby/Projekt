@@ -43,10 +43,9 @@
 
                     <li><a asp-controller="Candy" asp-action="List" asp-route-category="">All Candy</a></li>
                     @await Component.InvokeAsync("CategoryMenu")
-                    <li><a asp-controller="Contact" asp-action="Index">Contact Us</a></li>
+                    @*<li><a asp-controller="Contact" asp-action="Index">Contact Us</a></li>*@
                     @await Component.InvokeAsync("ShoppingCartSummary")
                 </ul>
-
                 <ul class="nav navbar-nav identity-menu">
 
                     @if (User.IsInRole("Admin"))
