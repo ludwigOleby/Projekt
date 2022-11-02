@@ -39,10 +39,12 @@ namespace Candy_SUT21.Controllers
 
         public async Task<RedirectToActionResult> AddToShoppingCart(int candyId)
         {
-            var candies = await _candyRepository.GetAllCandy();
-            var selectedCandy = candies.FirstOrDefault(c => c.CandyId == candyId);
+            var selectedCandy = await _candyRepository.GetCandyById(candyId);
 
-            if (selectedCandy != null)
+            var itemInCart = _shoppingCart.GetShoppingCartItems().FirstOrDefault(x=>x.Candy.CandyId==candyId)?.Amount;
+            
+
+            if (selectedCandy != null && (itemInCart==null || itemInCart < selectedCandy.StockAmount))
             {
                 _shoppingCart.AddToCart(selectedCandy, 1);
             }
