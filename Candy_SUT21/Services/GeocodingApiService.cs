@@ -72,6 +72,7 @@ namespace Candy_SUT21.Services
             {
                 if (response.IsSuccessStatusCode)
                 {
+                    
                     position = await response.Content.ReadFromJsonAsync<GeocodingAPIModel>();
 
                     if (position?.Results != null)

@@ -95,10 +95,6 @@
 </script>
 
 
-@*<div style="width:100vw; height:100vh" id="myMap">
-        <button onclick="GetMap()"></button>
-    </div>*@
-
 <style>
     html, body {
         margin: 0;
@@ -119,7 +115,7 @@
             </body>
         </div>
         <div class="col-md-6">
-            <h2>Details:</h2>
+            <h2>Route details:</h2>
             <div class="row">
                 <table class="table">
                     <thead>
@@ -127,7 +123,6 @@
                             <th scope="col">Distance</th>
                             <th scope="col">Departure Time</th>
                             <th scope="col">Arrival Time</th>
-                            <th scope="col">Instructions</th>
 
                         </tr>
                     </thead>
@@ -142,7 +137,7 @@
             </div>
             <div class="row">
                 <h2>Instructions:</h2>
-                <div style="height:50%;overflow-y:auto;">
+                <div style="height:525px;overflow-y:scroll;">
                     <ul class="list-group">
                         @foreach (var item in @Model.guidance.instructions)
                         {
@@ -161,10 +156,13 @@
                                     <li class="list-group-item"><i class="glyphicon glyphicon-arrow-left"></i> @item.message</li>
                                     break;
                                 case "ROUNDABOUT_RIGHT":
-                                    <li class="list-group-item"><i class="glyphicon glyphicon glyphicon-circle-arrow-right"></i> @item.message</li>
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-circle-arrow-right"></i> @item.message</li>
                                     break;
                                 case "ROUNDABOUT_LEFT":
-                                    <li class="list-group-item"><i class="glyphicon glyphicon glyphicon-circle-arrow-left"></i> @item.message</li>
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-circle-arrow-left"></i> @item.message</li>
+                                    break;
+                                case "ROUNDABOUT_CROSS":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-circle-arrow-up"></i> @item.message</li>
                                     break;
                                     case "DEPART":
                                     <li class="list-group-item"><i class="glyphicon glyphicon-send"></i> @item.message</li>
@@ -177,6 +175,30 @@
                                     break;
                                 case "ARRIVE_RIGHT":
                                     <li class="list-group-item"><i class="glyphicon glyphicon-thumbs-up"></i> @item.message</li>
+                                    break;
+                                case "ENTER_HIGHWAY":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-road"></i> @item.message</li>
+                                    break;
+                                case "ENTER_MOTORWAY":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-road"></i> @item.message</li>
+                                    break;
+                                case "MOTORWAY_EXIT_LEFT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-download-alt"></i> @item.message</li>
+                                    break;
+                                case "MOTORWAY_EXIT_RIGHT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-download-alt"></i> @item.message</li>
+                                    break;
+                                case "TAKE_EXIT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-download-alt"></i> @item.message</li>
+                                    break;
+                                case "FOLLOW":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-arrow-up"></i> @item.message</li>
+                                    break;
+                                case "KEEP_LEFT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-hand-left"></i> @item.message</li>
+                                    break;
+                                case "KEEP_RIGHT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-hand-right"></i> @item.message</li>
                                     break;
                                 default:
                                     <li class="list-group-item">@item.message</li>

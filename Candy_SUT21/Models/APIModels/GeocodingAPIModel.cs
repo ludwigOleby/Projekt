@@ -38,7 +38,7 @@ namespace Candy_SUT21.Models.APIModels
         public string Municipality { get; set; }
         public double Lon { get; set; }
         public double Lat { get; set; }
-        public int Distance { get; set; }
+        public double Distance { get; set; }
         public string Formatted { get; set; }
         public string Address_line1 { get; set; }
         public string Address_line2 { get; set; }
