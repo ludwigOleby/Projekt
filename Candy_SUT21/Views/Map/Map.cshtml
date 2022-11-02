@@ -1,0 +1,222 @@
+﻿@model MapViewModel
+
+
+<script>
+    var map, datasource, client;
+
+    function GetMap() {
+        //var cord1lon= "57.09722"
+        //var cord1lat = "12.27333"
+        //var cord2lon= "59.32944"
+        //var cord2lat= "18.06861"
+
+
+        console.log("inside getmap");
+
+        // Instantiate a map object
+        var map = new atlas.Map('myMap', {
+            view: 'Auto',
+
+            //Add authentication details for connecting to Azure Maps.
+            authOptions: {
+                authType: 'subscriptionKey',
+                subscriptionKey: 'UXsLQk9ekQxPmWrI7dNLF7xq40X0qc9vS_ZVZlzCgAM'
+            }
+        }
+        );
+
+
+        //Wait until the map resources are ready.
+        map.events.add('ready', function () {
+
+            //Create a data source and add it to the map.
+            datasource = new atlas.source.DataSource();
+            map.sources.add(datasource);
+
+            //Add a layer for rendering the route lines and have it render under the map labels.
+            map.layers.add(new atlas.layer.LineLayer(datasource, null, {
+                strokeColor: '#2272B9',
+                strokeWidth: 5,
+                lineJoin: 'round',
+                lineCap: 'round'
+            }), 'labels');
+
+            //Add a layer for rendering point data.
+            map.layers.add(new atlas.layer.SymbolLayer(datasource, null, {
+                iconOptions: {
+                    image: ['get', 'icon'],
+                    allowOverlap: true
+                },
+                textOptions: {
+                    textField: ['get', 'title'],
+                    offset: [0, 1.2]
+                },
+                filter: ['any', ['==', ['geometry-type'], 'Point'], ['==', ['geometry-type'], 'MultiPoint']] //Only render Point or MultiPoints in this layer.
+            }));
+
+
+            //Create the GeoJSON objects which represent the start and end points of the route.
+            var startPoint = new atlas.data.Feature(new atlas.data.Point([parseFloat(@Model.StorageCord[1]), parseFloat(@Model.StorageCord[0])]), {
+                title: "Storage",
+                icon: "pin-blue"
+            });
+
+            var endPoint = new atlas.data.Feature(new atlas.data.Point([parseFloat(@Model.CustomerCord[1]), parseFloat(@Model.CustomerCord[0])]), {
+                title: "Customer Adress",
+                icon: "pin-round-blue"
+            });
+
+            //Add the data to the data source.
+            datasource.add([startPoint, endPoint]);
+
+            map.setCamera({
+                bounds: atlas.data.BoundingBox.fromData([startPoint, endPoint]),
+                padding: 80
+            });
+
+            //Use MapControlCredential to share authentication between a map control and the service module.
+            var pipeline = atlas.service.MapsURL.newPipeline(new atlas.service.MapControlCredential(map));
+
+            //Construct the RouteURL object
+            var routeURL = new atlas.service.RouteURL(pipeline);
+
+            //Start and end point input to the routeURL
+            var coordinates = [[startPoint.geometry.coordinates[0], startPoint.geometry.coordinates[1]], [endPoint.geometry.coordinates[0], endPoint.geometry.coordinates[1]]];
+
+            //Make a search route request
+            routeURL.calculateRouteDirections(atlas.service.Aborter.timeout(10000), coordinates).then((directions) => {
+                //Get data features from response
+                var data = directions.geojson.getFeatures();
+                datasource.add(data);
+            });
+        });
+    }
+
+</script>
+
+
+<style>
+    html, body {
+        margin: 0;
+    }
+
+    #myMap {
+        height: 80vh;
+        width: 30vw;
+    }
+</style>
+
+
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-6">
+            <body onload="GetMap()">
+                <div id="myMap"></div>
+            </body>
+        </div>
+        <div class="col-md-6">
+            <h2>Route details:</h2>
+            <div class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Distance</th>
+                            <th scope="col">Departure Time</th>
+                            <th scope="col">Arrival Time</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">@Model.distance Km</th>
+                            <th scope="row">@Model.departureTime</th>
+                            <th scope="row">@Model.arrivalTime</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <h2>Instructions:</h2>
+                <div style="height:525px;overflow-y:scroll;">
+                    <ul class="list-group">
+                        @foreach (var item in @Model.guidance.instructions)
+                        {
+                            switch (item.maneuver)
+                            {
+                                case "TURN_RIGHT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-arrow-right"></i> @item.message</li>
+                                    break;
+                                case "SHARP_RIGHT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-arrow-right"></i> @item.message</li>
+                                    break;
+                                    case"TURN_LEFT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-arrow-left"></i> @item.message</li>
+                                    break;
+                                case "SHARP_LEFT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-arrow-left"></i> @item.message</li>
+                                    break;
+                                case "ROUNDABOUT_RIGHT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-circle-arrow-right"></i> @item.message</li>
+                                    break;
+                                case "ROUNDABOUT_LEFT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-circle-arrow-left"></i> @item.message</li>
+                                    break;
+                                case "ROUNDABOUT_CROSS":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-circle-arrow-up"></i> @item.message</li>
+                                    break;
+                                    case "DEPART":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-send"></i> @item.message</li>
+                                    break;
+                                case "ARRIVE":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-thumbs-up"></i> @item.message</li>
+                                    break;
+                                case "ARRIVE_LEFT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-thumbs-up"></i> @item.message</li>
+                                    break;
+                                case "ARRIVE_RIGHT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-thumbs-up"></i> @item.message</li>
+                                    break;
+                                case "ENTER_HIGHWAY":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-road"></i> @item.message</li>
+                                    break;
+                                case "ENTER_MOTORWAY":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-road"></i> @item.message</li>
+                                    break;
+                                case "MOTORWAY_EXIT_LEFT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-download-alt"></i> @item.message</li>
+                                    break;
+                                case "MOTORWAY_EXIT_RIGHT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-download-alt"></i> @item.message</li>
+                                    break;
+                                case "TAKE_EXIT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-download-alt"></i> @item.message</li>
+                                    break;
+                                case "FOLLOW":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-arrow-up"></i> @item.message</li>
+                                    break;
+                                case "KEEP_LEFT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-hand-left"></i> @item.message</li>
+                                    break;
+                                case "KEEP_RIGHT":
+                                    <li class="list-group-item"><i class="glyphicon glyphicon-hand-right"></i> @item.message</li>
+                                    break;
+                                default:
+                                    <li class="list-group-item">@item.message</li>
+                                    break;
+                            };
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

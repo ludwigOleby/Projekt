@@ -381,3 +381,14 @@ footer {
     width: 25%;
     padding: 10px;
 }
+
+
+.thumbnail {
+    transition: all 0.2s ease;
+}
+
+    .thumbnail:hover {
+        transform: scale(1.03);
+        box-shadow: lightgray 2px 5px 5px 2px;
+    }
+
